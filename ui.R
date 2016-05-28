@@ -166,7 +166,7 @@ dashboardPage(skin = "green",
                           fluidRow(
                             box(
                               title = "Markets by Growth",
-                              status = "warning",
+                              status = "danger",
                               width = 12,
                               solidHeader = TRUE,
                               collapsible = TRUE,

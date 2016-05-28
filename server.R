@@ -173,31 +173,9 @@ shinyServer(function(input, output) {
     selectInput("city", label = "City:", choices = c(Choose='', "Any", as.character(cities$City)), selected = dfltCity, selectize = FALSE)
   })
 
-  # Filter query results by requested growth horizon and rate
-  filterByGrowth <- function(d) {
-
-    horizon <- input$horizon
-    if (horizon == "5 Year") {
-      horizon <- "Five"
-    } else if (horizon == "10 Year") {
-      horizon <- "Ten"
-    }
-
-    print(paste("filtering by ", horizon, " value ", input$growthQuery[1]))
-    print(paste("Rows passed to be filtered", nrow(d)))
-    print(paste("class of growth is ", class(input$growthQuery[1])))
-    
-    switch(horizon,
-           Monthly = arrange(d[ which(d$MoM >= input$growthQuery[1]),], desc(MoM)),
-           Quarterly = arrange(d[ which(d$QoQ >= input$growthQuery[1]),], desc(QoQ)),
-           Annual = arrange(d[ which(d$YoY >= input$growthQuery[1]),], desc(YoY)),
-           Five = arrange(d[ which(d$X5Year >= input$growthQuery[1]),], desc(X5Year)),
-           Ten = arrange(d[ which(d$X10Year >= input$growthQuery[1]),], desc(X10Year)))
-  }
-
   # Get data that matches query
-  getData <- eventReactive(input$query, {
-  
+  filterData <- eventReactive(input$query, {
+    
     # Set home value parameters
     minValue <- input$hviQuery[1]
     if (input$maxValue == TRUE) {
@@ -205,78 +183,125 @@ shinyServer(function(input, output) {
     } else {
       maxValue <- input$hviQuery[2]
     }
-    print(paste("Horizon is:", input$horizon))
-    print(paste("Minimum Home Value :", input$hviQuery[1]))
-    print(paste("Maximum Home Value :", maxValue))
-    print(paste("Minimum Growth Rate :", input$growthQuery[1]))
-    print(paste("State :", input$state))
-    print(paste("City :", input$city))
 
     # Filter based upon geography and home value
     if (!is.null(input$city) & input$city != "Any") {
-      print("...getting results for city...")
       results <- subset(currentZip,
-                          City == input$city &
+                        City == input$city &
                           StateName == input$state &
                           Zhvi >= minValue & Zhvi <= maxValue )
-      print(paste("...dimension of results is ", dim(results)))
     } else if (!is.null(input$state) & input$state != "Any") {
-      print("...getting results for state...")
       results <- subset(currentZip,
-                          StateName == input$state &
+                        StateName == input$state &
                           Zhvi >= minValue & Zhvi <= maxValue)
-      print(paste("...dimension of results is ", dim(results)))    
-      } else {
-      print("...getting all results..")
+    } else {
       results <- subset(currentZip,
                         Zhvi >= minValue & Zhvi <= maxValue)
-      print(paste("...dimension of results is ", dim(results)))
     }
 
-    print(paste("Query returned ", nrow(results), " results."))
-
-    return(isolate(filterByGrowth(results)))
-  })
+    return(results)
+  }, ignoreNULL = FALSE)
   
-  #Set core bar plot parameters
-  setCorePlot <- function(d) {
+
+  # Filter query results by requested growth horizon and rate
+  getData <- eventReactive(input$query, {
     
+    d <- filterData()
+
     horizon <- input$horizon
     if (horizon == "5 Year") {
       horizon <- "Five"
     } else if (horizon == "10 Year") {
       horizon <- "Ten"
     }
-    
-    switch(horizon,
-           Monthly = rPlot(x = list(var = "location", sort = "MoM"), y = "MoM", data = d, type = "bar"),
-           Quarterly = rPlot(x = list(var = "location", sort = "QoQ"), y = "QoQ", data = d, type = "bar"),
-           Annual = rPlot(x = list(var = "location", sort = "YoY"), y = "YoY", data = d, type = "bar"),
-           Five = rPlot(x = list(var = "location", sort = "X5Year"), y = "X5Year", data = d, type = "bar"),
-           Ten = rPlot(x = list(var = "location", sort = "X10Year"), y = "X10Year", data = d, type = "bar")
-    )
-  }
 
-  #Render Top 10 Markets Meeting Criteria
+    switch(horizon,
+           Monthly = arrange(d[ which(d$MoM >= input$growthQuery[1]),], desc(MoM)),
+           Quarterly = arrange(d[ which(d$QoQ >= input$growthQuery[1]),], desc(QoQ)),
+           Annual = arrange(d[ which(d$YoY >= input$growthQuery[1]),], desc(YoY)),
+           Five = arrange(d[ which(d$X5Year >= input$growthQuery[1]),], desc(X5Year)),
+           Ten = arrange(d[ which(d$X10Year >= input$growthQuery[1]),], desc(X10Year)))
+  }, ignoreNULL = FALSE)
+
+
+  #Render Top Markets by Growth
   output$topByGrowth <- renderChart({
+    
+    # Get Data
     d <- getData()
-    if (is.null(d)) {
-      print("Query returned zero rows")
-      p <- NULL
-    } else {
-      print(paste("Filtered query returned ", nrow(d), " results"))
-      numBars <- 10
-      if (nrow(d) < 10) {
-        numBars <- nrow(d)
+    
+    # Subset into top results
+    numBars <- 10
+    if (nrow(d) < numBars) {
+      numBars <- nrow(d)
+    }
+    d <- d[1:numBars,]
+    
+    # Create location variable
+    d$location <- paste0(d$City,", ",d$State," ",d$RegionName) 
+    
+    # Configure Chart based upon input horizon
+    isolate({
+      horizon <- input$horizon
+      if (horizon == "5 Year") {
+        horizon <- "Five"
+      } else if (horizon == "10 Year") {
+        horizon <- "Ten"
       }
-      d <- d[1:numBars,]
-      d$location <- paste(d$City, ", ", d$State, " ", d$RegionName)
-      p <- setCorePlot(d)
+      
+      p <- switch(horizon,
+                  Monthly = rPlot(x = list(var = "location", sort = "MoM"), y = "MoM", data = d, type = "bar"),
+                  Quarterly = rPlot(x = list(var = "location", sort = "QoQ"), y = "QoQ", data = d, type = "bar"),
+                  Annual = rPlot(x = list(var = "location", sort = "YoY"), y = "YoY", data = d, type = "bar"),
+                  Five = rPlot(x = list(var = "location", sort = "X5Year"), y = "X5Year", data = d, type = "bar"),
+                  Ten = rPlot(x = list(var = "location", sort = "X10Year"), y = "X10Year", data = d, type = "bar")
+      )
       p$addParams(height = 300, width = 1500, dom = 'topByGrowth', title = paste("Top Markets by ", input$horizon, " Growth"))
       p$guides(x = list(title = "Market", ticks = unique(d$location)))
       p$guides(y = list(title = paste(input$horizon,"  Growth Rate")))
-    }  
-    return(p)
+      return(p)
+    })
   })
   
+  # Render Growth Data Table
+  output$growthTbl <- renderDataTable({
+    d <- getData()
+    
+    isolate({
+      horizon <- input$horizon
+      if (horizon == "5 Year") {
+        horizon <- "Five"
+      } else if (horizon == "10 Year") {
+        horizon <- "Ten"
+      }
+    
+      t <- switch(horizon,
+                  Monthly = {
+                      df <- select(d, StateName, Metro, County, City, RegionName, Zhvi, MoM)
+                      colnames(df) <- c("State", "Metro", "County", "City", "Zip", "Value Index", "Monthly Growth")
+                      t <- df 
+                  },
+                  Quarterly = {
+                    df <- select(d, StateName, Metro, County, City, RegionName, Zhvi, QoQ)
+                    colnames(df) <- c("State", "Metro", "County", "City", "Zip", "Value Index", "Quarterly Growth")
+                    t <- df 
+                  },
+                  Annual = {
+                    df <- select(d, StateName, Metro, County, City, RegionName, Zhvi, YoY)
+                    colnames(df) <- c("State", "Metro", "County", "City", "Zip", "Value Index", "Annual Growth")
+                    t <- df 
+                  },
+                  Five = {
+                    df <- select(d, StateName, Metro, County, City, RegionName, Zhvi, X5Year)
+                    colnames(df) <- c("State", "Metro", "County", "City", "Zip", "Value Index", "5 Year Growth")
+                    t <- df 
+                  },
+                  Ten = {
+                    df <- select(d, StateName, Metro, County, City, RegionName, Zhvi, X10Year)
+                    colnames(df) <- c("State", "Metro", "County", "City", "Zip", "Value Index", "10 Year Growth")
+                    t <- df 
+                  }
+            )
+      t})
+  }, options = list(lengthMenu = c(5, 30, 50), pageLength = 5))
 })
