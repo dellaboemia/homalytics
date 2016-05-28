@@ -146,22 +146,27 @@ dashboardPage(skin = "green",
                         conditionalPanel(
                           condition = "input.query",
                           fluidRow(
-                             box(
-                               title = "Markets by Home Value",
-                               status = "warning",
-                               width = 12,
-                               solidHeader = TRUE,
-                               collapsible = TRUE,
-                               tabBox(
-                                 id = "valueTab",
-                                 tabPanel("Top Markets by Home Value Bar Chart",
-                                   showOutput("topByValue", "polycharts")
-                                 ),# end of tabPanel
-                                 tabPanel("Markets By Home Value Table",
-                                    dataTableOutput("valueTbl")
-                                 ) # end of tabPanel
-                               )# End of TabBox
-                             )# end of box
+                            box(
+                              title = "Markets by Value",
+                              status = "success",
+                              width = 12,
+                              solidHeader = TRUE,
+                              collapsible = TRUE,
+                              box(
+                                title = "Top Markets by Value",
+                                status = "primary",
+                                width = 8,
+                                solidHeader = FALSE,
+                                showOutput("topByValue", "polycharts")
+                              ),# end of box
+                              box(
+                                title = "Markets by Value Table",
+                                status = "primary",
+                                width = 4,
+                                solidHeader = FALSE,
+                                dataTableOutput("valueTbl")
+                              )# end of box
+                            )# end of box
                           ), # end of fluidrow   
                           fluidRow(
                             box(
@@ -170,15 +175,20 @@ dashboardPage(skin = "green",
                               width = 12,
                               solidHeader = TRUE,
                               collapsible = TRUE,
-                              tabBox(
-                                id = "growthTab",
-                                tabPanel("Top Markets by Growth Bar Chart",
-                                         showOutput("topByGrowth", "polycharts")
-                                ),# end of tabPanel
-                                tabPanel("Markets By Growth Table",
-                                         dataTableOutput("growthTbl")
-                                ) # end of tabPanel
-                              )# End of TabBox
+                              box(
+                                title = "Top Markets by Growth",
+                                status = "primary",
+                                width = 8,
+                                solidHeader = FALSE,
+                                showOutput("topByGrowth", "polycharts")
+                              ),# end of box
+                              box(
+                                title = "Markets by Growth Table",
+                                status = "primary",
+                                width = 4,
+                                solidHeader = FALSE,
+                                dataTableOutput("growthTbl")
+                              )# end of box
                             )# end of box
                           ) # end of fluidrow   
                       ) # end of conditionalpanel

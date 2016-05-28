@@ -94,11 +94,15 @@ dfltMaxValue <- 10000000
 
 shinyServer(function(input, output) {
   
+  ################################################################################
+  ##                        DASHBOARD SERVER FUNCTIONS                          ##
+  ################################################################################
   #Render National Home Value Index Box
   output$hviUSBox <- renderValueBox({
     current <- currentState[ which(currentState$RegionName == "United States"), ]
     valueBox(
-      paste0("$", current$Zhvi), paste(current$RegionName, " Home Value Index "), icon = icon("dollar"), color = "green"
+      paste0("$", current$Zhvi), paste(current$RegionName, " Home Value Index "), 
+      icon = icon("dollar"), color = "green"
     )
   })
   
@@ -106,7 +110,8 @@ shinyServer(function(input, output) {
   output$momUSBox <- renderValueBox({
     current <- currentState[ which(currentState$RegionName == "United States"), ]
     valueBox(
-      paste0(round(current$MoM * 100,4), "%"), paste(current$RegionName, " Monthly Change in Home Values"), icon = icon("bullseye"), color = "orange"
+      paste0(round(current$MoM * 100,4), "%"), paste(current$RegionName, 
+      " Monthly Change in Home Values"), icon = icon("bullseye"), color = "orange"
     )
   })
   
@@ -114,7 +119,8 @@ shinyServer(function(input, output) {
   output$yoyUSBox <- renderValueBox({
     current <- currentState[ which(currentState$RegionName == "United States"), ]
     valueBox(
-      paste0(round(current$YoY * 100,4), "%"), paste(current$RegionName, " Annual Change in Home Values"), icon = icon("calendar"), color = "purple"
+      paste0(round(current$YoY * 100,4), "%"), paste(current$RegionName,
+      " Annual Change in Home Values"), icon = icon("calendar"), color = "purple"
     )
   })
   
@@ -156,6 +162,10 @@ shinyServer(function(input, output) {
     return(p)
   })
   
+  
+  ################################################################################
+  ##                        MARKET EXPLORER FUNCTIONS                           ##
+  ################################################################################
   # State query UI
   output$stateQueryUi <- renderUI({
     states <- unique(geo$StateName)
@@ -223,6 +233,43 @@ shinyServer(function(input, output) {
            Ten = arrange(d[ which(d$X10Year >= input$growthQuery[1]),], desc(X10Year)))
   }, ignoreNULL = FALSE)
 
+  
+  #Render Top Markets by Value
+  output$topByValue <- renderChart({
+    
+    # Get Data sorted by home value
+    d <- arrange(getData(),desc(Zhvi))
+
+    # Subset into top results
+    numBars <- 10
+    if (nrow(d) < numBars) {
+      numBars <- nrow(d)
+    }
+    d <- d[1:numBars,]
+    
+    # Create location variable
+    d$location <- paste0(d$City,", ",d$State," ",d$RegionName) 
+    
+    # Configure Chart
+    p <- rPlot(x = list(var = "location", sort = "Zhvi"), y = "Zhvi", data = d, type = "bar")
+    p$addParams(height = 300, width = 1050, dom = 'topByValue', title = paste("Top Markets by Median Home Value"))
+    p$guides(x = list(title = "Market", ticks = unique(d$location)))
+    p$guides(y = list(title = paste("Median Home Value")))
+    return(p)
+  })
+
+  
+  # Render Value Data Table
+  output$valueTbl <- renderDataTable({
+    d <- getData()
+
+    #Sort DAta
+    t <- arrange(select(d, StateName, County, City, RegionName, Zhvi), desc(Zhvi))
+    colnames(t) <- c("State", "County", "City", "Zip", "Value Index")
+    t
+    
+  }, options = list(lengthMenu = c(5, 30, 50), pageLength = 5))
+    
 
   #Render Top Markets by Growth
   output$topByGrowth <- renderChart({
@@ -256,7 +303,7 @@ shinyServer(function(input, output) {
                   Five = rPlot(x = list(var = "location", sort = "X5Year"), y = "X5Year", data = d, type = "bar"),
                   Ten = rPlot(x = list(var = "location", sort = "X10Year"), y = "X10Year", data = d, type = "bar")
       )
-      p$addParams(height = 300, width = 1500, dom = 'topByGrowth', title = paste("Top Markets by ", input$horizon, " Growth"))
+      p$addParams(height = 300, width = 1050, dom = 'topByGrowth', title = paste("Top Markets by ", input$horizon, " Growth"))
       p$guides(x = list(title = "Market", ticks = unique(d$location)))
       p$guides(y = list(title = paste(input$horizon,"  Growth Rate")))
       return(p)
@@ -266,7 +313,7 @@ shinyServer(function(input, output) {
   # Render Growth Data Table
   output$growthTbl <- renderDataTable({
     d <- getData()
-    
+
     isolate({
       horizon <- input$horizon
       if (horizon == "5 Year") {
@@ -277,28 +324,28 @@ shinyServer(function(input, output) {
     
       t <- switch(horizon,
                   Monthly = {
-                      df <- select(d, StateName, Metro, County, City, RegionName, Zhvi, MoM)
-                      colnames(df) <- c("State", "Metro", "County", "City", "Zip", "Value Index", "Monthly Growth")
+                      df <- select(d, StateName, County, City, RegionName, Zhvi, MoM)
+                      colnames(df) <- c("State", "County", "City", "Zip", "Value Index", "Monthly Growth")
                       t <- df 
                   },
                   Quarterly = {
-                    df <- select(d, StateName, Metro, County, City, RegionName, Zhvi, QoQ)
-                    colnames(df) <- c("State", "Metro", "County", "City", "Zip", "Value Index", "Quarterly Growth")
+                    df <- select(d, StateName, County, City, RegionName, Zhvi, QoQ)
+                    colnames(df) <- c("State", "County", "City", "Zip", "Value Index", "Quarterly Growth")
                     t <- df 
                   },
                   Annual = {
-                    df <- select(d, StateName, Metro, County, City, RegionName, Zhvi, YoY)
-                    colnames(df) <- c("State", "Metro", "County", "City", "Zip", "Value Index", "Annual Growth")
+                    df <- select(d, StateName, County, City, RegionName, Zhvi, YoY)
+                    colnames(df) <- c("State", "County", "City", "Zip", "Value Index", "Annual Growth")
                     t <- df 
                   },
                   Five = {
-                    df <- select(d, StateName, Metro, County, City, RegionName, Zhvi, X5Year)
-                    colnames(df) <- c("State", "Metro", "County", "City", "Zip", "Value Index", "5 Year Growth")
+                    df <- select(d, StateName, County, City, RegionName, Zhvi, X5Year)
+                    colnames(df) <- c("State", "County", "City", "Zip", "Value Index", "5 Year Growth")
                     t <- df 
                   },
                   Ten = {
-                    df <- select(d, StateName, Metro, County, City, RegionName, Zhvi, X10Year)
-                    colnames(df) <- c("State", "Metro", "County", "City", "Zip", "Value Index", "10 Year Growth")
+                    df <- select(d, StateName, County, City, RegionName, Zhvi, X10Year)
+                    colnames(df) <- c("State", "County", "City", "Zip", "Value Index", "10 Year Growth")
                     t <- df 
                   }
             )
