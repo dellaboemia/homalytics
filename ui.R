@@ -17,7 +17,7 @@ dashboardPage(skin = "green",
                 sidebarMenu(
                   menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
                   menuItem("Market Explorer", tabName = "explorer", icon = icon("search")),
-                  menuItem("Value Analysis", tabName = "exploreData", icon = icon("area-chart")),
+                  menuItem("Value Analysis", tabName = "valueAnalysis", icon = icon("area-chart")),
                   menuItem("Forecast Models", icon = icon("line-chart"),
                            menuSubItem("Model Training", icon = icon("gears"),tabName = "trainModels"),
                            menuSubItem("Model Performance", icon = icon("check-circle"))),
@@ -32,8 +32,8 @@ dashboardPage(skin = "green",
                             title = "Dashboard",
                             fluidRow(
                               valueBoxOutput("hviUSBox"),
-                              valueBoxOutput("momUSBox"),
-                              valueBoxOutput("yoyUSBox")
+                              valueBoxOutput("MonthlyUSBox"),
+                              valueBoxOutput("AnnualUSBox")
                             ),
                             fluidRow(
                               column(width = 4,
@@ -111,7 +111,8 @@ dashboardPage(skin = "green",
                                   paste("Select minimum and maximum home values")),
                                 sliderInput("hviQuery", label = "Home Value Range", min = 0, max = 2000000, value = c(300000,500000)),
                                 checkboxInput("maxValue", label = "Include values exceeding $2m", value = FALSE)
-                              ) # end of box
+                              ), # end of box
+                              actionButton("query", label = "Go")
                             ), # end of column
                             column(width = 4,
                               box(
@@ -135,11 +136,46 @@ dashboardPage(skin = "green",
                                 solidHeader = FALSE,
                                 width = 12,
                                 p(class = "text-muted",
-                                  paste("Further refine your query by indicating state and city")),
-                                uiOutput("stateQueryUi"),
-                                uiOutput("cityQueryUi"),
-                                actionButton("query", label = "Go")
-                              )# end of box
+                                  paste("Further refine your query by indicating level of analysis and geography")),
+                                box(
+                                  fluidRow(
+                                    width = 6,
+                                    status = "primary",
+                                    solidHeader = FALSE,
+                                    uiOutput("levelQueryUi")
+                                  )
+                                ),# end of box
+                                conditionalPanel(
+                                  condition = "input.analysisLevel == 2",
+                                  box(
+                                    status = "primary",
+                                    solidHeader = FALSE,
+                                    width = 6,
+                                    uiOutput("stateQuery2Ui")
+                                  )# end of box
+                                ),# end of conditional panel  
+                                conditionalPanel(
+                                  condition = "input.analysisLevel == 3",
+                                  box(
+                                    status = "primary",
+                                    solidHeader = FALSE,
+                                    width = 6,
+                                    uiOutput("stateQuery3Ui"),
+                                    uiOutput("countyQuery3Ui")
+                                  )# end of box
+                                ),# end of conditionalpanel    
+                                conditionalPanel(
+                                  condition = "input.analysisLevel == 4",
+                                  box(
+                                    status = "primary",
+                                    solidHeader = FALSE,
+                                    width = 6,
+                                    uiOutput("stateQuery4Ui"),
+                                    uiOutput("countyQuery4Ui"),
+                                    uiOutput("cityQuery4Ui")
+                                  )# end of box
+                                )# end of conditionalpanel    
+                              )#end of box
                             ) # end of column
                           ) # end of box
                         ), # end of fluidrow
@@ -193,7 +229,45 @@ dashboardPage(skin = "green",
                           ) # end of fluidrow   
                       ) # end of conditionalpanel
                     ) # End of fluidPage
-                ) # End of tabItem 
+                ), # End of tabItem 
+                tabItem(tabName = "valueAnalysis",
+                        fluidRow(
+                          box(
+                            title = "Time Series Data Exploration", status = "primary",
+                            solidHeader = TRUE, height = 800, width = 12,
+                            tabBox(
+                              title = "Seasonal and Non-Seasonal Time Series Decomposition",
+                              id = "exploreTab", height = 660, width = 12,
+                              tabPanel("Non-Seasonal", 
+                                       box(
+                                         title = "Span Order",
+                                         status = "success",
+                                         solidHeader = FALSE, width = 3,
+                                         p(
+                                           class = "text-muted",
+                                           paste("Adjust span order until the simple moving average has smoothed random fluctuations
+                                                 and the trend component emerges")),
+                                         sliderInput("span", label = "Span Order", min = 1, max = 10, value = 3, step = 1)
+                                           ),
+                                       box(
+                                         title = "Estimate Trend Component with Simple Moving Average (SMA)",
+                                         status = "success",
+                                         solidHeader = FALSE, height = 400, width = 9,
+                                         plotOutput("nsPlot")
+                                       )# end of box
+                              ), # end of tabPanel
+                              tabPanel("Seasonal", 
+                                       box(
+                                         title = "Estimate Trend Seasonal, and Irregular Components of the Time Series",
+                                         status = "success",
+                                         solidHeader = FALSE, height = 600, width = 12,
+                                         plotOutput("tsiPlot")
+                                       )
+                              )# end of tab panel
+                            )# end of tabbox
+                          )# end of box
+                        )# end of fluidrow
+                ) # end of tabItem                
           ) # end of tabITems
     )# end of dashboard body
 )# end of dashboard page

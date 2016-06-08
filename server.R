@@ -19,50 +19,52 @@ library(xlsx)
 ################################################################################
 #                                READ DATA                                     #
 ################################################################################
+setwd("processedData")
+
 # Function that reads a file based upon the name provided
 readData <- function(f) {
-  
+
   switch (f,
-          currentZip = read.csv("./data/currentZip.csv", header = TRUE),
-          currentCity = read.csv("./data/currentCity.csv", header = TRUE),
-          currentCounty = read.csv("./data/currentCounty.csv", header = TRUE),
-          currentState = read.csv("./data/currentState.csv", header = TRUE),
-          hviAllZip = read.csv("./data/hviAllZip.csv", header = TRUE),
-          hviAllCity = read.csv("./data/hviAllCity.csv", header = TRUE),
-          hviAllCounty = read.csv("./data/hviAllCounty.csv", header = TRUE),
-          hviAllState = read.csv("./data/hviAllState.csv", header = TRUE),
-          hviCondoZip = read.csv("./data/hviCondoZip.csv", header = TRUE),
-          hviCondoCity = read.csv("./data/hviCondoCity.csv", header = TRUE),
-          hviCondoCounty = read.csv("./data/hviCondoCounty.csv", header = TRUE),
-          hviCondoState = read.csv("./data/hviCondoState.csv", header = TRUE),
-          hviSFHZip = read.csv("./data/hviSFHZip.csv", header = TRUE),
-          hviSFHCity = read.csv("./data/hviSFHCity.csv", header = TRUE),
-          hviSFHCounty = read.csv("./data/hviSFHCounty.csv", header = TRUE),
-          hviSFHState = read.csv("./data/hviSFHState.csv", header = TRUE),
-          hvi1brZip = read.csv("./data/hvi1brZip.csv", header = TRUE),
-          hvi1brCity = read.csv("./data/hvi1brCity.csv", header = TRUE),
-          hvi1brCounty = read.csv("./data/hvi1brCounty.csv", header = TRUE),
-          hvi1brState = read.csv("./data/hvi1brState.csv", header = TRUE),
-          hvi2brZip = read.csv("./data/hvi2brZip.csv", header = TRUE),
-          hvi2brCity = read.csv("./data/hvi2brCity.csv", header = TRUE),
-          hvi2brCounty = read.csv("./data/hvi2brCounty.csv", header = TRUE),
-          hvi2brState = read.csv("./data/hvi2brState.csv", header = TRUE),
-          hvi3brZip = read.csv("./data/hvi3brZip.csv", header = TRUE),
-          hvi3brCity = read.csv("./data/hvi3brCity.csv", header = TRUE),
-          hvi3brCounty = read.csv("./data/hvi3brCounty.csv", header = TRUE),
-          hvi3brState = read.csv("./data/hvi3brState.csv", header = TRUE),
-          hvi4brZip = read.csv("./data/hvi4brZip.csv", header = TRUE),
-          hvi4brCity = read.csv("./data/hvi4brCity.csv", header = TRUE),
-          hvi4brCounty = read.csv("./data/hvi4brCounty.csv", header = TRUE),
-          hvi4brState = read.csv("./data/hvi4brState.csv", header = TRUE),
-          hvi5brZip = read.csv("./data/hvi5brZip.csv", header = TRUE),
-          hvi5brCity = read.csv("./data/hvi5brCity.csv", header = TRUE),
-          hvi5brCounty = read.csv("./data/hvi5brCounty.csv", header = TRUE),
-          hvi5brState = read.csv("./data/hvi5brState.csv", header = TRUE),
-          hvisqZip = read.csv("./data/hvisqZip.csv", header = TRUE),
-          hvisqCity = read.csv("./data/hvisqCity.csv", header = TRUE),
-          hvisqCounty = read.csv("./data/hvisqCounty.csv", header = TRUE),
-          hvisqState = read.csv("./data/hvisqState.csv", header = TRUE)
+          currentZip = read.csv("currentZip.csv", header = TRUE),
+          currentCity = read.csv("currentCity.csv", header = TRUE),
+          currentCounty = read.csv("currentCounty.csv", header = TRUE),
+          currentState = read.csv("currentState.csv", header = TRUE),
+          hviAllZip = read.csv("hviAllZip.csv", header = TRUE),
+          hviAllCity = read.csv("hviAllCity.csv", header = TRUE),
+          hviAllCounty = read.csv("hviAllCounty.csv", header = TRUE),
+          hviAllState = read.csv("hviAllState.csv", header = TRUE),
+          hviCondoZip = read.csv("hviCondoZip.csv", header = TRUE),
+          hviCondoCity = read.csv("hviCondoCity.csv", header = TRUE),
+          hviCondoCounty = read.csv("hviCondoCounty.csv", header = TRUE),
+          hviCondoState = read.csv("hviCondoState.csv", header = TRUE),
+          hviSFHZip = read.csv("hviSFHZip.csv", header = TRUE),
+          hviSFHCity = read.csv("hviSFHCity.csv", header = TRUE),
+          hviSFHCounty = read.csv("hviSFHCounty.csv", header = TRUE),
+          hviSFHState = read.csv("hviSFHState.csv", header = TRUE),
+          hvi1brZip = read.csv("hvi1brZip.csv", header = TRUE),
+          hvi1brCity = read.csv("hvi1brCity.csv", header = TRUE),
+          hvi1brCounty = read.csv("hvi1brCounty.csv", header = TRUE),
+          hvi1brState = read.csv("hvi1brState.csv", header = TRUE),
+          hvi2brZip = read.csv("hvi2brZip.csv", header = TRUE),
+          hvi2brCity = read.csv("hvi2brCity.csv", header = TRUE),
+          hvi2brCounty = read.csv("hvi2brCounty.csv", header = TRUE),
+          hvi2brState = read.csv("hvi2brState.csv", header = TRUE),
+          hvi3brZip = read.csv("hvi3brZip.csv", header = TRUE),
+          hvi3brCity = read.csv("hvi3brCity.csv", header = TRUE),
+          hvi3brCounty = read.csv("hvi3brCounty.csv", header = TRUE),
+          hvi3brState = read.csv("hvi3brState.csv", header = TRUE),
+          hvi4brZip = read.csv("hvi4brZip.csv", header = TRUE),
+          hvi4brCity = read.csv("hvi4brCity.csv", header = TRUE),
+          hvi4brCounty = read.csv("hvi4brCounty.csv", header = TRUE),
+          hvi4brState = read.csv("hvi4brState.csv", header = TRUE),
+          hvi5brZip = read.csv("hvi5brZip.csv", header = TRUE),
+          hvi5brCity = read.csv("hvi5brCity.csv", header = TRUE),
+          hvi5brCounty = read.csv("hvi5brCounty.csv", header = TRUE),
+          hvi5brState = read.csv("hvi5brState.csv", header = TRUE),
+          hvisqZip = read.csv("hvisqZip.csv", header = TRUE),
+          hvisqCity = read.csv("hvisqCity.csv", header = TRUE),
+          hvisqCounty = read.csv("hvisqCounty.csv", header = TRUE),
+          hvisqState = read.csv("hvisqState.csv", header = TRUE)
   )
 }
 
@@ -70,10 +72,10 @@ readData <- function(f) {
 #                     GLOBAL VARIABLES AND STRUCTURES                          #
 ################################################################################
 # File containing unique geo codes, state,city, zip
-geo <- read.csv("./data/geo.csv", header = TRUE)
+geo <- read.csv("geo.csv", header = TRUE)
 
 # Read model data
-modelData <- read.xlsx("./data/models.xlsx", sheetIndex = 1, header = TRUE)
+modelData <- read.xlsx("models.xlsx", sheetIndex = 1, header = TRUE)
 
 # Read summary files
 currentZip    <- readData("currentZip")
@@ -81,8 +83,11 @@ currentCity   <- readData("currentCity")
 currentCounty <- readData("currentCounty")
 currentState  <- readData("currentState")
 
+# Initialize Active Data
+
 #Default  Values
 dfltState <- "Any"
+dfltCounty <- "Any"
 dfltCity  <- "Any"
 dfltZip   <- 94133
 dfltModel <- "ARIMA"
@@ -99,37 +104,37 @@ shinyServer(function(input, output) {
   ################################################################################
   #Render National Home Value Index Box
   output$hviUSBox <- renderValueBox({
-    current <- currentState[ which(currentState$RegionName == "United States"), ]
+    current <- currentState[ which(currentState$State == "United States"), ]
     valueBox(
-      paste0("$", current$Zhvi), paste(current$RegionName, " Home Value Index "), 
+      paste0("$", current$Value), paste(current$State, " Home Value Index "), 
       icon = icon("dollar"), color = "green"
     )
   })
   
   #Render Monthly Price Growth  Box
-  output$momUSBox <- renderValueBox({
-    current <- currentState[ which(currentState$RegionName == "United States"), ]
+  output$MonthlyUSBox <- renderValueBox({
+    current <- currentState[ which(currentState$State == "United States"), ]
     valueBox(
-      paste0(round(current$MoM * 100,4), "%"), paste(current$RegionName, 
+      paste0(round(current$Monthly * 100,4), "%"), paste(current$State, 
       " Monthly Change in Home Values"), icon = icon("bullseye"), color = "orange"
     )
   })
   
   #Render Annual Price Growth  Box
-  output$yoyUSBox <- renderValueBox({
-    current <- currentState[ which(currentState$RegionName == "United States"), ]
+  output$AnnualUSBox <- renderValueBox({
+    current <- currentState[ which(currentState$State == "United States"), ]
     valueBox(
-      paste0(round(current$YoY * 100,4), "%"), paste(current$RegionName,
+      paste0(round(current$Annual * 100,4), "%"), paste(current$State,
       " Annual Change in Home Values"), icon = icon("calendar"), color = "purple"
     )
   })
   
   #Render Top 10 States bar chart
   output$top10States <- renderChart({
-    current <- currentState[ which(currentState$RegionName != "United States"), ]
-    current <- arrange(current, desc(YoY))
+    current <- currentState[ which(currentState$State != "United States"), ]
+    current <- arrange(current, desc(Annual))
     current <- current[1:10,]
-    p <- rPlot(x = list(var = "RegionName", sort = "YoY"), y = "YoY", data = current, type = "bar")
+    p <- rPlot(x = list(var = "location", sort = "Annual"), y = "Annual", data = current, type = "bar")
     p$addParams(height = 300, width = 1000, dom = 'top10States', title = "Top 10 States by Annual Home Value Growth")
     p$guides(x = list(title = "State", ticks = unique(current$RegionName)))
     p$guides(y = list(title = "Annual Growth Rate"))
@@ -139,10 +144,9 @@ shinyServer(function(input, output) {
   #Render Top 10 Counties bar chart
   output$top10Counties <- renderChart({
     current <- currentCounty
-    current <- arrange(current, desc(YoY))
+    current <- arrange(current, desc(Annual))
     current <- current[1:10,]
-    current$location <- paste(current$RegionName, ", ", current$State)
-    p <- rPlot(x = list(var = "location", sort = "YoY"), y = "YoY", data = current, type = "bar")
+    p <- rPlot(x = list(var = "location", sort = "Annual"), y = "Annual", data = current, type = "bar")
     p$addParams(height = 300, width = 1000, dom = 'top10Counties', title = "Top 10 Counties by Annual Home Value Growth")
     p$guides(x = list(title = "County", ticks = unique(current$location)))
     p$guides(y = list(title = "Annual Growth Rate"))
@@ -152,10 +156,9 @@ shinyServer(function(input, output) {
   #Render Top 10 Counties bar chart
   output$top10Cities <- renderChart({
     current <- currentCity
-    current <- arrange(current, desc(YoY))
+    current <- arrange(current, desc(Annual))
     current <- current[1:10,]
-    current$location <- paste(current$RegionName, ", ", current$State)
-    p <- rPlot(x = list(var = "location", sort = "YoY"), y = "YoY", data = current, type = "bar")
+    p <- rPlot(x = list(var = "location", sort = "Annual"), y = "Annual", data = current, type = "bar")
     p$addParams(height = 300, width = 1000, dom = 'top10Cities', title = "Top 10 Cities by Annual Home Value Growth")
     p$guides(x = list(title = "City", ticks = unique(current$location)))
     p$guides(y = list(title = "Annual Growth Rate"))
@@ -166,79 +169,283 @@ shinyServer(function(input, output) {
   ################################################################################
   ##                        MARKET EXPLORER FUNCTIONS                           ##
   ################################################################################
-  # State query UI
-  output$stateQueryUi <- renderUI({
-    states <- unique(geo$StateName)
-    selectInput("state", label = "State:", choices = c(Choose='', "Any", as.character(states)), selected = dfltState, selectize = FALSE)
+  #Level of Analysis UI
+  output$levelQueryUi <- renderUI({
+    radioButtons("analysisLevel", label = "Level of Analysis",
+                 choices = list("State" = 1, "County" = 2, "City" = 3, "Zip"  = 4), 
+                 selected = 4)
   })
   
   # State query UI
-  output$cityQueryUi <- renderUI({
+  output$stateQuery2Ui <- renderUI({
+    states <- unique(geo$StateName)
+    selectInput("state", label = "State:", choices = c(Choose='', "Any", as.character(states)), selected = dfltState, selectize = FALSE)
+  })
+
+  # State query UI
+  output$stateQuery3Ui <- renderUI({
+    states <- unique(geo$StateName)
+    selectInput("state", label = "State:", choices = c(Choose='', "Any", as.character(states)), selected = dfltState, selectize = FALSE)
+  })
+
+  # State query UI
+  output$stateQuery4Ui <- renderUI({
+    states <- unique(geo$StateName)
+    selectInput("state", label = "State:", choices = c(Choose='', "Any", as.character(states)), selected = dfltState, selectize = FALSE)
+  })
+
+  # County Query UI  
+  output$countyQuery3Ui <- renderUI({
     if (!is.null(input$state)) {
       state <- input$state
     } else {
       state <- dfltState
     }
-    cities <- unique(subset(geo, StateName == state, select = City))
-    selectInput("city", label = "City:", choices = c(Choose='', "Any", as.character(cities$City)), selected = dfltCity, selectize = FALSE)
+    counties <- unique(subset(geo, StateName == state, select = County))
+    selectInput("county", label = "County:", choices = c(Choose='', "Any", as.character(counties$County)), selected = dfltCounty, selectize = FALSE)
   })
 
-  # Get data that matches query
-  filterData <- eventReactive(input$query, {
+  # County Query UI  
+  output$countyQuery4Ui <- renderUI({
+    if (!is.null(input$state)) {
+      state <- input$state
+    } else {
+      state <- dfltState
+    }
+    counties <- unique(subset(geo, StateName == state, select = County))
+    selectInput("county", label = "County:", choices = c(Choose='', "Any", as.character(counties$County)), selected = dfltCounty, selectize = FALSE)
+  })
+  
+  output$cityQuery4Ui <- renderUI({
+    cities <- NULL
     
-    # Set home value parameters
+    if (!is.null(input$state)) {
+      if (input$state != "Any") {
+        if (!is.null(input$county)) {
+          if (input$county != "Any") {
+            cities  <- unique(subset(geo, StateName == input$state & County == input$county, select = City))
+          } else {
+            cities  <- unique(subset(geo, StateName == input$state, select = City))
+          }
+        } else {
+          cities  <- unique(subset(geo, StateName == input$state, select = City))
+        }
+      } 
+    }  
+    selectInput("city", label = "City:", choices = c(Choose='', "Any", as.character(cities$City)), selected = dfltCity, selectize = FALSE)
+  })
+  
+  
+  # Get and screen data based upon home value and growth rates
+  screenData <- function() {
+    # Get Deta
+    d <- switch(input$analysisLevel,
+                  "1" = currentState,
+                  "2" = currentCounty,
+                  "3" = currentCity,
+                  "4" = currentZip
+      )
+
+    # Screen based upon home value index
     minValue <- input$hviQuery[1]
     if (input$maxValue == TRUE) {
       maxValue <- dfltMaxValue
     } else {
       maxValue <- input$hviQuery[2]
     }
+    d <- subset(d, Value >= minValue & Value <= maxValue)
 
-    # Filter based upon geography and home value
-    if (!is.null(input$city) & input$city != "Any") {
-      results <- subset(currentZip,
-                        City == input$city &
-                          StateName == input$state &
-                          Zhvi >= minValue & Zhvi <= maxValue )
-    } else if (!is.null(input$state) & input$state != "Any") {
-      results <- subset(currentZip,
-                        StateName == input$state &
-                          Zhvi >= minValue & Zhvi <= maxValue)
-    } else {
-      results <- subset(currentZip,
-                        Zhvi >= minValue & Zhvi <= maxValue)
-    }
-
-    return(results)
-  }, ignoreNULL = FALSE)
-  
-
-  # Filter query results by requested growth horizon and rate
-  getData <- eventReactive(input$query, {
-    
-    d <- filterData()
-
+    # Screen based upon growth variable
     horizon <- input$horizon
     if (horizon == "5 Year") {
       horizon <- "Five"
     } else if (horizon == "10 Year") {
       horizon <- "Ten"
     }
+    d <- switch(horizon,
+           Monthly = d[ which(d$Monthly >= input$growthQuery[1]),],
+           Quarterly = d[ which(d$Quarterly >= input$growthQuery[1]),],
+           Annual = d[ which(d$Annual >= input$growthQuery[1]),], 
+           Five = d[ which(d$Five_Year >= input$growthQuery[1]),],
+           Ten = d[ which(d$Ten_Year >= input$growthQuery[1]),])
+    
+     return(d)
+  }
+  
 
-    switch(horizon,
-           Monthly = arrange(d[ which(d$MoM >= input$growthQuery[1]),], desc(MoM)),
-           Quarterly = arrange(d[ which(d$QoQ >= input$growthQuery[1]),], desc(QoQ)),
-           Annual = arrange(d[ which(d$YoY >= input$growthQuery[1]),], desc(YoY)),
-           Five = arrange(d[ which(d$X5Year >= input$growthQuery[1]),], desc(X5Year)),
-           Ten = arrange(d[ which(d$X10Year >= input$growthQuery[1]),], desc(X10Year)))
+  # Get Data for State level of analysis
+  getStateData <- function() {
+    
+    # Get data screened by value and growth rates
+    d <- screenData()
+    
+    if (!is.null(input$state) & (input$state != "Any")) {
+      d <- d[ which(d$RegionName == input$state),]
+    }
+    
+    # Format growth record
+    horizon <- input$horizon
+    if (horizon == "5 Year") {
+      horizon <- "Five"
+    } else if (horizon == "10 Year") {
+      horizon <- "Ten"
+    }
+    d <- switch(horizon,
+                Monthly   = select(d, State, Value, Monthly, location),
+                Quarterly = select(d, State, Value, Quarterly, location),
+                Annual    = select(d, State, Value, Annual, location),
+                Five      = select(d, State, Value, Five_Year, location),
+                Ten       = select(d, State, Value, Ten_Year, location))
+
+    return(d)
+                
+  }
+  
+  
+  # Get Data for County level of analysis
+  getCountyData <- function() {
+    
+    # Get data screened by value and growth rates
+    d <- screenData()
+    
+    # Filter based upon state and county entered
+    if (!is.null(input$county) & (input$county != "Any")) {
+      d <- d[ which(d$RegionName == input$county & d$StateName == input$state),]
+    } else if (!is.null(input$state) & (input$state != "Any")) {
+      d <- d[ which(d$StateName == input$state),]
+    } 
+    
+    # Format growth record
+    horizon <- input$horizon
+    if (horizon == "5 Year") {
+      horizon <- "Five"
+    } else if (horizon == "10 Year") {
+      horizon <- "Ten"
+    }
+    d <- switch(horizon,
+                Monthly   = select(d, StateName, County, Value, Monthly, location),
+                Quarterly = select(d, StateName, County, Value, Quarterly, location),
+                Annual    = select(d, StateName, County, Value, Annual, location),
+                Five      = select(d, StateName, County, Value, Five_Year, location),
+                Ten       = select(d, StateName, County, Value, Ten_Year))    
+    return(d)
+    
+  }
+  
+  
+  
+  # Get Data for City level of analysis
+  getCityData <- function() {
+    
+    # Get data screened by value and growth rates
+    d <- screenData()
+    
+    # Filter based upon state and county entered
+    if (!is.null(input$city) & (input$city != "Any")) {
+      d <- d[ which(d$RegionName == input$city & d$StateName == input$state),]
+    } else if (!is.null(input$state) & (input$state != "Any")) {
+      d <- d[ which(d$StateName == input$state),]
+    } 
+    
+    # Format growth record
+    horizon <- input$horizon
+    if (horizon == "5 Year") {
+      horizon <- "Five"
+    } else if (horizon == "10 Year") {
+      horizon <- "Ten"
+    }
+    d <- switch(horizon,
+                Monthly = select(d, StateName, County, City, Value, Monthly, location),
+                Quarterly = select(d, StateName, County, City, Value, Quarterly, location),
+                Annual = select(d, StateName, County, City, Value, Annual, location),
+                Five = select(d, StateName, County, City, Value, Five_Year, location),
+                Ten = select(d, StateName, County, City, Value, Ten_Year, location))       
+    return(d)
+    
+  }
+  
+  
+  
+  # Get Data for Zip level of analysis
+  getZipData <- function() {
+    
+    # Get data screened by value and growth rates
+    d <- screenData()
+
+    # Filter based upon state and county entered
+    if (!is.null(input$city) & (input$city != "Any")) {
+      d <- d[ which(d$City == input$city & d$StateName == input$state),]
+    } else if (!is.null(input$state) & (input$state != "Any")) {
+      d <- d[ which(d$StateName == input$state),]
+    } 
+    
+    # Format growth record
+    horizon <- input$horizon
+    if (horizon == "5 Year") {
+      horizon <- "Five"
+    } else if (horizon == "10 Year") {
+      horizon <- "Ten"
+    }
+    d <- switch(horizon,
+                Monthly = select(d, StateName, County, City, Zip, Value, Monthly, location),
+                Quarterly = select(d, StateName, County, City, Zip, Value, Quarterly, location),
+                Annual = select(d, StateName, County, City, Zip, Value, Annual, location),
+                Five = select(d, StateName, County, City, Zip, Value, Five_Year, location),
+                Ten = select(d, StateName, County, City, Zip, Value, Ten_Year, location))           
+    
+    return(d)
+    
+  }
+  
+  
+  
+  # Retrieves Data for Value Presentation
+  getData <- eventReactive(input$query, {
+    
+    d <- switch(input$analysisLevel,
+                "1" = getStateData(),
+                "2" = getCountyData(),
+                "3" = getCityData(),
+                "4" = getZipData()
+                )
+
+      return(d)
   }, ignoreNULL = FALSE)
 
+
+  # Get Growth Data
+  getGrowthData <- eventReactive(input$query, {
+    
+    d <- getData()
+    
+    # Configure Chart based upon input horizon
+    horizon <- input$horizon
+    if (horizon == "5 Year") {
+      horizon <- "Five"
+    } else if (horizon == "10 Year") {
+      horizon <- "Ten"
+    }
+    
+    
+    # Sort by horizon
+    if (nrow(d) != 0) {
+      d <- switch(horizon,
+                  Monthly = arrange(d, desc(Monthly)),
+                  Quarterly = arrange(d, desc(Quarterly)),
+                  Annual = arrange(d, desc(Annual)),
+                  Five = arrange(d, desc(Five_Year)),
+                  Ten = arrange(d, desc(Ten_Year)))
+    } 
+    
+    
+  }, ignoreNULL = FALSE)
+  
   
   #Render Top Markets by Value
   output$topByValue <- renderChart({
     
-    # Get Data sorted by home value
-    d <- arrange(getData(),desc(Zhvi))
+    d <- getData()
+    d <- arrange(d, desc(Value))
 
     # Subset into top results
     numBars <- 10
@@ -246,12 +453,9 @@ shinyServer(function(input, output) {
       numBars <- nrow(d)
     }
     d <- d[1:numBars,]
-    
-    # Create location variable
-    d$location <- paste0(d$City,", ",d$State," ",d$RegionName) 
-    
+
     # Configure Chart
-    p <- rPlot(x = list(var = "location", sort = "Zhvi"), y = "Zhvi", data = d, type = "bar")
+    p <- rPlot(x = list(var = "location", sort = "Value"), y = "Value", data = d, type = "bar")
     p$addParams(height = 300, width = 1050, dom = 'topByValue', title = paste("Top Markets by Median Home Value"))
     p$guides(x = list(title = "Market", ticks = unique(d$location)))
     p$guides(y = list(title = paste("Median Home Value")))
@@ -262,33 +466,29 @@ shinyServer(function(input, output) {
   # Render Value Data Table
   output$valueTbl <- renderDataTable({
     d <- getData()
-
-    #Sort DAta
-    t <- arrange(select(d, StateName, County, City, RegionName, Zhvi), desc(Zhvi))
-    colnames(t) <- c("State", "County", "City", "Zip", "Value Index")
-    t
+    d <- arrange(d, desc(Value))
     
-  }, options = list(lengthMenu = c(5, 30, 50), pageLength = 5))
+    #Drop Location variable
+    d$location <- NULL
+    return(d)
+
+  }, options = list(lengthMenu = c(5, 30, 50), autowidth = TRUE, pageLength = 5))
     
 
   #Render Top Markets by Growth
   output$topByGrowth <- renderChart({
     
-    # Get Data
-    d <- getData()
-    
-    # Subset into top results
-    numBars <- 10
-    if (nrow(d) < numBars) {
-      numBars <- nrow(d)
-    }
-    d <- d[1:numBars,]
-    
-    # Create location variable
-    d$location <- paste0(d$City,", ",d$State," ",d$RegionName) 
-    
-    # Configure Chart based upon input horizon
-    isolate({
+      # Get Data
+      d <- getGrowthData()
+  
+      # Subset into top results
+      numBars <- 10
+      if (nrow(d) < numBars) {
+        numBars <- nrow(d)
+      }
+      d <- d[1:numBars,]
+
+      # Configure Chart based upon input horizon
       horizon <- input$horizon
       if (horizon == "5 Year") {
         horizon <- "Five"
@@ -297,58 +497,30 @@ shinyServer(function(input, output) {
       }
       
       p <- switch(horizon,
-                  Monthly = rPlot(x = list(var = "location", sort = "MoM"), y = "MoM", data = d, type = "bar"),
-                  Quarterly = rPlot(x = list(var = "location", sort = "QoQ"), y = "QoQ", data = d, type = "bar"),
-                  Annual = rPlot(x = list(var = "location", sort = "YoY"), y = "YoY", data = d, type = "bar"),
-                  Five = rPlot(x = list(var = "location", sort = "X5Year"), y = "X5Year", data = d, type = "bar"),
-                  Ten = rPlot(x = list(var = "location", sort = "X10Year"), y = "X10Year", data = d, type = "bar")
+                  Monthly = rPlot(x = list(var = "location", sort = "Monthly"), y = "Monthly", data = d, type = "bar"),
+                  Quarterly = rPlot(x = list(var = "location", sort = "Quarterly"), y = "Quarterly", data = d, type = "bar"),
+                  Annual = rPlot(x = list(var = "location", sort = "Annual"), y = "Annual", data = d, type = "bar"),
+                  Five = rPlot(x = list(var = "location", sort = "Five_Year"), y = "Five_Year", data = d, type = "bar"),
+                  Ten = rPlot(x = list(var = "location", sort = "Ten_Year"), y = "Ten_Year", data = d, type = "bar")
       )
       p$addParams(height = 300, width = 1050, dom = 'topByGrowth', title = paste("Top Markets by ", input$horizon, " Growth"))
       p$guides(x = list(title = "Market", ticks = unique(d$location)))
       p$guides(y = list(title = paste(input$horizon,"  Growth Rate")))
       return(p)
-    })
   })
-  
+
   # Render Growth Data Table
   output$growthTbl <- renderDataTable({
-    d <- getData()
-
-    isolate({
-      horizon <- input$horizon
-      if (horizon == "5 Year") {
-        horizon <- "Five"
-      } else if (horizon == "10 Year") {
-        horizon <- "Ten"
-      }
     
-      t <- switch(horizon,
-                  Monthly = {
-                      df <- select(d, StateName, County, City, RegionName, Zhvi, MoM)
-                      colnames(df) <- c("State", "County", "City", "Zip", "Value Index", "Monthly Growth")
-                      t <- df 
-                  },
-                  Quarterly = {
-                    df <- select(d, StateName, County, City, RegionName, Zhvi, QoQ)
-                    colnames(df) <- c("State", "County", "City", "Zip", "Value Index", "Quarterly Growth")
-                    t <- df 
-                  },
-                  Annual = {
-                    df <- select(d, StateName, County, City, RegionName, Zhvi, YoY)
-                    colnames(df) <- c("State", "County", "City", "Zip", "Value Index", "Annual Growth")
-                    t <- df 
-                  },
-                  Five = {
-                    df <- select(d, StateName, County, City, RegionName, Zhvi, X5Year)
-                    colnames(df) <- c("State", "County", "City", "Zip", "Value Index", "5 Year Growth")
-                    t <- df 
-                  },
-                  Ten = {
-                    df <- select(d, StateName, County, City, RegionName, Zhvi, X10Year)
-                    colnames(df) <- c("State", "County", "City", "Zip", "Value Index", "10 Year Growth")
-                    t <- df 
-                  }
-            )
-      t})
-  }, options = list(lengthMenu = c(5, 30, 50), pageLength = 5))
+    d <- getGrowthData()
+
+    #Drop location variable
+    d$location <- NULL 
+    return(d)
+  }, options = list(lengthMenu = c(5, 30, 50), autowidth = TRUE, pageLength = 5))
+  
+  ################################################################################
+  ##                        VALUE ANALYSIS FUNCTIONS                            ##
+  ################################################################################
+  
 })
