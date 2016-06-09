@@ -179,60 +179,60 @@ shinyServer(function(input, output) {
   # State query UI
   output$stateQuery2Ui <- renderUI({
     states <- unique(geo$StateName)
-    selectInput("state", label = "State:", choices = c(Choose='', "Any", as.character(states)), selected = dfltState, selectize = FALSE)
+    selectInput("state2", label = "State:", choices = c(Choose='', "Any", as.character(states)), selected = dfltState, selectize = FALSE)
   })
 
   # State query UI
   output$stateQuery3Ui <- renderUI({
     states <- unique(geo$StateName)
-    selectInput("state", label = "State:", choices = c(Choose='', "Any", as.character(states)), selected = dfltState, selectize = FALSE)
+    selectInput("state3", label = "State:", choices = c(Choose='', "Any", as.character(states)), selected = dfltState, selectize = FALSE)
   })
 
   # State query UI
   output$stateQuery4Ui <- renderUI({
     states <- unique(geo$StateName)
-    selectInput("state", label = "State:", choices = c(Choose='', "Any", as.character(states)), selected = dfltState, selectize = FALSE)
+    selectInput("state4", label = "State:", choices = c(Choose='', "Any", as.character(states)), selected = dfltState, selectize = FALSE)
   })
 
   # County Query UI  
   output$countyQuery3Ui <- renderUI({
-    if (!is.null(input$state)) {
-      state <- input$state
+    if (!is.null(input$state3)) {
+      state <- input$state3
     } else {
       state <- dfltState
     }
     counties <- unique(subset(geo, StateName == state, select = County))
-    selectInput("county", label = "County:", choices = c(Choose='', "Any", as.character(counties$County)), selected = dfltCounty, selectize = FALSE)
+    selectInput("county3", label = "County:", choices = c(Choose='', "Any", as.character(counties$County)), selected = dfltCounty, selectize = FALSE)
   })
 
   # County Query UI  
   output$countyQuery4Ui <- renderUI({
-    if (!is.null(input$state)) {
-      state <- input$state
+    if (!is.null(input$stat4)) {
+      state <- input$state4
     } else {
       state <- dfltState
     }
     counties <- unique(subset(geo, StateName == state, select = County))
-    selectInput("county", label = "County:", choices = c(Choose='', "Any", as.character(counties$County)), selected = dfltCounty, selectize = FALSE)
+    selectInput("county4", label = "County:", choices = c(Choose='', "Any", as.character(counties$County)), selected = dfltCounty, selectize = FALSE)
   })
   
   output$cityQuery4Ui <- renderUI({
     cities <- NULL
     
-    if (!is.null(input$state)) {
-      if (input$state != "Any") {
-        if (!is.null(input$county)) {
-          if (input$county != "Any") {
-            cities  <- unique(subset(geo, StateName == input$state & County == input$county, select = City))
+    if (!is.null(input$state4)) {
+      if (input$state4 != "Any") {
+        if (!is.null(input$county4)) {
+          if (input$county4 != "Any") {
+            cities  <- unique(subset(geo, StateName == input$state4 & County == input$county4, select = City))
           } else {
-            cities  <- unique(subset(geo, StateName == input$state, select = City))
+            cities  <- unique(subset(geo, StateName == input$state4, select = City))
           }
         } else {
-          cities  <- unique(subset(geo, StateName == input$state, select = City))
+          cities  <- unique(subset(geo, StateName == input$state4, select = City))
         }
       } 
     }  
-    selectInput("city", label = "City:", choices = c(Choose='', "Any", as.character(cities$City)), selected = dfltCity, selectize = FALSE)
+    selectInput("city4", label = "City:", choices = c(Choose='', "Any", as.character(cities$City)), selected = dfltCity, selectize = FALSE)
   })
   
   
@@ -279,10 +279,6 @@ shinyServer(function(input, output) {
     # Get data screened by value and growth rates
     d <- screenData()
     
-    if (!is.null(input$state) & (input$state != "Any")) {
-      d <- d[ which(d$RegionName == input$state),]
-    }
-    
     # Format growth record
     horizon <- input$horizon
     if (horizon == "5 Year") {
@@ -304,15 +300,12 @@ shinyServer(function(input, output) {
   
   # Get Data for County level of analysis
   getCountyData <- function() {
-    
     # Get data screened by value and growth rates
     d <- screenData()
     
-    # Filter based upon state and county entered
-    if (!is.null(input$county) & (input$county != "Any")) {
-      d <- d[ which(d$RegionName == input$county & d$StateName == input$state),]
-    } else if (!is.null(input$state) & (input$state != "Any")) {
-      d <- d[ which(d$StateName == input$state),]
+    # Filter based upon state 
+    if (!is.null(input$state2) & (input$state2 != "Any")) {
+      d <- d[ which(d$StateName == input$state2),]
     } 
     
     # Format growth record
@@ -341,10 +334,10 @@ shinyServer(function(input, output) {
     d <- screenData()
     
     # Filter based upon state and county entered
-    if (!is.null(input$city) & (input$city != "Any")) {
-      d <- d[ which(d$RegionName == input$city & d$StateName == input$state),]
-    } else if (!is.null(input$state) & (input$state != "Any")) {
-      d <- d[ which(d$StateName == input$state),]
+    if (!is.null(input$county3) & (input$county3 != "Any")) {
+      d <- d[ which(d$County == input$county3),]
+    } else if (!is.null(input$state3) & (input$state3 != "Any")) {
+      d <- d[ which(d$StateName == input$state3),]
     } 
     
     # Format growth record
@@ -373,10 +366,12 @@ shinyServer(function(input, output) {
     d <- screenData()
 
     # Filter based upon state and county entered
-    if (!is.null(input$city) & (input$city != "Any")) {
-      d <- d[ which(d$City == input$city & d$StateName == input$state),]
-    } else if (!is.null(input$state) & (input$state != "Any")) {
-      d <- d[ which(d$StateName == input$state),]
+    if (!is.null(input$city4) & (input$city4 != "Any")) {
+      d <- d[ which(d$City == input$city4 & d$StateName == input$state4),]
+    } else if (!is.null(input$county4) & (input$county4 != "Any")) {
+      d <- d[ which(d$County == input$county4 & d$StateName == input$state4),]
+    } else if (!is.null(input$state4) & (input$state4 != "Any")) {
+      d <- d[ which(d$StateName == input$state4),]
     } 
     
     # Format growth record
@@ -482,11 +477,13 @@ shinyServer(function(input, output) {
       d <- getGrowthData()
   
       # Subset into top results
-      numBars <- 10
-      if (nrow(d) < numBars) {
-        numBars <- nrow(d)
+      if (!is.null(d)) {
+        numBars <- 10
+        if (nrow(d) < numBars) {
+          numBars <- nrow(d)
+        }
+        d <- d[1:numBars,]
       }
-      d <- d[1:numBars,]
 
       # Configure Chart based upon input horizon
       horizon <- input$horizon
