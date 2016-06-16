@@ -702,7 +702,6 @@ shinyServer(function(input, output) {
     
   getTimeSeries <- eventReactive(input$select, {
     d <- selectData()
-    str(d)
 
     if (!is.null(d)) {
       d <- as.numeric(as.vector(d))
@@ -840,7 +839,6 @@ shinyServer(function(input, output) {
         
       }
     } 
-    
     if (level =="1") {
       d <- switch(input$rtype2,
                   "1" = hvi1brState,
@@ -934,17 +932,19 @@ shinyServer(function(input, output) {
     
     d <- selectData2()
 
-    # Create time series object on full data
-    marketPrices  <- as.numeric(as.vector(d))
-    tSeries       <- ts(marketPrices, frequency = 12, start = c(2000,1))
-    
-    #Split into training and test set
-    tsTest  <- window(tSeries, start = c(y+1,1))
-    tsTrain <- window(tSeries, end = c(y,12))
-    
-    #Combine into a list
-    l <- list("train" = tsTrain, "test" = tsTest)
-    return(l)
+    if (!any(is.na(d))) {
+      # Create time series object on full data
+      marketPrices  <- as.numeric(as.vector(d))
+      tSeries       <- ts(marketPrices, frequency = 12, start = c(2000,1))
+      
+      #Split into training and test set
+      tsTest  <- window(tSeries, start = c(y+1,1))
+      tsTrain <- window(tSeries, end = c(y,12))
+      
+      #Combine into a list
+      l <- list("train" = tsTrain, "test" = tsTest)
+      return(l)
+    }
   }
   
   
@@ -982,41 +982,48 @@ shinyServer(function(input, output) {
       m <- input$model
     }
     
-    switch (m,
-            ARIMA = auto.arima(d, ic='aicc', stepwise=FALSE),
-            ETS = ets(d, ic='aicc', restrict=FALSE),
-            NEURAL = nnetar(d, p=12, size=25),
-            TBATS = tbats(d, ic='aicc', seasonal.periods=12),
-            BATS = bats(d, ic='aicc', seasonal.periods=12),
-            STLM = stlm(d, s.window=12, ic='aicc', robust=TRUE, method='ets'),
-            STS = StructTS(d),
-            NAIVE = naive(d, getForecastOptions()$periods)
-    )
+    if (!is.null(d)) {
+      switch (m,
+              ARIMA = auto.arima(d, ic='aicc', stepwise=FALSE),
+              ETS = ets(d, ic='aicc', restrict=FALSE),
+              NEURAL = nnetar(d, p=12, size=25),
+              TBATS = tbats(d, ic='aicc', seasonal.periods=12),
+              BATS = bats(d, ic='aicc', seasonal.periods=12),
+              STLM = stlm(d, s.window=12, ic='aicc', robust=TRUE, method='ets'),
+              STS = StructTS(d),
+              NAIVE = naive(d, getForecastOptions()$periods)
+      )
+    }
   }
   
   
   #Format Accuracy Results into a table
-  formatAccuracy <- function(a) {
-    r <- t(a)
-    measure    <-c("Mean Error (ME)",
-                   "Root Mean Squared Error (RMSE)",
-                   "Mean Absolute Error (MAE)",
-                   "Mean Percentage Error (MPE)",
-                   "Mean Absolute Percentage Error (MAPE)",
-                   "Mean Absolute Scaled Error (MASE)",
-                   "Autocorrelation of errors at lag 1. (ACF1)",
-                   "ThEIl's U")
-    trainingSet <- r[,1]
-    testSet     <- r[,2]
-    results     <- data.frame(measure, trainingSet, testSet)
-    names(results) <- c("Measure", "Training Set", "Test Set")
-    return(results)
+  formatAccuracy <- function(r) {
+    
+    if (!is.null(r)) {
+      measure    <-c("Mean Error (ME)",
+                     "Root Mean Squared Error (RMSE)",
+                     "Mean Absolute Error (MAE)",
+                     "Mean Percentage Error (MPE)",
+                     "Mean Absolute Percentage Error (MAPE)",
+                     "Mean Absolute Scaled Error (MASE)",
+                     "Autocorrelation of errors at lag 1. (ACF1)",
+                     "ThEIl's U")
+      trainingSet <- r[,1]
+      results     <- data.frame(measure, trainingSet)
+      names(results) <- c("Measure", "Training Set")
+      return(results)
+    }
   }
   
   # Get training forecast and test data
-  getPlotData <- eventReactive(input$train, {
+  getPlotData <- function() {
     
     d <- splitData()
+
+    validate(
+      need(!is.null(d$train), "No markets match your selection criteria.  Please change your selection criteria in Market Selector")
+    )
 
     validate(
       need(!any(is.na(d$train)), "No markets match your selection criteria.  Please change your selection criteria in Market Selector")
@@ -1026,7 +1033,7 @@ shinyServer(function(input, output) {
     p <- forecast(m, o$periods)
     a <- accuracy(p, d$test)
     r <- t(a)
-    ma <- formatAccuracy(a)
+    ma <- formatAccuracy(r)
     
     #Combine into a list
     l <- list("train" = d$train, "test" = d$test, "model" = m$model, 
@@ -1035,7 +1042,7 @@ shinyServer(function(input, output) {
     
     #Return list
     return(l)
-  }, ignoreNULL = FALSE)
+  }
   
   
   # Render training forecast plot
@@ -1266,12 +1273,12 @@ shinyServer(function(input, output) {
     o <- getForecastOptions2()
     p <- forecast(m, o$periods)
     a <- accuracy(p, d$test)
-    r <- t(a)
+    accuracyArima <<- t(a)
 
     #Combine into a plot data list
     p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
               "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
-              "prediction" = p, "results" = r)
+              "prediction" = p, "results" = accuracyArima)
     
     plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
     lines(p$test, col = "red")
@@ -1294,12 +1301,12 @@ shinyServer(function(input, output) {
     o <- getForecastOptions2()
     p <- forecast(m, o$periods)
     a <- accuracy(p, d$test)
-    r <- t(a)
+    accuracyEts <<- t(a)
     
     #Combine into a plot data list
     p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
               "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
-              "prediction" = p, "results" = r)
+              "prediction" = p, "results" = accuracyEts)
     
     plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
     lines(p$test, col = "red")
@@ -1322,12 +1329,12 @@ shinyServer(function(input, output) {
     o <- getForecastOptions2()
     p <- forecast(m, o$periods)
     a <- accuracy(p, d$test)
-    r <- t(a)
+    accuracyNaive <<- t(a)
     
     #Combine into a plot data list
     p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
               "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
-              "prediction" = p, "results" = r)
+              "prediction" = p, "results" = accuracyNaive)
     
     plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
     lines(p$test, col = "red")
@@ -1350,12 +1357,12 @@ shinyServer(function(input, output) {
     o <- getForecastOptions2()
     p <- forecast(m, o$periods)
     a <- accuracy(p, d$test)
-    r <- t(a)
+    accuracyNeural <<- t(a)
     
     #Combine into a plot data list
     p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
               "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
-              "prediction" = p, "results" = r)
+              "prediction" = p, "results" = accuracyNeural)
     
     plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
     lines(p$test, col = "red")
@@ -1378,12 +1385,12 @@ shinyServer(function(input, output) {
     o <- getForecastOptions2()
     p <- forecast(m, o$periods)
     a <- accuracy(p, d$test)
-    r <- t(a)
+    accuracyBats <<- t(a)
     
     #Combine into a plot data list
     p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
               "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
-              "prediction" = p, "results" = r)
+              "prediction" = p, "results" = accuracyBats)
     
     plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
     lines(p$test, col = "red")
@@ -1407,12 +1414,12 @@ shinyServer(function(input, output) {
     o <- getForecastOptions2()
     p <- forecast(m, o$periods)
     a <- accuracy(p, d$test)
-    r <- t(a)
+    accuracyTbats <<- t(a)
     
     #Combine into a plot data list
     p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
               "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
-              "prediction" = p, "results" = r)
+              "prediction" = p, "results" = accuracyTbats)
     
     plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
     lines(p$test, col = "red")
@@ -1436,12 +1443,12 @@ shinyServer(function(input, output) {
     o <- getForecastOptions2()
     p <- forecast(m, o$periods)
     a <- accuracy(p, d$test)
-    r <- t(a)
+    accuracyStlm <<- t(a)
     
     #Combine into a plot data list
     p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
               "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
-              "prediction" = p, "results" = r)
+              "prediction" = p, "results" = accuracyStlm)
     
     plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
     lines(p$test, col = "red")
@@ -1461,16 +1468,16 @@ shinyServer(function(input, output) {
   
   output$sts <- renderPlot({
     d <- splitData2()
-    m <- StructTS(d$train)
+    m <- StructTS(d$train, type = "level")
     o <- getForecastOptions2()
     p <- forecast(m, o$periods)
     a <- accuracy(p, d$test)
-    r <- t(a)
+    accuracySts <<- t(a)
     
     #Combine into a plot data list
     p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
               "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
-              "prediction" = p, "results" = r)
+              "prediction" = p, "results" = accuracySts)
     
     plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
     lines(p$test, col = "red")
@@ -1485,5 +1492,41 @@ shinyServer(function(input, output) {
            col=c("red","blue"),
            bg="white",
            text.font=3)
+  })
+  
+  
+  #Summary Table
+  output$modelsumm <- renderDataTable({
+    accuracyArima <<- formatAccuracy(accuracyArima)
+    accuracyEts <<- formatAccuracy(accuracyEts)
+    accuracyNaive <<- formatAccuracy(accuracyNaive)
+    accuracyNeural <<- formatAccuracy(accuracyNeural)
+    accuracyBats <<- formatAccuracy(accuracyBats)
+    accuracyTbats <<- formatAccuracy(accuracyTbats)
+    accuracyStlm <<- formatAccuracy(accuracyStlm)
+    accuracySts <<- formatAccuracy(accuracySts)
+    
+    accuracyArima  <<-  t(accuracyArima)[2,]
+    accuracyEts  <<-  t(accuracyEts)[2,]
+    accuracyNaive  <<-  t(accuracyNaive)[2,]
+    accuracyNeural  <<-  t(accuracyNeural)[2,]
+    accuracyBats  <<-  t(accuracyBats)[2,]
+    accuracyTbats  <<-  t(accuracyTbats)[2,]
+    accuracyStlm  <<-  t(accuracyStlm)[2,]
+    accuracySts  <<-  t(accuracySts)[2,]
+    
+    accuracyTbl <<-  as.data.frame(rbind(accuracyArima,
+                    accuracyEts,
+                    accuracyNaive,
+                    accuracyNeural,
+                    accuracyBats,
+                    accuracyTbats,
+                    accuracyStlm,
+                    accuracySts)[,-8])
+    
+    modelNames <- as.vector(c("Arima", "ETS", "Naive", "Neural", "BATS", "TBATS", "STLM", "STS"))
+    accuracyTbl <<- data.frame(modelNames, accuracyTbl)
+    accuracyTbl <<- rename(accuracyTbl, c("modelNames" = "Model"))
+    
   })
 })

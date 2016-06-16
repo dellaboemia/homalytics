@@ -364,7 +364,7 @@ dashboardPage(skin = "green",
                                 actionButton("train", label = "Run Training Model")
                               )# end of box
                             )# end of box
-                        ),# end of column
+                        ),# end of fluidrow
                         conditionalPanel(
                           condition = "input.train",
                           fluidRow(
@@ -382,7 +382,7 @@ dashboardPage(skin = "green",
                             )# end of box
                           )# end of fluidrow
                         )# end of conditional panel
-                      )# end of fluidrow
+                    )# end of column
                 ),# end of tabItem
                 tabItem(tabName = "compareModels",
                         column(width = 2,
@@ -410,12 +410,24 @@ dashboardPage(skin = "green",
                                                                "Single Family Home" = 7, "All Homes" = 8), 
                                                 selected = 8)
                                  ),# end of box
-                                 actionButton("select2", label = "Go")
+                                 actionButton("select2", label = "Go"),
+                                 p(class = "text-muted",
+                                   paste("Please be patient.  We are cranking through 8 training models"))
                                )# end of box
                         ),# end of column
                         conditionalPanel(
                           condition = "input.select2",
                           column(width = 10,
+                                 fluidRow(
+                                   box(
+                                     status = "warning",
+                                     width = 12,
+                                     title = "Model Performance Summary",
+                                     solidHeader = TRUE,
+                                     collapsible = TRUE,
+                                     dataTableOutput("modelsumm")
+                                   )# end of box
+                                 ),#end of fluidrow
                                  fluidRow(
                                    box(
                                      status = "primary",
