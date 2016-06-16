@@ -547,15 +547,21 @@ shinyServer(function(input, output) {
     selectInput("state5", label = "State:", choices = c(Choose='', as.character(states)), selectize = FALSE)
   })
   
-  # County Query UI
+  # County Query UI  
   output$countyQuery5Ui <- renderUI({
     if (!is.null(input$state5)) {
       if (input$state5 != "") {
-        counties <- unique(subset(geo, StateName == input$state5, select = County))
-        selectInput("county6", label = "County:", choices = c(Choose='', as.character(counties$County)), selected = dfltCounty, selectize = FALSE)
+        state <- input$state5
+      } else {
+        state <- dfltState  
       }
+    } else {
+      state <- dfltState
     }
-  })  
+    counties <- unique(subset(geo, StateName == state, select = County))
+    selectInput("county5", label = "County:", choices = c(Choose='', as.character(counties$County)), selected = dfltCounty, selectize = FALSE)
+  })
+  
 
   output$cityQuery5Ui <- renderUI({
     cities <- NULL
@@ -661,7 +667,7 @@ shinyServer(function(input, output) {
                   "6" = hviCondoCounty,
                   "7" = hviSFHCounty,
                   "8" = hviAllCounty)
-      d <- subset(d, RegionName == input$county5, select = X2000.01:X2016.01)
+      d <- subset(d, StateName == input$state5 & RegionName == input$county5, select = X2000.01:X2016.01)
     }  
     
     if (level == "3") {   
@@ -674,7 +680,7 @@ shinyServer(function(input, output) {
                   "6" = hviCondoCity,
                   "7" = hviSFHCity,
                   "8" = hviAllCity)
-      d <- subset(d, RegionName == input$city5, select = X2000.01:X2016.01)  
+      d <- subset(d, StateName == input$state5 & RegionName == input$city5, select = X2000.01:X2016.01)  
     }   
     
     if (level == "4") {
@@ -696,6 +702,7 @@ shinyServer(function(input, output) {
     
   getTimeSeries <- eventReactive(input$select, {
     d <- selectData()
+    str(d)
 
     if (!is.null(d)) {
       d <- as.numeric(as.vector(d))
@@ -742,10 +749,15 @@ shinyServer(function(input, output) {
   output$countyQuery6Ui <- renderUI({
     if (!is.null(input$state6)) {
       if (input$state6 != "") {
-        counties <- unique(subset(geo, StateName == input$state6, select = County))
-        selectInput("county6", label = "County:", choices = c(Choose='', as.character(counties$County)), selected = dfltCounty, selectize = FALSE)
+        state <- input$state6
+      } else {
+        state <- dfltState  
       }
+    } else {
+      state <- dfltState
     }
+    counties <- unique(subset(geo, StateName == state, select = County))
+    selectInput("county6", label = "County:", choices = c(Choose='', as.character(counties$County)), selected = dfltCounty, selectize = FALSE)
   })
   
   
@@ -796,7 +808,8 @@ shinyServer(function(input, output) {
   })
   
   # Select Data for Model Training Page
-  selectData2 <- reactive({
+  selectData2 <- function() {
+    
     level <- 0
     # Get State Data 
     if (!is.null(input$state6)) {
@@ -827,6 +840,7 @@ shinyServer(function(input, output) {
         
       }
     } 
+    
     if (level =="1") {
       d <- switch(input$rtype2,
                   "1" = hvi1brState,
@@ -850,7 +864,7 @@ shinyServer(function(input, output) {
                   "6" = hviCondoCounty,
                   "7" = hviSFHCounty,
                   "8" = hviAllCounty)
-      d <- subset(d, RegionName == input$county6, select = X2000.01:X2016.01)
+      d <- subset(d, StateName == input$state6 & RegionName == input$county6, select = X2000.01:X2016.01)
     }  
     
     if (level == "3") {   
@@ -863,7 +877,7 @@ shinyServer(function(input, output) {
                   "6" = hviCondoCity,
                   "7" = hviSFHCity,
                   "8" = hviAllCity)
-      d <- subset(d, RegionName == input$city6, select = X2000.01:X2016.01)  
+      d <- subset(d, StateName == input$state6 & RegionName == input$city6, select = X2000.01:X2016.01)  
     }   
     
     if (level == "4") {
@@ -879,7 +893,7 @@ shinyServer(function(input, output) {
       d <- subset(d, RegionName == input$zip6, select = X2000.01:X2016.01)    
     }
     return(d)
-  })
+  }
   
   
   # Render model select
@@ -909,10 +923,9 @@ shinyServer(function(input, output) {
   
   
   # Split data into training and test/validation set
-  splitData <- eventReactive(input$train, {
+  splitData <- function() {
     
-    print("in splitData")
-    
+
     if (is.null(input$split)) {
       y <- dfltSplit
     } else {
@@ -920,7 +933,7 @@ shinyServer(function(input, output) {
     }
     
     d <- selectData2()
-    
+
     # Create time series object on full data
     marketPrices  <- as.numeric(as.vector(d))
     tSeries       <- ts(marketPrices, frequency = 12, start = c(2000,1))
@@ -931,9 +944,8 @@ shinyServer(function(input, output) {
     
     #Combine into a list
     l <- list("train" = tsTrain, "test" = tsTest)
-    
     return(l)
-  }, ignoreNULL = FALSE)
+  }
   
   
   
@@ -1005,8 +1017,9 @@ shinyServer(function(input, output) {
   getPlotData <- eventReactive(input$train, {
     
     d <- splitData()
+
     validate(
-      need(!is.null(nrow(d)), "No markets match your selection criteria.  Please change your selection criteria in Market Selector")
+      need(!any(is.na(d$train)), "No markets match your selection criteria.  Please change your selection criteria in Market Selector")
     )
     m <- trainModel(d$train)
     o <- getForecastOptions()
@@ -1060,14 +1073,19 @@ shinyServer(function(input, output) {
   
   # County Query UI  
   output$countyQuery7Ui <- renderUI({
-    print("in countyquery7")
     if (!is.null(input$state7)) {
       if (input$state7 != "") {
-        counties <- unique(subset(geo, StateName == input$state7, select = County))
-        selectInput("county7", label = "County:", choices = c(Choose='', as.character(counties$County)), selected = dfltCounty, selectize = FALSE)
+        state <- input$state7
+      } else {
+        state <- dfltState  
       }
+    } else {
+      state <- dfltState
     }
-  })  
+    counties <- unique(subset(geo, StateName == state, select = County))
+    selectInput("county7", label = "County:", choices = c(Choose='', as.character(counties$County)), selected = dfltCounty, selectize = FALSE)
+  })
+  
   
   output$cityQuery7Ui <- renderUI({
     cities <- NULL
@@ -1172,7 +1190,7 @@ shinyServer(function(input, output) {
                   "6" = hviCondoCounty,
                   "7" = hviSFHCounty,
                   "8" = hviAllCounty)
-      d <- subset(d, RegionName == input$county7, select = X2000.01:X2016.01)
+      d <- subset(d, StateName == input$state7 & RegionName == input$county7, select = X2000.01:X2016.01)
     }  
     
     if (level == "3") {   
@@ -1185,7 +1203,7 @@ shinyServer(function(input, output) {
                   "6" = hviCondoCity,
                   "7" = hviSFHCity,
                   "8" = hviAllCity)
-      d <- subset(d, RegionName == input$city7, select = X2000.01:X2016.01)  
+      d <- subset(d, StateName == input$state7 & RegionName == input$city7, select = X2000.01:X2016.01)  
     }   
     
     if (level == "4") {
@@ -1207,6 +1225,9 @@ shinyServer(function(input, output) {
     y <- dfltSplit
 
     d <- selectData3()
+    validate(
+      need(!any(is.na(d)), "There are no markets that match your selection criteria.  Please change your options in Market Selector")
+    )
     
     # Create time series object on full data
     marketPrices  <- as.numeric(as.vector(d))
