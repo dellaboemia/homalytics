@@ -522,7 +522,158 @@ dashboardPage(skin = "green",
                                  )# end of fluidrow
                           )# end of column
                     )# end of conditional panel
-                )# end of tabItem
+                ),# end of tabItem
+                tabItem(tabName = "forecast",
+                        column(width = 2,
+                               box(
+                                 status = "primary",
+                                 title = "Forecast Options",
+                                 solidHeader = TRUE,
+                                 width = 12,
+                                 box(
+                                   width = 12,
+                                   status = "primary",
+                                   solidHeader = FALSE,
+                                   uiOutput("stateQuery8Ui"),
+                                   uiOutput("countyQuery8Ui"),
+                                   uiOutput("cityQuery8Ui"),
+                                   uiOutput("zipQuery8Ui")
+                                 ),# end of box
+                                 box(
+                                   width = 12,
+                                   status = "primary",
+                                   solidHeader = FALSE,
+                                   radioButtons("rtype4", label = h4("Residence Type"),
+                                                choices = list("1 Bedroom" = 1, "2 Bedroom" = 2, "3 Bedroom" = 3, 
+                                                               "4 Bedroom" = 5, "5 Bedroom" = 5, "Condo" = 6,
+                                                               "Single Family Home" = 7, "All Homes" = 8), 
+                                                selected = 8)
+                                 ),# end of box
+                                 box(
+                                   status = "primary",
+                                   title = "Years to Forecast",
+                                   solidHeader = FALSE,
+                                   width = 12,
+                                   sliderInput("forecastRange", label = NULL, min = 1, 
+                                               max = 10, value = 5),
+                                   actionButton("select3", label = "Go")
+                                 )# end of box
+                               )# end of box
+                        ),# end of column
+                        conditionalPanel(
+                          condition = "input.select3",
+                          column(width = 10,
+                                 fluidRow(
+                                   box(
+                                     status = "primary",
+                                     width = 12,
+                                     title = "Forecast Summary",
+                                     solidHeader = TRUE,
+                                     collapsible = TRUE,
+                                     box(
+                                       status = "primary",
+                                       width = 12,
+                                       title = "Summary by Forecast Model",
+                                       solidHeader = FALSE,
+                                       plotOutput("forecastSummary")
+                                     )# end of box
+                                   )# end of box
+                                 ),# end of fluidrow
+                                 fluidRow(
+                                   box(
+                                     status = "primary",
+                                     width = 12,
+                                     title = "Arima / ETS Model Forecast",
+                                     solidHeader = TRUE,
+                                     collapsible = TRUE,
+                                     box(
+                                       status = "primary",
+                                       width = 6,
+                                       title = "Arima Model Forecast",
+                                       solidHeader = FALSE,
+                                       plotOutput("arimaForecast")
+                                     ),# end of box
+                                     box(
+                                       status = "primary",
+                                       width = 6,
+                                       title = "Exponential Smoothing (ETS) Model Forecast",
+                                       solidHeader = FALSE,
+                                       plotOutput("etsForecast")
+                                     )# end of box
+                                   )# end of box
+                                 ),# end of fluidrow
+                                 fluidRow(
+                                   box(
+                                     status = "primary",
+                                     width = 12,
+                                     title = "Naive / Neural Network Model Forecast",
+                                     solidHeader = TRUE,
+                                     collapsible = TRUE,
+                                     box(
+                                       status = "primary",
+                                       width = 6,
+                                       title = "Naive Model Forecast",
+                                       solidHeader = FALSE,
+                                       plotOutput("naiveForecast")
+                                     ),# end of box
+                                     box(
+                                       status = "primary",
+                                       width = 6,
+                                       title = "Neural Network Model Forecast",
+                                       solidHeader = FALSE,
+                                       plotOutput("neuralForecast")
+                                     )# end of box
+                                   )# end of box
+                                 ),# end of fluidrow
+                                 fluidRow(
+                                   box(
+                                     status = "primary",
+                                     width = 12,
+                                     title = "BATS / TBATS Model Forecast",
+                                     solidHeader = TRUE,
+                                     collapsible = TRUE,
+                                     box(
+                                       status = "primary",
+                                       width = 6,
+                                       title = "BATS Model Forecast",
+                                       solidHeader = FALSE,
+                                       plotOutput("batsForecast")
+                                     ),# end of box
+                                     box(
+                                       status = "primary",
+                                       width = 6,
+                                       title = "TBATS Model Forecast",
+                                       solidHeader = FALSE,
+                                       plotOutput("tbatsForecast")
+                                     )# end of box
+                                   )# end of box
+                                 ),# end of fluidrow
+                                 fluidRow(
+                                   box(
+                                     status = "primary",
+                                     width = 12,
+                                     title = "STLM / STS Model Forecast",
+                                     solidHeader = TRUE,
+                                     collapsible = TRUE,
+                                     box(
+                                       status = "primary",
+                                       width = 6,
+                                       title = "STLM Model Forecast",
+                                       solidHeader = FALSE,
+                                       plotOutput("stlmForecast")
+                                     ),# end of box
+                                     box(
+                                       status = "primary",
+                                       width = 6,
+                                       title = "STS Model Forecast",
+                                       solidHeader = FALSE,
+                                       plotOutput("stsForecast")
+                                     )# end of box
+                                   )# end of box
+                                 )# end of fluidrow
+                          )# end of column
+                        )# end of conditionalpanel
+                      )# end of tabItem
           ) # end of tabITems
     )# end of dashboard body
 )# end of dashboard page

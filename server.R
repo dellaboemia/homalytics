@@ -1506,14 +1506,14 @@ shinyServer(function(input, output) {
     accuracyStlm <<- formatAccuracy(accuracyStlm)
     accuracySts <<- formatAccuracy(accuracySts)
     
-    accuracyArima  <<-  t(accuracyArima)[2,]
-    accuracyEts  <<-  t(accuracyEts)[2,]
-    accuracyNaive  <<-  t(accuracyNaive)[2,]
-    accuracyNeural  <<-  t(accuracyNeural)[2,]
-    accuracyBats  <<-  t(accuracyBats)[2,]
-    accuracyTbats  <<-  t(accuracyTbats)[2,]
-    accuracyStlm  <<-  t(accuracyStlm)[2,]
-    accuracySts  <<-  t(accuracySts)[2,]
+    accuracyArima  <<-  as.numeric(t(accuracyArima)[2,])
+    accuracyEts  <<-  as.numeric(t(accuracyEts)[2,])
+    accuracyNaive  <<-  as.numeric(t(accuracyNaive)[2,])
+    accuracyNeural  <<-  as.numeric(t(accuracyNeural)[2,])
+    accuracyBats  <<-  as.numeric(t(accuracyBats)[2,])
+    accuracyTbats  <<-  as.numeric(t(accuracyTbats)[2,])
+    accuracyStlm  <<-  as.numeric(t(accuracyStlm)[2,])
+    accuracySts  <<-  as.numeric(t(accuracySts)[2,])
     
     accuracyTbl <<-  as.data.frame(rbind(accuracyArima,
                     accuracyEts,
@@ -1526,7 +1526,285 @@ shinyServer(function(input, output) {
     
     modelNames <- as.vector(c("Arima", "ETS", "Naive", "Neural", "BATS", "TBATS", "STLM", "STS"))
     accuracyTbl <<- data.frame(modelNames, accuracyTbl)
-    accuracyTbl <<- rename(accuracyTbl, c("modelNames" = "Model"))
+    colnames(accuracyTbl) <<- c("Model", "ME", "RMSE", "MAE", "MPE", "MAPE", "MASE", "ACF1")
+    accuracyTbl
+
     
+  })
+  
+  ################################################################################
+  ##                        MARKET FORECAST FUNCTIONS                           ##
+  ################################################################################
+  # State query UI
+  output$stateQuery8Ui <- renderUI({
+    states <- unique(geo$StateName)
+    selectInput("state8", label = "State:", choices = c(Choose='', as.character(states)), selectize = FALSE)
+  })
+  
+  # County Query UI  
+  output$countyQuery8Ui <- renderUI({
+    if (!is.null(input$state8)) {
+      if (input$state8 != "") {
+        state <- input$state8
+      } else {
+        state <- dfltState  
+      }
+    } else {
+      state <- dfltState
+    }
+    counties <- unique(subset(geo, StateName == state, select = County))
+    selectInput("county8", label = "County:", choices = c(Choose='', as.character(counties$County)), selected = dfltCounty, selectize = FALSE)
+  })
+  
+  
+  output$cityQuery8Ui <- renderUI({
+    cities <- NULL
+    
+    if (!is.null(input$state8)) {
+      if (input$state8 != "") {
+        if (!is.null(input$county8)) {
+          if (input$county8 != "") {
+            cities  <- unique(subset(geo, StateName == input$state8 & County == input$county8, select = City))
+          } else {
+            cities  <- unique(subset(geo, StateName == input$state8, select = City))
+          }
+        } else {
+          cities  <- unique(subset(geo, StateName == input$state8, select = City))
+        }
+      } 
+    }  
+    selectInput("city8", label = "City:", choices = c(Choose='', as.character(cities$City)), selected = dfltCity, selectize = FALSE)
+  })
+  
+  
+  output$zipQuery8Ui <- renderUI({
+    
+    zips <- NULL
+    
+    if (!is.null(input$state8)) {
+      if (input$state8 != "") {
+        zips <- unique(subset(geo, StateName == input$state8))
+      }
+    }
+    
+    if (!is.null(input$county8)) {
+      if (input$county8 != "") {
+        zips <- unique(subset(zips, StateName == input$state8 & County == input$county8)) 
+      }
+    }
+    
+    if (!is.null(input$city8)) {
+      if (input$city8 != "") {
+        zips <- unique(subset(zips, StateName == input$state8 & City == input$city8)) 
+      }
+    }
+    
+    
+    selectInput("zip8", label = "Zip:", choices = c(Choose='', as.character(zips$RegionName)), selectize = FALSE)
+    
+  })
+  
+  
+  # Select Data for Model Training Page
+  selectData4 <- eventReactive(input$select3, {
+    level <- 0
+    # Get State Data 
+    if (!is.null(input$state8)) {
+      if (input$state8 != "") {
+        level <- "1"
+        dfltState <<- input$state8
+      }
+    }
+    
+    if (!is.null(input$county8)) {
+      if (input$county8 != "") {
+        level <- "2"
+        dfltCounty <<- input$county8
+      }
+    } 
+    
+    if (!is.null(input$city8)) {
+      if (input$city8 != "") {
+        level <- "3"
+        dfltCity <<- input$city8
+      }
+    } 
+    
+    if (!is.null(input$zip8)) {
+      if (input$zip8 != "") {
+        level <- "4"
+        dfltZip <<- input$zip8
+        
+      }
+    } 
+    if (level =="1") {
+      d <- switch(input$rtype4,
+                  "1" = hvi1brState,
+                  "2" = hvi2brState,
+                  "3" = hvi3brState,
+                  "4" = hvi4brState,
+                  "5" = hvi5brState,
+                  "6" = hviCondoState,
+                  "7" = hviSFHState,
+                  "8" = hviAllState)
+      d <- subset(d, RegionName == input$state8, select = X2000.01:X2016.01)
+    }
+    
+    if (level == "2") {
+      d <- switch(input$rtype4,
+                  "1" = hvi1brCounty,
+                  "2" = hvi2brCounty,
+                  "3" = hvi3brCounty,
+                  "4" = hvi4brCounty,
+                  "5" = hvi5brCounty,
+                  "6" = hviCondoCounty,
+                  "7" = hviSFHCounty,
+                  "8" = hviAllCounty)
+      d <- subset(d, StateName == input$state8 & RegionName == input$county8, select = X2000.01:X2016.01)
+    }  
+    
+    if (level == "3") {   
+      d <- switch(input$rtype4,
+                  "1" = hvi1brCity,
+                  "2" = hvi2brCity,
+                  "3" = hvi3brCity,
+                  "4" = hvi4brCity,
+                  "5" = hvi5brCity,
+                  "6" = hviCondoCity,
+                  "7" = hviSFHCity,
+                  "8" = hviAllCity)
+      d <- subset(d, StateName == input$state8 & RegionName == input$city8, select = X2000.01:X2016.01)  
+    }   
+    
+    if (level == "4") {
+      d <- switch(input$rtype4,
+                  "1" = hvi1brZip,
+                  "2" = hvi2brZip,
+                  "3" = hvi3brZip,
+                  "4" = hvi4brZip,
+                  "5" = hvi5brZip,
+                  "6" = hviCondoZip,
+                  "7" = hviSFHZip,
+                  "8" = hviAllZip)
+      d <- subset(d, RegionName == input$zip8, select = X2000.01:X2016.01)    
+    }
+    return(d)
+  }, ignoreNULL = FALSE)  
+  
+  output$arimaForecast <- renderPlot({
+    periods <- as.integer(input$forecastRange) * 12
+    
+    #Get data and convert to timeseries
+    d  <- selectData4()
+    v  <- as.numeric(as.vector(d))
+    d  <- ts(v, frequency = 12, start = c(2000,1))
+    m  <- auto.arima(d, ic='aicc', stepwise=FALSE)
+    f  <- forecast(m, periods)
+    ARIMA <<- f$mean
+    plot.forecast(f, include = 36)
+  })
+  
+  
+  output$etsForecast <- renderPlot({
+    periods <- as.integer(input$forecastRange) * 12
+    
+    #Get data and convert to timeseries
+    d  <- selectData4()
+    v  <- as.numeric(as.vector(d))
+    d  <- ts(v, frequency = 12, start = c(2000,1))
+    m  <- ets(d, ic='aicc', restrict=FALSE)
+    f  <- forecast(m, periods)
+    ETS <<- f$mean
+    plot.forecast(f, include = 36)
+  })
+  
+  
+  output$naiveForecast <- renderPlot({
+    periods <- as.integer(input$forecastRange) * 12
+    
+    #Get data and convert to timeseries
+    d  <- selectData4()
+    v  <- as.numeric(as.vector(d))
+    d  <- ts(v, frequency = 12, start = c(2000,1))
+    m  <- naive(d, periods)
+    f  <- forecast(m, periods)
+    NAIVE <<- f$mean
+    plot.forecast(f, include = 36)
+  })
+  
+  
+  output$neuralForecast <- renderPlot({
+    periods <- as.integer(input$forecastRange) * 12
+    
+    #Get data and convert to timeseries
+    d  <- selectData4()
+    v  <- as.numeric(as.vector(d))
+    d  <- ts(v, frequency = 12, start = c(2000,1))
+    m  <- nnetar(d, p=12, size=25)
+    f  <- forecast(m, periods)
+    NEURAL <<- f$mean
+    plot.forecast(f, include = 36)
+  })
+  
+  
+  output$batsForecast <- renderPlot({
+    periods <- as.integer(input$forecastRange) * 12
+    
+    #Get data and convert to timeseries
+    d  <- selectData4()
+    v  <- as.numeric(as.vector(d))
+    d  <- ts(v, frequency = 12, start = c(2000,1))
+    m  <- bats(d, ic='aicc', seasonal.periods=12)
+    f  <- forecast(m, periods)
+    BATS <<- f$mean
+    plot.forecast(f, include = 36)
+  })
+  
+  
+  output$tbatsForecast <- renderPlot({
+    periods <- as.integer(input$forecastRange) * 12
+    
+    #Get data and convert to timeseries
+    d  <- selectData4()
+    v  <- as.numeric(as.vector(d))
+    d  <- ts(v, frequency = 12, start = c(2000,1))
+    m  <- tbats(d, ic='aicc', seasonal.periods=12)
+    f  <- forecast(m, periods)
+    TBATS <<- f$mean
+    plot.forecast(f, include = 36)
+  })
+  
+  
+  output$stlmForecast <- renderPlot({
+    periods <- as.integer(input$forecastRange) * 12
+    
+    #Get data and convert to timeseries
+    d  <- selectData4()
+    v  <- as.numeric(as.vector(d))
+    d  <- ts(v, frequency = 12, start = c(2000,1))
+    m  <- stlm(d, s.window=12, ic='aicc', robust=TRUE, method='ets')
+    f  <- forecast(m, periods)
+    STLM <<- f$mean
+    plot.forecast(f, include = 36)
+  })
+  
+  
+  output$stsForecast <- renderPlot({
+    periods <- as.integer(input$forecastRange) * 12
+    
+    #Get data and convert to timeseries
+    d  <- selectData4()
+    v  <- as.numeric(as.vector(d))
+    d  <- ts(v, frequency = 12, start = c(2000,1))
+    m  <- StructTS(d)
+    f  <- forecast(m, periods)
+    STS <<- f$mean
+    plot.forecast(f, include = 36)
+  })
+  
+  output$forecastSummary <- renderPlot({
+    forecasts <- ts.union(ARIMA, ETS, NAIVE, NEURAL, BATS, TBATS, STLM, STS)
+    plot(forecasts, plot.type = "single", col = 1:ncol(forecasts))
+    legend("topleft", colnames(forecasts), col = 1:ncol(forecasts), lty = 1)
   })
 })
