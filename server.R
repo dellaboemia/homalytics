@@ -25,46 +25,46 @@ setwd("processedData")
 readData <- function(f) {
 
   switch (f,
-          currentZip = read.csv("currentZip.csv", header = TRUE),
-          currentCity = read.csv("currentCity.csv", header = TRUE),
-          currentCounty = read.csv("currentCounty.csv", header = TRUE),
-          currentState = read.csv("currentState.csv", header = TRUE),
-          hviAllZip = read.csv("hviAllZip.csv", header = TRUE),
-          hviAllCity = read.csv("hviAllCity.csv", header = TRUE),
-          hviAllCounty = read.csv("hviAllCounty.csv", header = TRUE),
-          hviAllState = read.csv("hviAllState.csv", header = TRUE),
-          hviCondoZip = read.csv("hviCondoZip.csv", header = TRUE),
-          hviCondoCity = read.csv("hviCondoCity.csv", header = TRUE),
-          hviCondoCounty = read.csv("hviCondoCounty.csv", header = TRUE),
-          hviCondoState = read.csv("hviCondoState.csv", header = TRUE),
-          hviSFHZip = read.csv("hviSFHZip.csv", header = TRUE),
-          hviSFHCity = read.csv("hviSFHCity.csv", header = TRUE),
-          hviSFHCounty = read.csv("hviSFHCounty.csv", header = TRUE),
-          hviSFHState = read.csv("hviSFHState.csv", header = TRUE),
-          hvi1brZip = read.csv("hvi1brZip.csv", header = TRUE),
-          hvi1brCity = read.csv("hvi1brCity.csv", header = TRUE),
-          hvi1brCounty = read.csv("hvi1brCounty.csv", header = TRUE),
-          hvi1brState = read.csv("hvi1brState.csv", header = TRUE),
-          hvi2brZip = read.csv("hvi2brZip.csv", header = TRUE),
-          hvi2brCity = read.csv("hvi2brCity.csv", header = TRUE),
-          hvi2brCounty = read.csv("hvi2brCounty.csv", header = TRUE),
-          hvi2brState = read.csv("hvi2brState.csv", header = TRUE),
-          hvi3brZip = read.csv("hvi3brZip.csv", header = TRUE),
-          hvi3brCity = read.csv("hvi3brCity.csv", header = TRUE),
-          hvi3brCounty = read.csv("hvi3brCounty.csv", header = TRUE),
-          hvi3brState = read.csv("hvi3brState.csv", header = TRUE),
-          hvi4brZip = read.csv("hvi4brZip.csv", header = TRUE),
-          hvi4brCity = read.csv("hvi4brCity.csv", header = TRUE),
-          hvi4brCounty = read.csv("hvi4brCounty.csv", header = TRUE),
-          hvi4brState = read.csv("hvi4brState.csv", header = TRUE),
-          hvi5brZip = read.csv("hvi5brZip.csv", header = TRUE),
-          hvi5brCity = read.csv("hvi5brCity.csv", header = TRUE),
-          hvi5brCounty = read.csv("hvi5brCounty.csv", header = TRUE),
-          hvi5brState = read.csv("hvi5brState.csv", header = TRUE),
-          hvisqZip = read.csv("hvisqZip.csv", header = TRUE),
-          hvisqCity = read.csv("hvisqCity.csv", header = TRUE),
-          hvisqCounty = read.csv("hvisqCounty.csv", header = TRUE),
-          hvisqState = read.csv("hvisqState.csv", header = TRUE)
+          currentZip = read.csv("currentZip.csv", header = TRUE, stringsAsFactors = FALSE),
+          currentCity = read.csv("currentCity.csv", header = TRUE, stringsAsFactors = FALSE),
+          currentCounty = read.csv("currentCounty.csv", header = TRUE, stringsAsFactors = FALSE),
+          currentState = read.csv("currentState.csv", header = TRUE, stringsAsFactors = FALSE),
+          hviAllZip = read.csv("hviAllZip.csv", header = TRUE, stringsAsFactors = FALSE),
+          hviAllCity = read.csv("hviAllCity.csv", header = TRUE, stringsAsFactors = FALSE),
+          hviAllCounty = read.csv("hviAllCounty.csv", header = TRUE, stringsAsFactors = FALSE),
+          hviAllState = read.csv("hviAllState.csv", header = TRUE, stringsAsFactors = FALSE),
+          hviCondoZip = read.csv("hviCondoZip.csv", header = TRUE, stringsAsFactors = FALSE),
+          hviCondoCity = read.csv("hviCondoCity.csv", header = TRUE, stringsAsFactors = FALSE),
+          hviCondoCounty = read.csv("hviCondoCounty.csv", header = TRUE, stringsAsFactors = FALSE),
+          hviCondoState = read.csv("hviCondoState.csv", header = TRUE, stringsAsFactors = FALSE),
+          hviSFHZip = read.csv("hviSFHZip.csv", header = TRUE, stringsAsFactors = FALSE),
+          hviSFHCity = read.csv("hviSFHCity.csv", header = TRUE, stringsAsFactors = FALSE),
+          hviSFHCounty = read.csv("hviSFHCounty.csv", header = TRUE, stringsAsFactors = FALSE),
+          hviSFHState = read.csv("hviSFHState.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvi1brZip = read.csv("hvi1brZip.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvi1brCity = read.csv("hvi1brCity.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvi1brCounty = read.csv("hvi1brCounty.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvi1brState = read.csv("hvi1brState.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvi2brZip = read.csv("hvi2brZip.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvi2brCity = read.csv("hvi2brCity.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvi2brCounty = read.csv("hvi2brCounty.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvi2brState = read.csv("hvi2brState.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvi3brZip = read.csv("hvi3brZip.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvi3brCity = read.csv("hvi3brCity.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvi3brCounty = read.csv("hvi3brCounty.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvi3brState = read.csv("hvi3brState.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvi4brZip = read.csv("hvi4brZip.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvi4brCity = read.csv("hvi4brCity.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvi4brCounty = read.csv("hvi4brCounty.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvi4brState = read.csv("hvi4brState.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvi5brZip = read.csv("hvi5brZip.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvi5brCity = read.csv("hvi5brCity.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvi5brCounty = read.csv("hvi5brCounty.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvi5brState = read.csv("hvi5brState.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvisqZip = read.csv("hvisqZip.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvisqCity = read.csv("hvisqCity.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvisqCounty = read.csv("hvisqCounty.csv", header = TRUE, stringsAsFactors = FALSE),
+          hvisqState = read.csv("hvisqState.csv", header = TRUE, stringsAsFactors = FALSE)
   )
 }
 
@@ -106,7 +106,7 @@ shinyServer(function(input, output) {
   output$usViBox <- renderValueBox({
     current <- currentState[ which(currentState$State == "United States"), ]
     valueBox(
-      paste0("$", current$Value), paste(current$State, " Home Value Index "), 
+      paste0("$", current$Value), paste(current$State, " Median Home Value "), 
       icon = icon("dollar"), color = "green"
     )
   })
@@ -115,7 +115,7 @@ shinyServer(function(input, output) {
   output$highestViBox <- renderValueBox({
     current <- currentCity[ which.max(currentCity$Value), ]
     valueBox(
-      paste0("$", current$Value), paste("Highest Home Value in ", current$location), 
+      paste0("$", current$Value), paste("Highest Median Home Value in ", current$location), 
       icon = icon("money"), color = "blue"
     )
   })
@@ -170,41 +170,88 @@ shinyServer(function(input, output) {
     )
   })
   
+  #Render Top 10 States pie chart
+  output$top10StatesPie <- renderChart({
+    current <- currentState[ which(currentState$State != "United States"), ]
+    current <- arrange(current, desc(Annual))
+    current <- subset(current[1:10,], select = c(location, Annual)) 
+    p <- nPlot(~ location, data = current, type = 'pieChart')
+    return(p)
+  })
+  
+  #Render Top 10 Cities pie chart
+  output$top10CitiesPie <- renderChart({
+    current <- currentCity
+    current <- arrange(current, desc(Annual))
+    current <- current[1:10,]
+    p <- rPlot(x = list(var = "location", sort = "Annual"), y = "Annual", data = current, type = "bar")
+    p$addParams(height = 180, width = 760, dom = 'top10Cities')
+    p$guides(x = list(title = "City", ticks = unique(current$location)))
+    p$guides(y = list(title = "Annual Growth Rate"))
+    return(p)
+  })
+  
+  
   #Render Top 10 States bar chart
-  output$top10States <- renderChart({
+  output$top10StatesBar <- renderChart({
     current <- currentState[ which(currentState$State != "United States"), ]
     current <- arrange(current, desc(Annual))
     current <- current[1:10,]
     p <- rPlot(x = list(var = "location", sort = "Annual"), y = "Annual", data = current, type = "bar")
-    p$addParams(height = 200, width = 760, dom = 'top10States', title = "Top 10 States by Annual Home Value Growth")
+    p$addParams(height = 180, width = 760, dom = 'top10StatesBar')
     p$guides(x = list(title = "State", ticks = unique(current$location)))
     p$guides(y = list(title = "Annual Growth Rate"))
     return(p)
   })
   
-  #Render Top 10 Counties bar chart
-  output$top10Counties <- renderChart({
-    current <- currentCounty
-    current <- arrange(current, desc(Annual))
-    current <- current[1:10,]
-    p <- rPlot(x = list(var = "location", sort = "Annual"), y = "Annual", data = current, type = "bar")
-    p$addParams(height = 200, width = 760, dom = 'top10Counties', title = "Top 10 Counties by Annual Home Value Growth")
-    p$guides(x = list(title = "County", ticks = unique(current$location)))
-    p$guides(y = list(title = "Annual Growth Rate"))
-    return(p)
-  })
-  
-  #Render Top 10 Counties bar chart
-  output$top10Cities <- renderChart({
+  #Render Top 10 Cities bar chart
+  output$top10CitiesBar <- renderChart({
     current <- currentCity
     current <- arrange(current, desc(Annual))
     current <- current[1:10,]
     p <- rPlot(x = list(var = "location", sort = "Annual"), y = "Annual", data = current, type = "bar")
-    p$addParams(height = 200, width = 760, dom = 'top10Cities', title = "Top 10 Cities by Annual Home Value Growth")
+    p$addParams(height = 180, width = 760, dom = 'top10CitiesBar')
     p$guides(x = list(title = "City", ticks = unique(current$location)))
     p$guides(y = list(title = "Annual Growth Rate"))
     return(p)
   })
+  
+  #Render Top 10 States by Home Value Growth TimeSeries
+  output$top10StatesTS <- renderPlot({
+    current <- currentState[ which(currentState$State != "United States"), ]
+    current <- arrange(current, desc(Annual))
+    current <- data.frame(current[1:10,3])
+    colnames(current) <- "State"
+    stateDF <- readData("hviAllState")
+    stateDF <- rename(stateDF, c("RegionName" = "State"))
+    stateDF <- merge(current, stateDF, by = "State")
+    stateDF <- subset(stateDF, select = c(State, X2000.01:X2015.12))
+    stateDF <- t(stateDF)
+    colnames(stateDF) <- stateDF[1,]
+    stateDF <- stateDF[-1,]
+    stateTS <- ts(stateDF, start = c(2000,1), end = c(2015,12), frequency = 12)
+    plot(stateTS, plot.type = "single", col = 1:ncol(stateTS), ylab = "Median Home Value")
+    legend("topleft", colnames(stateTS), col = 1:ncol(stateTS), lty = 1)
+  })
+  
+  #Render Top 10 Cities by Home Value Growth TimeSeries
+  output$top10CitiesTS <- renderPlot({
+    current <- currentCity
+    current <- arrange(current, desc(Annual))
+    current <- data.frame(current[1:10,])
+    current <- subset(current, select = location)
+    cityDF <- readData("hviAllCity")
+    cityDF$location <- paste0(cityDF$RegionName, ", ", cityDF$State)
+    cityDF <- merge(current, cityDF, by = "location")
+    cityDF <- subset(cityDF, select = c(location, X2000.01:X2015.12))
+    cityDF <- t(cityDF)
+    colnames(cityDF) <- cityDF[1,]
+    cityDF <- cityDF[-1,]
+    cityTS <- ts(cityDF, start = c(2000,1), end = c(2015,12), frequency = 12)
+    plot(cityTS, plot.type = "single", col = 1:ncol(cityTS), ylab = "Median Home Value")
+    legend("topleft", colnames(cityTS), col = 1:ncol(cityTS), lty = 1)
+  })
+  
   
   
   ################################################################################

@@ -60,6 +60,7 @@ dashboardPage(skin = "green",
                                      box(
                                        title = "Analytics for the Real Estate Market",
                                        width = 12,
+                                       height = 508,
                                        background = "orange",
                                        solidHeader = FALSE,
                                        collapsible = TRUE,
@@ -94,15 +95,7 @@ dashboardPage(skin = "green",
                                   width = 12,
                                   solidHeader = FALSE,
                                   collapsible = TRUE,
-                                  showOutput("top10States", "polycharts")
-                                ),
-                                box(
-                                  title = "Top 10 Counties by Annual Home Value Growth",
-                                  status = "primary",
-                                  width = 12,
-                                  solidHeader = FALSE,
-                                  collapsible = TRUE,
-                                  showOutput("top10Counties", "polycharts")
+                                  showOutput("top10StatesBar", "polycharts")
                                 ),
                                 box(
                                   title = "Top 10 Cities by Annual Home Value Growth",
@@ -110,7 +103,7 @@ dashboardPage(skin = "green",
                                   width = 12,
                                   solidHeader = FALSE,
                                   collapsible = TRUE,
-                                  showOutput("top10Cities", "polycharts")
+                                  showOutput("top10CitiesBar", "polycharts")
                                 ) #End of Box
                               ), # End of column
                               column(width = 2,
@@ -127,7 +120,29 @@ dashboardPage(skin = "green",
                                       valueBoxOutput("numZipsBox", width = 12)
                                      )#end of fluidrow
                               )# end of column
-                          ) # End of Fluid Row
+                          ), # End of Fluid Row
+                          fluidRow(
+                            column(width = 6,
+                                   box(
+                                     title = "Top 10 States by Annual Home Value Growth Time Series",
+                                     status = "primary",
+                                     width = 12,
+                                     solidHeader = FALSE,
+                                     collapsible = TRUE,
+                                     plotOutput("top10StatesTS")
+                                   ) #End of Box
+                            ),# end of column
+                            column(width = 6,
+                                   box(
+                                     title = "Top 10 Cities by Annual Home Value Growth Time Series",
+                                     status = "primary",
+                                     width = 12,
+                                     solidHeader = FALSE,
+                                     collapsible = TRUE,
+                                     plotOutput("top10CitiesTS")
+                                   ) #End of Box
+                            )# end of column
+                          )#end of fluidrow
                       ) # End of FluidPage
                   ), # End of tabItem
                   tabItem(tabName = "explorer",
