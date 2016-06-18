@@ -103,7 +103,7 @@ shinyServer(function(input, output) {
   ##                        DASHBOARD SERVER FUNCTIONS                          ##
   ################################################################################
   #Render National Home Value Index Box
-  output$hviUSBox <- renderValueBox({
+  output$usViBox <- renderValueBox({
     current <- currentState[ which(currentState$State == "United States"), ]
     valueBox(
       paste0("$", current$Value), paste(current$State, " Home Value Index "), 
@@ -111,21 +111,62 @@ shinyServer(function(input, output) {
     )
   })
   
-  #Render Monthly Price Growth  Box
-  output$MonthlyUSBox <- renderValueBox({
-    current <- currentState[ which(currentState$State == "United States"), ]
+  #Highest Home Value Index by City Box
+  output$highestViBox <- renderValueBox({
+    current <- currentCity[ which.max(currentCity$Value), ]
     valueBox(
-      paste0(round(current$Monthly * 100,4), "%"), paste(current$State, 
-      " Monthly Change in Home Values"), icon = icon("bullseye"), color = "orange"
+      paste0("$", current$Value), paste("Highest Home Value in ", current$location), 
+      icon = icon("money"), color = "blue"
     )
   })
   
   #Render Annual Price Growth  Box
-  output$AnnualUSBox <- renderValueBox({
+  output$usAnnualBox <- renderValueBox({
     current <- currentState[ which(currentState$State == "United States"), ]
     valueBox(
       paste0(round(current$Annual * 100,4), "%"), paste(current$State,
-      " Annual Change in Home Values"), icon = icon("calendar"), color = "purple"
+      " Annual Change in Home Values"), icon = icon("bar-chart"), color = "red"
+    )
+  })
+  
+  #Render Highest Annual Price Growth  Box
+  output$highestAnnualBox <- renderValueBox({
+    current <- currentCity[ which.max(currentCity$Annual), ]
+    valueBox(
+      paste0(round(current$Annual * 100,4), "%"), paste("Highest Annual Change in Home Values in ", current$location), 
+      icon = icon("line-chart"), color = "purple"
+    )
+  })
+  
+  #Render number of states box
+  output$numStatesBox <- renderValueBox({
+    valueBox(
+      paste0(nrow(currentState)), paste("States in Database"), 
+      icon = icon("map-marker"), color = "green"
+    )
+  })
+
+  #Render number of counties box
+  output$numCountiesBox <- renderValueBox({
+    valueBox(
+      paste0(nrow(currentCounty)), paste("Counties in Database"), 
+      icon = icon("map"), color = "yellow"
+    )
+  })
+
+  #Render number of cities box
+  output$numCitiesBox <- renderValueBox({
+    valueBox(
+      paste0(nrow(currentCity)), paste("Cities in Database"), 
+      icon = icon("map-pin"), color = "red"
+    )
+  })
+  
+  #Render number of cities box
+  output$numZipsBox <- renderValueBox({
+    valueBox(
+      paste0(nrow(currentZip)), paste("Zipcodes in Database"), 
+      icon = icon("map-o"), color = "navy"
     )
   })
   
@@ -135,8 +176,8 @@ shinyServer(function(input, output) {
     current <- arrange(current, desc(Annual))
     current <- current[1:10,]
     p <- rPlot(x = list(var = "location", sort = "Annual"), y = "Annual", data = current, type = "bar")
-    p$addParams(height = 300, width = 1000, dom = 'top10States', title = "Top 10 States by Annual Home Value Growth")
-    p$guides(x = list(title = "State", ticks = unique(current$RegionName)))
+    p$addParams(height = 200, width = 760, dom = 'top10States', title = "Top 10 States by Annual Home Value Growth")
+    p$guides(x = list(title = "State", ticks = unique(current$location)))
     p$guides(y = list(title = "Annual Growth Rate"))
     return(p)
   })
@@ -147,7 +188,7 @@ shinyServer(function(input, output) {
     current <- arrange(current, desc(Annual))
     current <- current[1:10,]
     p <- rPlot(x = list(var = "location", sort = "Annual"), y = "Annual", data = current, type = "bar")
-    p$addParams(height = 300, width = 1000, dom = 'top10Counties', title = "Top 10 Counties by Annual Home Value Growth")
+    p$addParams(height = 200, width = 760, dom = 'top10Counties', title = "Top 10 Counties by Annual Home Value Growth")
     p$guides(x = list(title = "County", ticks = unique(current$location)))
     p$guides(y = list(title = "Annual Growth Rate"))
     return(p)
@@ -159,7 +200,7 @@ shinyServer(function(input, output) {
     current <- arrange(current, desc(Annual))
     current <- current[1:10,]
     p <- rPlot(x = list(var = "location", sort = "Annual"), y = "Annual", data = current, type = "bar")
-    p$addParams(height = 300, width = 1000, dom = 'top10Cities', title = "Top 10 Cities by Annual Home Value Growth")
+    p$addParams(height = 200, width = 760, dom = 'top10Cities', title = "Top 10 Cities by Annual Home Value Growth")
     p$guides(x = list(title = "City", ticks = unique(current$location)))
     p$guides(y = list(title = "Annual Growth Rate"))
     return(p)
@@ -717,12 +758,6 @@ shinyServer(function(input, output) {
   
   
   
-  # Render time series plot
-  output$tsPlot <- renderPlot({
-    Price <- getTimeSeries()
-    autoplot(Price, ts.colour = "blue") + theme_bw()
-  })
-  
   # Render non-seasonal trend time series
   output$nsPlot <- renderPlot({
     Price <- SMA(getTimeSeries(), n = input$span)
@@ -1009,9 +1044,10 @@ shinyServer(function(input, output) {
                      "Mean Absolute Scaled Error (MASE)",
                      "Autocorrelation of errors at lag 1. (ACF1)",
                      "ThEIl's U")
-      trainingSet <- r[,1]
-      results     <- data.frame(measure, trainingSet)
-      names(results) <- c("Measure", "Training Set")
+      trainingSet <- round(r[,1], 3)
+      testSet     <- round(r[,2], 3)
+      results     <- data.frame(measure, trainingSet, testSet)
+      names(results) <- c("Measure", "Training Set", "Test Set")
       return(results)
     }
   }
