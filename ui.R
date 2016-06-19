@@ -71,7 +71,7 @@ dashboardPage(skin = "green",
                                                explore and forecast over 13,000 real estate markets in the United States.  
                                                This tool will enable you to:")),
                                        tags$ul(
-                                         tags$li("get a snapshot of the states, counties, and cities with the highest annual increase in median home values
+                                         tags$li("get a snapshot and timeseries of the states and cities with the highest annual increase in median home values
                                                  on this", span("Dashboard page,", style = "color:white")),
                                          tags$li("explore home price indices and growth rates across various markets at several levels of granularity in 
                                                  the", span("Market Explorer,", style = "color:white")),
@@ -88,14 +88,14 @@ dashboardPage(skin = "green",
                                          paste("To get started, click on the Market Explorer menu on the left."))
                                          )
                                ),# end of column
-                              column(width = 6,
+                              column(width = 8,
                                 box(
                                   title = "Top 10 States by Annual Home Value Growth",
                                   status = "primary",
                                   width = 12,
                                   solidHeader = FALSE,
                                   collapsible = TRUE,
-                                  showOutput("top10StatesBar", "polycharts")
+                                  showOutput("top10StatesBar", "nvd3")
                                 ),
                                 box(
                                   title = "Top 10 Cities by Annual Home Value Growth",
@@ -103,23 +103,9 @@ dashboardPage(skin = "green",
                                   width = 12,
                                   solidHeader = FALSE,
                                   collapsible = TRUE,
-                                  showOutput("top10CitiesBar", "polycharts")
+                                  showOutput("top10CitiesBar", "nvd3")
                                 ) #End of Box
-                              ), # End of column
-                              column(width = 2,
-                                     fluidRow(
-                                      valueBoxOutput("numStatesBox", width = 12)
-                                     ),# end of fluidrow
-                                     fluidRow(
-                                      valueBoxOutput("numCountiesBox", width = 12)
-                                     ), # end of fluidrow
-                                     fluidRow(
-                                      valueBoxOutput("numCitiesBox", width = 12)
-                                     ),#end of fluidrow
-                                     fluidRow(
-                                      valueBoxOutput("numZipsBox", width = 12)
-                                     )#end of fluidrow
-                              )# end of column
+                              ) # End of column
                           ), # End of Fluid Row
                           fluidRow(
                             column(width = 6,
@@ -142,7 +128,15 @@ dashboardPage(skin = "green",
                                      plotOutput("top10CitiesTS")
                                    ) #End of Box
                             )# end of column
-                          )#end of fluidrow
+                          ),#end of fluidrow
+                          fluidRow(
+                            column(width = 12,
+                               valueBoxOutput("numStatesBox", width = 3),
+                               valueBoxOutput("numCountiesBox", width = 3),
+                               valueBoxOutput("numCitiesBox", width = 3),
+                               valueBoxOutput("numZipsBox", width = 3)
+                            )# end of column
+                          )# end of fluidrow
                       ) # End of FluidPage
                   ), # End of tabItem
                   tabItem(tabName = "explorer",

@@ -141,7 +141,7 @@ shinyServer(function(input, output) {
   #Render number of states box
   output$numStatesBox <- renderValueBox({
     valueBox(
-      paste0(nrow(currentState)), paste("States in Database"), 
+      paste0(nrow(currentState)), paste("States"), 
       icon = icon("map-marker"), color = "green"
     )
   })
@@ -149,7 +149,7 @@ shinyServer(function(input, output) {
   #Render number of counties box
   output$numCountiesBox <- renderValueBox({
     valueBox(
-      paste0(nrow(currentCounty)), paste("Counties in Database"), 
+      paste0(nrow(currentCounty)), paste("Counties"), 
       icon = icon("map"), color = "yellow"
     )
   })
@@ -157,7 +157,7 @@ shinyServer(function(input, output) {
   #Render number of cities box
   output$numCitiesBox <- renderValueBox({
     valueBox(
-      paste0(nrow(currentCity)), paste("Cities in Database"), 
+      paste0(nrow(currentCity)), paste("Cities"), 
       icon = icon("map-pin"), color = "red"
     )
   })
@@ -165,42 +165,20 @@ shinyServer(function(input, output) {
   #Render number of cities box
   output$numZipsBox <- renderValueBox({
     valueBox(
-      paste0(nrow(currentZip)), paste("Zipcodes in Database"), 
+      paste0(nrow(currentZip)), paste("Zipcodes"), 
       icon = icon("map-o"), color = "navy"
     )
   })
-  
-  #Render Top 10 States pie chart
-  output$top10StatesPie <- renderChart({
-    current <- currentState[ which(currentState$State != "United States"), ]
-    current <- arrange(current, desc(Annual))
-    current <- subset(current[1:10,], select = c(location, Annual)) 
-    p <- nPlot(~ location, data = current, type = 'pieChart')
-    return(p)
-  })
-  
-  #Render Top 10 Cities pie chart
-  output$top10CitiesPie <- renderChart({
-    current <- currentCity
-    current <- arrange(current, desc(Annual))
-    current <- current[1:10,]
-    p <- rPlot(x = list(var = "location", sort = "Annual"), y = "Annual", data = current, type = "bar")
-    p$addParams(height = 180, width = 760, dom = 'top10Cities')
-    p$guides(x = list(title = "City", ticks = unique(current$location)))
-    p$guides(y = list(title = "Annual Growth Rate"))
-    return(p)
-  })
-  
   
   #Render Top 10 States bar chart
   output$top10StatesBar <- renderChart({
     current <- currentState[ which(currentState$State != "United States"), ]
     current <- arrange(current, desc(Annual))
-    current <- current[1:10,]
-    p <- rPlot(x = list(var = "location", sort = "Annual"), y = "Annual", data = current, type = "bar")
-    p$addParams(height = 180, width = 760, dom = 'top10StatesBar')
-    p$guides(x = list(title = "State", ticks = unique(current$location)))
-    p$guides(y = list(title = "Annual Growth Rate"))
+    current$Annual <- round(current$Annual * 100,2)
+    current <- subset(current[1:10,], select = c(location, Annual))
+    p <- nPlot(Annual~location, data = current, type = "discreteBarChart", dom = "top10StatesBar", height = 180, width = 750)
+    p$xAxis(staggerLabels = TRUE)
+    p$yAxis(axisLabel = "Annual Growth (%)", width = 50)
     return(p)
   })
   
@@ -208,11 +186,11 @@ shinyServer(function(input, output) {
   output$top10CitiesBar <- renderChart({
     current <- currentCity
     current <- arrange(current, desc(Annual))
-    current <- current[1:10,]
-    p <- rPlot(x = list(var = "location", sort = "Annual"), y = "Annual", data = current, type = "bar")
-    p$addParams(height = 180, width = 760, dom = 'top10CitiesBar')
-    p$guides(x = list(title = "City", ticks = unique(current$location)))
-    p$guides(y = list(title = "Annual Growth Rate"))
+    current$Annual <- round(current$Annual * 100,2)
+    current <- subset(current[1:10,], select = c(location, Annual))
+    p <- nPlot(Annual~location, data = current, type = "discreteBarChart", dom = "top10CitiesBar", height = 180, width = 750)
+    p$xAxis(staggerLabels = TRUE)
+    p$yAxis(axisLabel = "Annual Growth (%)", width = 50)
     return(p)
   })
   
