@@ -6,17 +6,19 @@
 
 #ui.R
 
-require(rCharts)
-options(RCHART_LIB = 'polycharts')
-library(shiny)
-library(shinydashboard)
-
 dashboardPage(skin = "green",
               dashboardHeader(title = "shinyHome"),
               dashboardSidebar(
-                sidebarMenu(
+                sidebarMenu(id = "sbm",
                   menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
                   menuItem("Market Explorer", tabName = "explorer", icon = icon("search")),
+                  conditionalPanel(
+                    condition = "input.sbm != 'dashboard' && input.sbm != 'explorer'",
+                    uiOutput("stateUi"),
+                    uiOutput("countyUi"),
+                    uiOutput("cityUi"),
+                    uiOutput("zipUi")
+                  ),
                   menuItem("Value Analyzer", tabName = "valueAnalysis", icon = icon("area-chart")),
                   menuItem("Forecast Modeler", icon = icon("line-chart"),
                            menuSubItem("Train Models", icon = icon("gears"),tabName = "trainModels"),
@@ -63,7 +65,7 @@ dashboardPage(skin = "green",
                                        height = 508,
                                        background = "orange",
                                        solidHeader = FALSE,
-                                       collapsible = TRUE,
+                                       collapsible = FALSE,
                                        collapsed = FALSE,
                                        h3("Welcome to shinyHome"),
                                        p(
@@ -137,590 +139,546 @@ dashboardPage(skin = "green",
                                valueBoxOutput("numZipsBox", width = 3)
                             )# end of column
                           )# end of fluidrow
-                      ) # End of FluidPage
+                      ) # End of fluidPage
                   ), # End of tabItem
                   tabItem(tabName = "explorer",
                     fluidPage(
                       title = "Market Explorer",
-                      fluidRow(
-                          box(
-                            title = "Query Builder",
-                            status = "warning",
-                            width = 12,
-                            solidHeader = TRUE,
-                            collapsible = TRUE,
-                            column(width = 4,
-                              box(
-                                title = "Home Value Range",
-                                status = "primary",
-                                solidHeader = FALSE,
-                                width = 12,
-                                p(class = "text-muted",
-                                  paste("Select minimum and maximum home values")),
-                                sliderInput("hviQuery", label = "Home Value Range", min = 0, max = 2000000, value = c(300000,500000)),
-                                checkboxInput("maxValue", label = "Include all values exceeding $2m", value = FALSE)
-                              ), # end of box
-                              actionButton("query", label = "Go")
-                            ), # end of column
-                            column(width = 4,
-                              box(
-                                title = "Minimum Growth Rate",
-                                status = "primary",
-                                solidHeader = FALSE,
-                                width = 12,
-                                p(class = "text-muted",
-                                  paste("Select a growth rate time horizon and minimum value")),
-                                selectInput("horizon", label = "Time Horizon:", 
-                                            choices = c("Monthly", "Quarterly", "Annual", "5 Year", "10 Year"),
-                                            selected = "Annual",
-                                            selectize = FALSE),
-                                sliderInput("growthQuery", "Growth Rate:", min = 0, max = .5, value = c(.05,.5))
-                              )
-                            ),
-                            column(width = 4,
-                              box(
-                                title = "Geographic Filter",
-                                status = "primary",
-                                solidHeader = FALSE,
-                                width = 12,
-                                p(class = "text-muted",
-                                  paste("Further refine your query by indicating level of analysis and geography")),
+                      column(width = 2,
+                        box(
+                           title = "Query Builder",
+                           status = "primary",
+                           width = 12,
+                           solidHeader = TRUE,
+                           background = "navy",
+                           box(
+                             width = 12,
+                             status = "primary",
+                             solidHeader = FALSE,
+                             background = "navy",
+                             uiOutput("levelQueryUi")
+                           ),# end of box
+                           conditionalPanel(
+                             condition = "input.analysisLevel == 2",
+                             box(
+                               status = "primary",
+                               solidHeader = FALSE,
+                               width = 12,
+                               background = "navy",
+                               uiOutput("stateQuery2Ui")
+                             )# end of box
+                           ),# end of conditional panel  
+                           conditionalPanel(
+                             condition = "input.analysisLevel == 3",
+                             box(
+                               status = "primary",
+                               solidHeader = FALSE,
+                               width = 12,
+                               background = "navy",
+                               uiOutput("stateQuery3Ui"),
+                               uiOutput("countyQuery3Ui")
+                             )# end of box
+                           ),# end of conditionalpanel    
+                           conditionalPanel(
+                             condition = "input.analysisLevel == 4",
+                             box(
+                               status = "primary",
+                               solidHeader = FALSE,
+                               width = 12,
+                               background = "navy",
+                               uiOutput("stateQuery4Ui"),
+                               uiOutput("countyQuery4Ui"),
+                               uiOutput("cityQuery4Ui")
+                             )# end of box
+                           ),# end of conditionalpanel
+                           box(
+                             status = "primary",
+                             solidHeader = FALSE,
+                             width = 12,
+                             background = "navy",
+                             sliderInput("hviQuery", label = "Home Value Range ($000)", min = 0, max = 2000, value = c(500,1000)),
+                             checkboxInput("maxValue", label = "Include all values exceeding $2m", value = FALSE)
+                           ), # end of box
+                           box(
+                             status = "primary",
+                             solidHeader = FALSE,
+                             width = 12,
+                             background = "navy",
+                             selectInput("horizon", label = "Time Horizon:", 
+                                         choices = c("Monthly", "Quarterly", "Annual", "5 Year", "10 Year"),
+                                         selected = "Annual",
+                                         selectize = FALSE),
+                             numericInput("minGrowth", label = "Minimum Growth Rate (%)", value = 1)
+                           ),# end of box
+                           actionButton("query", label = "Go") 
+                        )# end of box
+                      ),# end of column
+                      conditionalPanel(
+                        condition = "input.query",
+                        column(width = 10,
+                            box(
+                              title = "Market Data",
+                              status = "primary",
+                              width = 12,
+                              solidHeader = TRUE,
+                              collapsible = TRUE,
+                              fluidRow(
                                 box(
-                                  fluidRow(
-                                    width = 6,
-                                    status = "primary",
-                                    solidHeader = FALSE,
-                                    uiOutput("levelQueryUi")
-                                  )
-                                ),# end of box
-                                conditionalPanel(
-                                  condition = "input.analysisLevel == 2",
+                                  title = "Value Growth by Value Scatterplot",
+                                  status = "primary",
+                                  width = 12,
+                                  solidHeader = FALSE,
+                                  collapsible = TRUE,
+                                  plotlyOutput("valueByGrowth")
+                                )# end of box
+                              ),# end of fluidrow
+                              fluidRow(
+                                column(width = 12,
                                   box(
+                                    title = "Distribution of Median Home Values",
                                     status = "primary",
-                                    solidHeader = FALSE,
                                     width = 6,
-                                    uiOutput("stateQuery2Ui")
-                                  )# end of box
-                                ),# end of conditional panel  
-                                conditionalPanel(
-                                  condition = "input.analysisLevel == 3",
+                                    solidHeader = FALSE,
+                                    collapsible = TRUE,
+                                    plotOutput("valueHist")
+                                  ),# end of box
                                   box(
+                                    title = "Markets Table",
                                     status = "primary",
-                                    solidHeader = FALSE,
                                     width = 6,
-                                    uiOutput("stateQuery3Ui"),
-                                    uiOutput("countyQuery3Ui")
-                                  )# end of box
-                                ),# end of conditionalpanel    
-                                conditionalPanel(
-                                  condition = "input.analysisLevel == 4",
-                                  box(
-                                    status = "primary",
                                     solidHeader = FALSE,
-                                    width = 6,
-                                    uiOutput("stateQuery4Ui"),
-                                    uiOutput("countyQuery4Ui"),
-                                    uiOutput("cityQuery4Ui")
+                                    collapsible = TRUE,
+                                    dataTableOutput("marketTbl")
                                   )# end of box
-                                )# end of conditionalpanel    
-                              )#end of box
-                            ) # end of column
-                          ) # end of box
-                        ), # end of fluidrow
-                        conditionalPanel(
-                          condition = "input.query",
-                          fluidRow(
-                            box(
-                              title = "Markets by Growth",
-                              status = "danger",
-                              width = 12,
-                              solidHeader = TRUE,
-                              collapsible = TRUE,
+                                ),# end of column
+                                column(width = 12,
+                                       box(
+                                         title = "Top Markets by Growth",
+                                         status = "primary",
+                                         width = 12,
+                                         solidHeader = FALSE,
+                                         collapsible = TRUE,
+                                         showOutput("topByGrowth", "nvd3")
+                                       )# end of box
+                                )# end of column
+                            ),# end of fluidRow
+                            fluidRow(
                               box(
-                                title = "Top Markets by Growth",
+                                title = "Median Home Value Time Series for Top Growth Markets",
                                 status = "primary",
-                                width = 8,
+                                width = 12,
                                 solidHeader = FALSE,
-                                showOutput("topByGrowth", "polycharts")
-                              ),# end of box
-                              box(
-                                title = "Top Markets by Growth Table",
-                                status = "primary",
-                                width = 4,
-                                solidHeader = FALSE,
-                                dataTableOutput("growthTbl")
-                              )# end of box
-                            )# end of box
-                          ), # end of fluidrow   
-                          fluidRow(
-                            box(
-                              title = "Markets by Value",
-                              status = "success",
-                              width = 12,
-                              solidHeader = TRUE,
-                              collapsible = TRUE,
-                              box(
-                                title = "Top Markets by Value",
-                                status = "primary",
-                                width = 8,
-                                solidHeader = FALSE,
-                                showOutput("topByValue", "polycharts")
-                              ),# end of box
-                              box(
-                                title = "Markets by Value Table",
-                                status = "primary",
-                                width = 4,
-                                solidHeader = FALSE,
-                                dataTableOutput("valueTbl")
-                              )# end of box
-                            )# end of box
-                          ) # end of fluidrow   
+                                collapsible = TRUE,
+                                plotOutput("topMarketsTS")
+                              ) #End of Box
+                            )# end of fluidrow
+                          )# end of box
+                        )#end of column
                       ) # end of conditionalpanel
                     ) # End of fluidPage
                 ), # End of tabItem 
                 tabItem(tabName = "valueAnalysis",
-                        fluidRow(
-                          column(width = 2,
+                        fluidPage(
+                          fluidRow(
                              box(
                                status = "primary",
                                title = "Market Selector",
-                               solidHeader = TRUE,
-                               width = 12,
-                               box(
-                                 width = 12,
-                                 status = "primary",
-                                 solidHeader = FALSE,
-                                 uiOutput("stateQuery5Ui"),
-                                 uiOutput("countyQuery5Ui"),
-                                 uiOutput("cityQuery5Ui"),
-                                 uiOutput("zipQuery5Ui")
-                               ),# end of box
-                               box(
-                                 width = 12,
-                                 status = "primary",
-                                 solidHeader = FALSE,
-                                 radioButtons("rtype", label = h4("Residence Type"),
-                                              choices = list("1 Bedroom" = 1, "2 Bedroom" = 2, "3 Bedroom" = 3, 
-                                                             "4 Bedroom" = 5, "5 Bedroom" = 5, "Condo" = 6,
-                                                             "Single Family Home" = 7, "All Homes" = 8), 
-                                              selected = 8)
-                               ),# end of box
-                               actionButton("select", label = "Go")
-                             )# end of box
-                          ),# end of column
-                          conditionalPanel(
-                            condition = "input.select",
-                            column(width = 10,
-                              box(
-                                title = "Home Value Time Series Exploration", status = "primary",
-                                solidHeader = TRUE, height = 800, width = 12,
-                                tabBox(
-                                  title = "Seasonal and Non-Seasonal Time Series Decomposition",
-                                  id = "exploreTab", height = 660, width = 12,
-                                  tabPanel("Non-Seasonal", 
-                                           box(
-                                             title = "Span Order",
-                                             status = "success",
-                                             solidHeader = FALSE, width = 3,
-                                             p(
-                                               class = "text-muted",
-                                               paste("Adjust span order until the simple moving average has smoothed random fluctuations
-                                                     and the trend component emerges")),
-                                             sliderInput("span", label = "Span Order", min = 1, max = 10, value = 3, step = 1)
-                                               ),
-                                           box(
-                                             title = "Estimate Trend Component with Simple Moving Average (SMA)",
-                                             status = "success",
-                                             solidHeader = FALSE, height = 600, width = 9,
-                                             plotOutput("nsPlot")
-                                           )# end of box
-                                  ), # end of tabPanel
-                                  tabPanel("Seasonal", 
-                                           box(
-                                             title = "Estimate Trend Seasonal, and Irregular Components of the Time Series",
-                                             status = "success",
-                                             solidHeader = FALSE, height = 600, width = 12,
-                                             plotOutput("tsiPlot")
-                                           )
-                                  )# end of tab panel
-                                )# end of tabbox
-                              )# end of box
-                            )# end of column
-                          )# end of conditional panel
-                        )# end of fluidrow
+                               solidHeader = FALSE,
+                               width = 3,
+                               background = "navy",
+                               p("Select a market to analyze, then press 'Go' to run the analysis"),
+                               actionButton("marketSelect", label = "Go")
+                             ),# end of box
+                            conditionalPanel(
+                              condition = "input.marketSelect",
+                              valueBoxOutput("hviBox", width = 3),
+                              valueBoxOutput("annualBox", width = 2),
+                              valueBoxOutput("fiveYearBox", width = 2),
+                              valueBoxOutput("tenYearBox", width = 2),
+                              fluidRow(
+                                column(width = 12,
+                                  box(
+                                    title = "Home Value Time Series Exploration", status = "primary",
+                                    solidHeader = TRUE, height = 800, width = 12,
+                                    tabBox(
+                                      title = "Seasonal and Non-Seasonal Time Series Decomposition",
+                                      id = "exploreTab", height = 660, width = 12,
+                                      tabPanel("Non-Seasonal", 
+                                               box(
+                                                 title = "Span Order",
+                                                 status = "success",
+                                                 solidHeader = FALSE, width = 3,
+                                                 p(
+                                                   class = "text-muted",
+                                                   paste("Adjust span order until the simple moving average has smoothed random fluctuations
+                                                         and the trend component emerges")),
+                                                 sliderInput("span", label = "Span Order", min = 1, max = 10, value = 3, step = 1)
+                                                   ),
+                                               box(
+                                                 title = "Estimate Trend Component with Simple Moving Average (SMA)",
+                                                 status = "success",
+                                                 solidHeader = FALSE, height = 600, width = 9,
+                                                 plotOutput("nsPlot")
+                                               )# end of box
+                                      ), # end of tabPanel
+                                      tabPanel("Seasonal", 
+                                               box(
+                                                 title = "Estimate Trend Seasonal, and Irregular Components of the Time Series",
+                                                 status = "success",
+                                                 solidHeader = FALSE, height = 600, width = 12,
+                                                 plotOutput("tsiPlot")
+                                               )
+                                      )# end of tab panel
+                                    )# end of tabbox
+                                  )# end of box
+                                )# end of column
+                              )#end of fluidrow
+                            )# end of conditional panel
+                          )# end of fluidrow
+                        )#end of fluidPage
                 ), # end of tabItem                  
                 tabItem(tabName = "trainModels",
-                        column(width = 2,
-                               box(
-                                 status = "primary",
-                                 title = "Market Selector",
-                                 solidHeader = TRUE,
-                                 width = 12,
-                                 box(
-                                   width = 12,
-                                   status = "primary",
-                                   solidHeader = FALSE,
-                                   uiOutput("stateQuery6Ui"),
-                                   uiOutput("countyQuery6Ui"),
-                                   uiOutput("cityQuery6Ui"),
-                                   uiOutput("zipQuery6Ui")
-                                 ),# end of box
-                                 box(
-                                   width = 12,
-                                   status = "primary",
-                                   solidHeader = FALSE,
-                                   radioButtons("rtype2", label = h4("Residence Type"),
-                                                choices = list("1 Bedroom" = 1, "2 Bedroom" = 2, "3 Bedroom" = 3, 
-                                                               "4 Bedroom" = 5, "5 Bedroom" = 5, "Condo" = 6,
-                                                               "Single Family Home" = 7, "All Homes" = 8), 
-                                                selected = 8)
-                                 )# end of box
-                               )# end of box
-                        ),# end of column
-                        column(width = 10,
-                          fluidRow(
-                            box(
-                              title = "Model Training Parameters",
-                              status = "warning", width = 12,
-                              solidHeader = TRUE,
+                        fluidPage(
+                          column(width = 12,
+                            fluidRow(
                               box(
-                                title = "Cross Validation",
-                                status = "primary", width = 3,
-                                solidHeader = FALSE,
-                                p(
-                                  class = "text-muted",
-                                  paste("The time series contains median housing prices, measured monthly, from 2000 thru 2015. Here, we
-                          split the time series data into training and validation sets.  Indicate here, the end year for
-                          the training set. The remaining years will be used to validate the predictions.")),
-                                sliderInput("split", label = "Training Set Split", min = 2004, max = 2014, value = 2014, step = 1)
-                              ),# end of box
-                              box(
-                                title = "Model Selection",
-                                status = "primary", width = 3,
-                                solidHeader = FALSE,
-                                p(
-                                  class = "text-muted",
-                                  paste("Select the forecast model algorithm.")),
-                                uiOutput("modelsUi")
-                              ),# end of box
-                              box(
-                                title = "Model Description",
-                                status = "primary", width = 6,
-                                solidHeader = FALSE,
-                                h3(textOutput("modelNameUi")),
-                                textOutput("modelDescUi"),
-                                actionButton("train", label = "Train Forecast Model")
+                                title = "Model Training Parameters",
+                                status = "warning", width = 12,
+                                solidHeader = TRUE,
+                                box(
+                                  title = "Cross Validation",
+                                  status = "primary", width = 3,
+                                  solidHeader = FALSE,
+                                  p(
+                                    class = "text-muted",
+                                    paste("The time series contains median housing prices, measured monthly, from 2000 thru 2015. Here, we
+                            split the time series data into training and validation sets.  Indicate here, the end year for
+                            the training set. The remaining years will be used to validate the predictions.")),
+                                  sliderInput("split", label = "Training Set Split", min = 2004, max = 2014, value = 2014, step = 1)
+                                ),# end of box
+                                box(
+                                  title = "Model Selection",
+                                  status = "primary", width = 3,
+                                  solidHeader = FALSE,
+                                  p(
+                                    class = "text-muted",
+                                    paste("Select the forecast model algorithm.")),
+                                  uiOutput("modelsUi")
+                                ),# end of box
+                                box(
+                                  title = "Model Description",
+                                  status = "primary", width = 6,
+                                  solidHeader = FALSE,
+                                  h3(textOutput("modelNameUi")),
+                                  textOutput("modelDescUi"),
+                                  br(),
+                                  tags$strong("Please confirm that you have selected a market in the sidebar, then press 'Train Forecast Model' to train the selected model."),
+                                  actionButton("train", label = "Train Forecast Model")
+                                )# end of box
                               )# end of box
-                            )# end of box
-                        ),# end of fluidrow
-                        conditionalPanel(
-                          condition = "input.train",
-                          fluidRow(
-                            box(
-                              title = "Prediction",
-                              status = "primary", width = 7,
-                              solidHeader = TRUE,
-                              plotOutput("modelPlot")
-                            ),# end of box
-                            box(
-                              title = "Prediction Accuracy",
-                              status = "primary", width = 5,
-                              solidHeader = TRUE,
-                              dataTableOutput("accuracy")
-                            )# end of box
-                          )# end of fluidrow
-                        )# end of conditional panel
-                    )# end of column
+                          ),# end of fluidrow
+                          conditionalPanel(
+                            condition = "input.train",
+                            fluidRow(
+                              box(
+                                title = "Prediction",
+                                status = "primary", width = 7,
+                                solidHeader = TRUE,
+                                plotOutput("modelPlot", height = 460)
+                              ),# end of box
+                              box(
+                                title = "Prediction Accuracy",
+                                status = "primary", width = 5,
+                                solidHeader = TRUE,
+                                dataTableOutput("accuracy")
+                              )# end of box
+                            )# end of fluidrow
+                          )# end of conditional panel
+                      )# end of column
+                    )# end of fluidPage
                 ),# end of tabItem
                 tabItem(tabName = "compareModels",
-                        column(width = 2,
-                               box(
-                                 status = "primary",
-                                 title = "Market Selector",
-                                 solidHeader = TRUE,
-                                 width = 12,
-                                 box(
-                                   width = 12,
-                                   status = "primary",
-                                   solidHeader = FALSE,
-                                   uiOutput("stateQuery7Ui"),
-                                   uiOutput("countyQuery7Ui"),
-                                   uiOutput("cityQuery7Ui"),
-                                   uiOutput("zipQuery7Ui")
-                                 ),# end of box
-                                 box(
-                                   width = 12,
-                                   status = "primary",
-                                   solidHeader = FALSE,
-                                   radioButtons("rtype3", label = h4("Residence Type"),
-                                                choices = list("1 Bedroom" = 1, "2 Bedroom" = 2, "3 Bedroom" = 3, 
-                                                               "4 Bedroom" = 5, "5 Bedroom" = 5, "Condo" = 6,
-                                                               "Single Family Home" = 7, "All Homes" = 8), 
-                                                selected = 8)
-                                 ),# end of box
-                                 actionButton("select2", label = "Go"),
-                                 p(class = "text-muted",
-                                   paste("Please be patient.  We are cranking through 8 training models"))
-                               )# end of box
-                        ),# end of column
-                        conditionalPanel(
-                          condition = "input.select2",
-                          column(width = 10,
-                                 fluidRow(
-                                   box(
-                                     status = "warning",
-                                     width = 12,
-                                     title = "Model Performance Summary",
-                                     solidHeader = TRUE,
-                                     collapsible = TRUE,
-                                     dataTableOutput("modelsumm")
-                                   )# end of box
-                                 ),#end of fluidrow
-                                 fluidRow(
-                                   box(
-                                     status = "primary",
-                                     width = 12,
-                                     title = "Arima / ETS Model Performance",
-                                     solidHeader = TRUE,
-                                     collapsible = TRUE,
-                                        box(
-                                          status = "primary",
-                                          width = 6,
-                                          title = "Arima Model Performance",
-                                          solidHeader = FALSE,
-                                          plotOutput("arima")
-                                        ),# end of box
-                                        box(
-                                          status = "primary",
-                                          width = 6,
-                                          title = "Exponential Smoothing (ETS) Model Performance",
-                                          solidHeader = FALSE,
-                                          plotOutput("ets")
-                                        )# end of box
-                                   )# end of box
-                                 ),# end of fluidrow
-                                 fluidRow(
-                                   box(
-                                     status = "primary",
-                                     width = 12,
-                                     title = "Naive / Neural Network Model Performance",
-                                     solidHeader = TRUE,
-                                     collapsible = TRUE,
-                                     box(
-                                       status = "primary",
-                                       width = 6,
-                                       title = "Naive Model Performance",
-                                       solidHeader = FALSE,
-                                       plotOutput("naive")
-                                     ),# end of box
-                                     box(
-                                       status = "primary",
-                                       width = 6,
-                                       title = "Neural Network Model Performance",
-                                       solidHeader = FALSE,
-                                       plotOutput("neural")
-                                     )# end of box
-                                   )# end of box
-                                 ),# end of fluidrow
-                                 fluidRow(
-                                   box(
-                                     status = "primary",
-                                     width = 12,
-                                     title = "BATS / TBATS Model Performance",
-                                     solidHeader = TRUE,
-                                     collapsible = TRUE,
-                                     box(
-                                       status = "primary",
-                                       width = 6,
-                                       title = "BATS Model Performance",
-                                       solidHeader = FALSE,
-                                       plotOutput("bats")
-                                     ),# end of box
-                                     box(
-                                       status = "primary",
-                                       width = 6,
-                                       title = "TBATS Model Performance",
-                                       solidHeader = FALSE,
-                                       plotOutput("tbats")
-                                     )# end of box
-                                   )# end of box
-                                 ),# end of fluidrow
-                                 fluidRow(
-                                   box(
-                                     status = "primary",
-                                     width = 12,
-                                     title = "STLM / STS Model Performance",
-                                     solidHeader = TRUE,
-                                     collapsible = TRUE,
-                                     box(
-                                       status = "primary",
-                                       width = 6,
-                                       title = "STLM Model Performance",
-                                       solidHeader = FALSE,
-                                       plotOutput("stlm")
-                                     ),# end of box
-                                     box(
-                                       status = "primary",
-                                       width = 6,
-                                       title = "STS Model Performance",
-                                       solidHeader = FALSE,
-                                       plotOutput("sts")
-                                     )# end of box
-                                   )# end of box
-                                 )# end of fluidrow
-                          )# end of column
-                    )# end of conditional panel
+                        fluidPage(
+                          fluidRow(
+                             box(
+                               status = "primary",
+                               title = "Market Selector",
+                               solidHeader = FALSE,
+                               width = 3,
+                               background = "navy",
+                               p("Select a market to analyze, then press 'Go' to run the analysis"),
+                               actionButton("compare", label = "Go")
+                             ),# end of box
+                            conditionalPanel(
+                              condition = "input.compare",
+                              valueBoxOutput("hviBox2", width = 3),
+                              valueBoxOutput("annualBox2", width = 2),
+                              valueBoxOutput("fiveYearBox2", width = 2),
+                              valueBoxOutput("tenYearBox2", width = 2),
+                              column(width = 12,
+                                     fluidRow(
+                                       box(
+                                         status = "warning",
+                                         width = 12,
+                                         title = "Model Performance Summary",
+                                         solidHeader = TRUE,
+                                         collapsible = TRUE,
+                                         box(
+                                           status = "warning",
+                                           width = 6,
+                                           title = "Model Performance Error Metrics",
+                                           solidHeader = FALSE,
+                                           selectInput("measurements", label = "Measurements", choices = 
+                                                         c("ME: Mean Error" = "ME",
+                                                           "RMSE: Root Mean Square Error" = "RMSE",
+                                                           "MAE: Mean Absolute Error" = "MAE",
+                                                           "MPE: Mean Percentage Error" = "MPE",
+                                                           "MAPE: Mean Absolute Percentage Error" = "MAPE",
+                                                           "MASE: Mean Absolute Scaled Error" = "MASE",
+                                                           "ACF1: Autocorrelation of Errors at Lag 1" = "ACF1",
+                                                           "Theil’s U" = "THEILS"),
+                                                       multiple = FALSE, selectize = FALSE, selected = "MASE"),
+                                           showOutput("measurementsBar", "nvd3")
+                                         ),# end of box
+                                         box(
+                                           status = "warning",
+                                           width = 6,
+                                           title = "Model Performance Error Metrics",
+                                           solidHeader = FALSE,
+                                           dataTableOutput("modelsumm")
+                                         )# end of box
+                                       )# end of box
+                                     ),#end of fluidrow
+                                     fluidRow(
+                                       box(
+                                         status = "primary",
+                                         width = 12,
+                                         title = "Arima / ETS Model Performance",
+                                         solidHeader = TRUE,
+                                         collapsible = TRUE,
+                                            box(
+                                              status = "primary",
+                                              width = 6,
+                                              title = "Arima Model Performance",
+                                              solidHeader = FALSE,
+                                              plotOutput("arima")
+                                            ),# end of box
+                                            box(
+                                              status = "primary",
+                                              width = 6,
+                                              title = "Exponential Smoothing (ETS) Model Performance",
+                                              solidHeader = FALSE,
+                                              plotOutput("ets")
+                                            )# end of box
+                                       )# end of box
+                                     ),# end of fluidrow
+                                     fluidRow(
+                                       box(
+                                         status = "primary",
+                                         width = 12,
+                                         title = "Naive / Neural Network Model Performance",
+                                         solidHeader = TRUE,
+                                         collapsible = TRUE,
+                                         box(
+                                           status = "primary",
+                                           width = 6,
+                                           title = "Naive Model Performance",
+                                           solidHeader = FALSE,
+                                           plotOutput("naive")
+                                         ),# end of box
+                                         box(
+                                           status = "primary",
+                                           width = 6,
+                                           title = "Neural Network Model Performance",
+                                           solidHeader = FALSE,
+                                           plotOutput("neural")
+                                         )# end of box
+                                       )# end of box
+                                     ),# end of fluidrow
+                                     fluidRow(
+                                       box(
+                                         status = "primary",
+                                         width = 12,
+                                         title = "BATS / TBATS Model Performance",
+                                         solidHeader = TRUE,
+                                         collapsible = TRUE,
+                                         box(
+                                           status = "primary",
+                                           width = 6,
+                                           title = "BATS Model Performance",
+                                           solidHeader = FALSE,
+                                           plotOutput("bats")
+                                         ),# end of box
+                                         box(
+                                           status = "primary",
+                                           width = 6,
+                                           title = "TBATS Model Performance",
+                                           solidHeader = FALSE,
+                                           plotOutput("tbats")
+                                         )# end of box
+                                       )# end of box
+                                     ),# end of fluidrow
+                                     fluidRow(
+                                       box(
+                                         status = "primary",
+                                         width = 12,
+                                         title = "STLM / STS Model Performance",
+                                         solidHeader = TRUE,
+                                         collapsible = TRUE,
+                                         box(
+                                           status = "primary",
+                                           width = 6,
+                                           title = "STLM Model Performance",
+                                           solidHeader = FALSE,
+                                           plotOutput("stlm")
+                                         ),# end of box
+                                         box(
+                                           status = "primary",
+                                           width = 6,
+                                           title = "STS Model Performance",
+                                           solidHeader = FALSE,
+                                           plotOutput("sts")
+                                         )# end of box
+                                       )# end of box
+                                     )# end of fluidrow
+                              )# end of column
+                        )# end of conditional panel
+                    )# end of fluidrow
+                  )# end of fluidPage
                 ),# end of tabItem
                 tabItem(tabName = "forecast",
-                        column(width = 2,
-                               box(
-                                 status = "primary",
-                                 title = "Forecast Options",
-                                 solidHeader = TRUE,
-                                 width = 12,
-                                 box(
-                                   width = 12,
-                                   status = "primary",
-                                   solidHeader = FALSE,
-                                   uiOutput("stateQuery8Ui"),
-                                   uiOutput("countyQuery8Ui"),
-                                   uiOutput("cityQuery8Ui"),
-                                   uiOutput("zipQuery8Ui")
-                                 ),# end of box
-                                 box(
-                                   width = 12,
-                                   status = "primary",
-                                   solidHeader = FALSE,
-                                   radioButtons("rtype4", label = h4("Residence Type"),
-                                                choices = list("1 Bedroom" = 1, "2 Bedroom" = 2, "3 Bedroom" = 3, 
-                                                               "4 Bedroom" = 5, "5 Bedroom" = 5, "Condo" = 6,
-                                                               "Single Family Home" = 7, "All Homes" = 8), 
-                                                selected = 8)
-                                 ),# end of box
+                        fluidPage(
+                          fluidRow(
                                  box(
                                    status = "primary",
-                                   title = "Years to Forecast",
+                                   title = "Forecast Options",
                                    solidHeader = FALSE,
-                                   width = 12,
+                                   width = 4,
+                                   background = "navy",
+                                   p("Select a market to analyze, and number of years to forecast, then press 'Go' to run the analysis"),
                                    sliderInput("forecastRange", label = NULL, min = 1, 
                                                max = 10, value = 5),
-                                   actionButton("select3", label = "Go")
-                                 )# end of box
-                               )# end of box
-                        ),# end of column
-                        conditionalPanel(
-                          condition = "input.select3",
-                          column(width = 10,
-                                 fluidRow(
-                                   box(
-                                     status = "primary",
-                                     width = 12,
-                                     title = "Forecast Summary",
-                                     solidHeader = TRUE,
-                                     collapsible = TRUE,
+                                   actionButton("forecast", label = "Go")
+                                 ),# end of box
+                            conditionalPanel(
+                              condition = "input.forecast",
+                              valueBoxOutput("hviBox3", width = 2),
+                              valueBoxOutput("annualBox3", width = 2),
+                              valueBoxOutput("fiveYearBox3", width = 2),
+                              valueBoxOutput("tenYearBox3", width = 2),
+                              column(width = 12,
+                                   fluidRow(
                                      box(
                                        status = "primary",
                                        width = 12,
-                                       title = "Summary by Forecast Model",
-                                       solidHeader = FALSE,
-                                       plotOutput("forecastSummary")
+                                       title = "Forecast Summary",
+                                       solidHeader = TRUE,
+                                       collapsible = TRUE,
+                                       box(
+                                         status = "primary",
+                                         width = 12,
+                                         title = "Summary by Forecast Model",
+                                         solidHeader = FALSE,
+                                         plotOutput("forecastSummary")
+                                       )# end of box
                                      )# end of box
-                                   )# end of box
-                                 ),# end of fluidrow
-                                 fluidRow(
-                                   box(
-                                     status = "primary",
-                                     width = 12,
-                                     title = "Arima / ETS Model Forecast",
-                                     solidHeader = TRUE,
-                                     collapsible = TRUE,
+                                   ),# end of fluidrow
+                                   fluidRow(
                                      box(
                                        status = "primary",
-                                       width = 6,
-                                       title = "Arima Model Forecast",
-                                       solidHeader = FALSE,
-                                       plotOutput("arimaForecast")
-                                     ),# end of box
-                                     box(
-                                       status = "primary",
-                                       width = 6,
-                                       title = "Exponential Smoothing (ETS) Model Forecast",
-                                       solidHeader = FALSE,
-                                       plotOutput("etsForecast")
+                                       width = 12,
+                                       title = "Arima / ETS Model Forecast",
+                                       solidHeader = TRUE,
+                                       collapsible = TRUE,
+                                       box(
+                                         status = "primary",
+                                         width = 6,
+                                         title = "Arima Model Forecast",
+                                         solidHeader = FALSE,
+                                         plotOutput("arimaForecast")
+                                       ),# end of box
+                                       box(
+                                         status = "primary",
+                                         width = 6,
+                                         title = "Exponential Smoothing (ETS) Model Forecast",
+                                         solidHeader = FALSE,
+                                         plotOutput("etsForecast")
+                                       )# end of box
                                      )# end of box
-                                   )# end of box
-                                 ),# end of fluidrow
-                                 fluidRow(
-                                   box(
-                                     status = "primary",
-                                     width = 12,
-                                     title = "Naive / Neural Network Model Forecast",
-                                     solidHeader = TRUE,
-                                     collapsible = TRUE,
+                                   ),# end of fluidrow
+                                   fluidRow(
                                      box(
                                        status = "primary",
-                                       width = 6,
-                                       title = "Naive Model Forecast",
-                                       solidHeader = FALSE,
-                                       plotOutput("naiveForecast")
-                                     ),# end of box
-                                     box(
-                                       status = "primary",
-                                       width = 6,
-                                       title = "Neural Network Model Forecast",
-                                       solidHeader = FALSE,
-                                       plotOutput("neuralForecast")
+                                       width = 12,
+                                       title = "Naive / Neural Network Model Forecast",
+                                       solidHeader = TRUE,
+                                       collapsible = TRUE,
+                                       box(
+                                         status = "primary",
+                                         width = 6,
+                                         title = "Naive Model Forecast",
+                                         solidHeader = FALSE,
+                                         plotOutput("naiveForecast")
+                                       ),# end of box
+                                       box(
+                                         status = "primary",
+                                         width = 6,
+                                         title = "Neural Network Model Forecast",
+                                         solidHeader = FALSE,
+                                         plotOutput("neuralForecast")
+                                       )# end of box
                                      )# end of box
-                                   )# end of box
-                                 ),# end of fluidrow
-                                 fluidRow(
-                                   box(
-                                     status = "primary",
-                                     width = 12,
-                                     title = "BATS / TBATS Model Forecast",
-                                     solidHeader = TRUE,
-                                     collapsible = TRUE,
+                                   ),# end of fluidrow
+                                   fluidRow(
                                      box(
                                        status = "primary",
-                                       width = 6,
-                                       title = "BATS Model Forecast",
-                                       solidHeader = FALSE,
-                                       plotOutput("batsForecast")
-                                     ),# end of box
-                                     box(
-                                       status = "primary",
-                                       width = 6,
-                                       title = "TBATS Model Forecast",
-                                       solidHeader = FALSE,
-                                       plotOutput("tbatsForecast")
+                                       width = 12,
+                                       title = "BATS / TBATS Model Forecast",
+                                       solidHeader = TRUE,
+                                       collapsible = TRUE,
+                                       box(
+                                         status = "primary",
+                                         width = 6,
+                                         title = "BATS Model Forecast",
+                                         solidHeader = FALSE,
+                                         plotOutput("batsForecast")
+                                       ),# end of box
+                                       box(
+                                         status = "primary",
+                                         width = 6,
+                                         title = "TBATS Model Forecast",
+                                         solidHeader = FALSE,
+                                         plotOutput("tbatsForecast")
+                                       )# end of box
                                      )# end of box
-                                   )# end of box
-                                 ),# end of fluidrow
-                                 fluidRow(
-                                   box(
-                                     status = "primary",
-                                     width = 12,
-                                     title = "STLM / STS Model Forecast",
-                                     solidHeader = TRUE,
-                                     collapsible = TRUE,
+                                   ),# end of fluidrow
+                                   fluidRow(
                                      box(
                                        status = "primary",
-                                       width = 6,
-                                       title = "STLM Model Forecast",
-                                       solidHeader = FALSE,
-                                       plotOutput("stlmForecast")
-                                     ),# end of box
-                                     box(
-                                       status = "primary",
-                                       width = 6,
-                                       title = "STS Model Forecast",
-                                       solidHeader = FALSE,
-                                       plotOutput("stsForecast")
+                                       width = 12,
+                                       title = "STLM / STS Model Forecast",
+                                       solidHeader = TRUE,
+                                       collapsible = TRUE,
+                                       box(
+                                         status = "primary",
+                                         width = 6,
+                                         title = "STLM Model Forecast",
+                                         solidHeader = FALSE,
+                                         plotOutput("stlmForecast")
+                                       ),# end of box
+                                       box(
+                                         status = "primary",
+                                         width = 6,
+                                         title = "STS Model Forecast",
+                                         solidHeader = FALSE,
+                                         plotOutput("stsForecast")
+                                       )# end of box
                                      )# end of box
-                                   )# end of box
-                                 )# end of fluidrow
-                          )# end of column
-                        )# end of conditionalpanel
+                                   )# end of fluidrow
+                                )# end of column
+                              )# end of conditional panel
+                          )# end of fluidrow
+                        )# end of fluidPage
                       ),# end of tabItem
                 tabItem(tabName = "helpAbout"
                 ), #end of tabItem
@@ -899,10 +857,6 @@ dashboardPage(skin = "green",
                                  p(class = "text-muted",
                                    paste(" The Market Selector enables you to select a specific market at the state, county, city,
                                          and zipcode levels. [1]")),
-                                 h4("Select Residence Type"),
-                                 p(class = "text-muted",
-                                   paste("The analysis can be further limited to specific types of residences.  You may select
-                                         1, 2, 3, 4 or 5 bedroom homes, Condos, Single Family Homes or all homes. [2]")),
                                  p(class = "text-muted",
                                    paste("Press GO to run the analysis. [3]"))
                                )# end of box
@@ -991,10 +945,6 @@ dashboardPage(skin = "green",
                                  p(class = "text-muted",
                                    paste(" The Market Selector enables you to select a specific market at the state, county, city,
                                          and zipcode levels. [1]")),
-                                 h4("Select Residence Type"),
-                                 p(class = "text-muted",
-                                   paste("The analysis can be further limited to specific types of residences.  You may select
-                                         1, 2, 3, 4 or 5 bedroom homes, Condos, Single Family Homes or all homes. [2]")),
                                  h3("Select Training Parameters"),
                                  h4("Set Cross Validation"),
                                  p(class = "text-muted",
@@ -1080,10 +1030,6 @@ dashboardPage(skin = "green",
                                  p(class = "text-muted",
                                    paste(" The Market Selector enables you to select a specific market at the state, county, city,
                                          and zipcode levels. [1]")),
-                                 h4("Select Residence Type"),
-                                 p(class = "text-muted",
-                                   paste("The analysis can be further limited to specific types of residences.  You may select
-                                         1, 2, 3, 4 or 5 bedroom homes, Condos, Single Family Homes or all homes. [2]")),
                                  p(class = "text-muted",
                                    paste("Press GO to run the analysis. [3]")),
                                  h3("Model Performance Summary"),
@@ -1122,10 +1068,6 @@ dashboardPage(skin = "green",
                                  p(class = "text-muted",
                                    paste(" The Market Selector enables you to select a specific market at the state, county, city,
                                          and zipcode levels. [1]")),
-                                 h4("Select Residence Type"),
-                                 p(class = "text-muted",
-                                   paste("The analysis can be further limited to specific types of residences.  You may select
-                                         1, 2, 3, 4 or 5 bedroom homes, Condos, Single Family Homes or all homes. [2]")),
                                  h4("Select Years to Forecast"),
                                  p(class = "text-muted",
                                    paste("Use the ‘Years to Forecast’ slider to forecast home values from 1 to 10 years. [3]")),

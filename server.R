@@ -6,98 +6,11 @@
 
 # server.R
 
-library(datasets)
-library(dplyr)
-library(forecast)
-library(ggplot2)
-library(plyr)
-library(rCharts)
-library(shiny)
-library(TTR)
-library(xlsx)
-
-################################################################################
-#                                READ DATA                                     #
-################################################################################
-setwd("processedData")
-
-# Function that reads a file based upon the name provided
-readData <- function(f) {
-
-  switch (f,
-          currentZip = read.csv("currentZip.csv", header = TRUE, stringsAsFactors = FALSE),
-          currentCity = read.csv("currentCity.csv", header = TRUE, stringsAsFactors = FALSE),
-          currentCounty = read.csv("currentCounty.csv", header = TRUE, stringsAsFactors = FALSE),
-          currentState = read.csv("currentState.csv", header = TRUE, stringsAsFactors = FALSE),
-          hviAllZip = read.csv("hviAllZip.csv", header = TRUE, stringsAsFactors = FALSE),
-          hviAllCity = read.csv("hviAllCity.csv", header = TRUE, stringsAsFactors = FALSE),
-          hviAllCounty = read.csv("hviAllCounty.csv", header = TRUE, stringsAsFactors = FALSE),
-          hviAllState = read.csv("hviAllState.csv", header = TRUE, stringsAsFactors = FALSE),
-          hviCondoZip = read.csv("hviCondoZip.csv", header = TRUE, stringsAsFactors = FALSE),
-          hviCondoCity = read.csv("hviCondoCity.csv", header = TRUE, stringsAsFactors = FALSE),
-          hviCondoCounty = read.csv("hviCondoCounty.csv", header = TRUE, stringsAsFactors = FALSE),
-          hviCondoState = read.csv("hviCondoState.csv", header = TRUE, stringsAsFactors = FALSE),
-          hviSFHZip = read.csv("hviSFHZip.csv", header = TRUE, stringsAsFactors = FALSE),
-          hviSFHCity = read.csv("hviSFHCity.csv", header = TRUE, stringsAsFactors = FALSE),
-          hviSFHCounty = read.csv("hviSFHCounty.csv", header = TRUE, stringsAsFactors = FALSE),
-          hviSFHState = read.csv("hviSFHState.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvi1brZip = read.csv("hvi1brZip.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvi1brCity = read.csv("hvi1brCity.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvi1brCounty = read.csv("hvi1brCounty.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvi1brState = read.csv("hvi1brState.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvi2brZip = read.csv("hvi2brZip.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvi2brCity = read.csv("hvi2brCity.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvi2brCounty = read.csv("hvi2brCounty.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvi2brState = read.csv("hvi2brState.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvi3brZip = read.csv("hvi3brZip.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvi3brCity = read.csv("hvi3brCity.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvi3brCounty = read.csv("hvi3brCounty.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvi3brState = read.csv("hvi3brState.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvi4brZip = read.csv("hvi4brZip.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvi4brCity = read.csv("hvi4brCity.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvi4brCounty = read.csv("hvi4brCounty.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvi4brState = read.csv("hvi4brState.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvi5brZip = read.csv("hvi5brZip.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvi5brCity = read.csv("hvi5brCity.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvi5brCounty = read.csv("hvi5brCounty.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvi5brState = read.csv("hvi5brState.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvisqZip = read.csv("hvisqZip.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvisqCity = read.csv("hvisqCity.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvisqCounty = read.csv("hvisqCounty.csv", header = TRUE, stringsAsFactors = FALSE),
-          hvisqState = read.csv("hvisqState.csv", header = TRUE, stringsAsFactors = FALSE)
-  )
-}
-
-################################################################################
-#                     GLOBAL VARIABLES AND STRUCTURES                          #
-################################################################################
-# File containing unique geo codes, state,city, zip
-geo <- read.csv("geo.csv", header = TRUE)
-
-# Read model data
-modelData <- read.xlsx("models.xlsx", sheetIndex = 1, header = TRUE)
-
-# Read summary files
-currentZip    <- readData("currentZip")
-currentCity   <- readData("currentCity")
-currentCounty <- readData("currentCounty")
-currentState  <- readData("currentState")
-
-# Initialize Active Data
-
-#Default  Values
-dfltState   <- ""
-dfltCounty  <- ""
-dfltCity  <- ""
-dfltZip   <- ""
-dfltModel <- "ARIMA"
-dfltSplit <- 2014
-dfltMaxValue <- 10000000
 ################################################################################
 #                               SHINYSERVER                                    #
 ################################################################################
 
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
   
   ################################################################################
   ##                        DASHBOARD SERVER FUNCTIONS                          ##
@@ -200,8 +113,7 @@ shinyServer(function(input, output) {
     current <- arrange(current, desc(Annual))
     current <- data.frame(current[1:10,3])
     colnames(current) <- "State"
-    stateDF <- readData("hviAllState")
-    stateDF <- rename(stateDF, c("RegionName" = "State"))
+    stateDF <- hviAllState
     stateDF <- merge(current, stateDF, by = "State")
     stateDF <- subset(stateDF, select = c(State, X2000.01:X2015.12))
     stateDF <- t(stateDF)
@@ -218,8 +130,8 @@ shinyServer(function(input, output) {
     current <- arrange(current, desc(Annual))
     current <- data.frame(current[1:10,])
     current <- subset(current, select = location)
-    cityDF <- readData("hviAllCity")
-    cityDF$location <- paste0(cityDF$RegionName, ", ", cityDF$State)
+    cityDF <-  hviAllCity
+    cityDF$location <- paste0(cityDF$City, ", ", cityDF$State)
     cityDF <- merge(current, cityDF, by = "location")
     cityDF <- subset(cityDF, select = c(location, X2000.01:X2015.12))
     cityDF <- t(cityDF)
@@ -239,25 +151,25 @@ shinyServer(function(input, output) {
   output$levelQueryUi <- renderUI({
     radioButtons("analysisLevel", label = "Level of Analysis",
                  choices = list("State" = 1, "County" = 2, "City" = 3, "Zip"  = 4), 
-                 selected = 4)
+                 selected = 2)
   })
   
   # State query UI
   output$stateQuery2Ui <- renderUI({
     states <- unique(geo$StateName)
-    selectInput("state2", label = "State:", choices = c(Choose='', as.character(states)), selected = dfltState, selectize = FALSE)
+    selectInput("state2", label = "State:", choices = c(Choose='', as.character(states)), selected = dflt$state, selectize = FALSE)
   })
 
   # State query UI
   output$stateQuery3Ui <- renderUI({
     states <- unique(geo$StateName)
-    selectInput("state3", label = "State:", choices = c(Choose='', as.character(states)), selected = dfltState, selectize = FALSE)
+    selectInput("state3", label = "State:", choices = c(Choose='', as.character(states)), selected = dflt$state, selectize = FALSE)
   })
 
   # State query UI
   output$stateQuery4Ui <- renderUI({
     states <- unique(geo$StateName)
-    selectInput("state4", label = "State:", choices = c(Choose='', as.character(states)), selected = dfltState, selectize = FALSE)
+    selectInput("state4", label = "State:", choices = c(Choose='', as.character(states)), selected = dflt$state, selectize = FALSE)
   })
 
   # County Query UI  
@@ -266,13 +178,13 @@ shinyServer(function(input, output) {
       if (input$state3 != "") {
         state <- input$state3
       } else {
-        state <- dfltState  
+        state <- dflt$state  
       }
     } else {
-      state <- dfltState
+      state <- dflt$state
     }
     counties <- unique(subset(geo, StateName == state, select = County))
-    selectInput("county3", label = "County:", choices = c(Choose='', as.character(counties$County)), selected = dfltCounty, selectize = FALSE)
+    selectInput("county3", label = "County:", choices = c(Choose='', as.character(counties$County)), selected = dflt$county, selectize = FALSE)
   })
 
   # County Query UI  
@@ -281,13 +193,13 @@ shinyServer(function(input, output) {
       if (input$state4 != "") {
         state <- input$state4
       } else {
-        state <- dfltState  
+        state <- dflt$state  
       }
     } else {
-      state <- dfltState
+      state <- dflt$state
     }
     counties <- unique(subset(geo, StateName == state, select = County))
-    selectInput("county4", label = "County:", choices = c(Choose='', as.character(counties$County)), selected = dfltCounty, selectize = FALSE)
+    selectInput("county4", label = "County:", choices = c(Choose='', as.character(counties$County)), selected = dflt$county, selectize = FALSE)
   })
   
   output$cityQuery4Ui <- renderUI({
@@ -306,7 +218,7 @@ shinyServer(function(input, output) {
         }
       } 
     }  
-    selectInput("city4", label = "City:", choices = c(Choose='', as.character(cities$City)), selected = dfltCity, selectize = FALSE)
+    selectInput("city4", label = "City:", choices = c(Choose='', as.character(cities$City)), selected = dflt$city, selectize = FALSE)
   })
   
   
@@ -321,15 +233,17 @@ shinyServer(function(input, output) {
       )
 
     # Screen based upon home value index
-    minValue <- input$hviQuery[1]
+    minValue <- as.numeric(input$hviQuery[1]) * 1000
     if (input$maxValue == TRUE) {
       maxValue <- dfltMaxValue
     } else {
-      maxValue <- input$hviQuery[2]
+      maxValue <- as.numeric(input$hviQuery[2]) * 1000
     }
     d <- subset(d, Value >= minValue & Value <= maxValue)
 
     # Screen based upon growth variable
+    minGrowth <- as.numeric(input$minGrowth) / 100
+    
     horizon <- input$horizon
     if (horizon == "5 Year") {
       horizon <- "Five"
@@ -337,11 +251,11 @@ shinyServer(function(input, output) {
       horizon <- "Ten"
     }
     d <- switch(horizon,
-           Monthly = d[ which(d$Monthly >= input$growthQuery[1]),],
-           Quarterly = d[ which(d$Quarterly >= input$growthQuery[1]),],
-           Annual = d[ which(d$Annual >= input$growthQuery[1]),], 
-           Five = d[ which(d$Five_Year >= input$growthQuery[1]),],
-           Ten = d[ which(d$Ten_Year >= input$growthQuery[1]),])
+           Monthly = d[ which(d$Monthly >= minGrowth),],
+           Quarterly = d[ which(d$Quarterly >= minGrowth),],
+           Annual = d[ which(d$Annual >= minGrowth),], 
+           Five = d[ which(d$Five_Year >= minGrowth),],
+           Ten = d[ which(d$Ten_Year >= minGrowth),])
     
      return(d)
   }
@@ -509,7 +423,6 @@ shinyServer(function(input, output) {
       horizon <- "Ten"
     }
     
-    
     # Sort by horizon
     if (nrow(d) != 0) {
       d <- switch(horizon,
@@ -524,261 +437,372 @@ shinyServer(function(input, output) {
   }, ignoreNULL = FALSE)
   
   
-  #Render Top Markets by Value
-  output$topByValue <- renderChart({
+  # Merge current and historical data for number of markets requested.
+  mergeMarketData <- function(d,n) {
     
-    d <- getData()
-    d <- arrange(d, desc(Value))
-
-    # Subset into top results
-    numBars <- 10
-    if (nrow(d) < numBars) {
-      numBars <- nrow(d)
+    #if state level of analysis, remove row for USA from data frame.
+    if (input$analysisLevel == 1) {
+      d <- d[ which(d$State != "United States"), ]
     }
-    d <- d[1:numBars,]
+    
+    #Subset current data to top n markets by growth
+    if (!is.null(d)) {
+      numMarkets <- n
+      if (nrow(d) < numMarkets) {
+        numMarkets <- nrow(d)
+      }
+      d <- d[1:numMarkets,]
+    }
+    
+    #Get historical pricing data based upon level of analysis
+    h <- switch (isolate(input$analysisLevel),
+                 "1" = hviAllState,
+                 "2" = hviAllCounty,
+                 "3" = hviAllCity,
+                 "4" = hviAllZip
+    )
+    
+    m <- merge(d, h, by = "location")
 
-    # Configure Chart
-    p <- rPlot(x = list(var = "location", sort = "Value"), y = "Value", data = d, type = "bar")
-    p$addParams(height = 300, width = 1050, dom = 'topByValue', title = paste("Top Markets by Median Home Value"))
-    p$guides(x = list(title = "Market", ticks = unique(d$location)))
-    p$guides(y = list(title = paste("Median Home Value")))
-    return(p)
+    return(m)
+  }
+
+  output$valueByGrowth <- renderPlotly({
+    # Get Data
+    d <- getGrowthData()
+    
+    # Subset into top results
+    if (!is.null(d)) {
+      numBars <- 1000
+      if (nrow(d) < numBars) {
+        numBars <- nrow(d)
+      }
+      d <- d[1:numBars,]
+    }
+    
+    # Prepare data based upon input horizon
+    horizon <- isolate(input$horizon)
+    if (horizon == "5 Year") {
+      horizon <- "Five"
+    } else if (horizon == "10 Year") {
+      horizon <- "Ten"
+    }
+    
+    d <- switch(horizon,
+                Monthly = subset(d, select = c(location, Value, Monthly)),
+                Quarterly = subset(d, select = c(location, Value, Quarterly)),  
+                Annual = subset(d, select = c(location, Value, Annual)),            
+                Five = subset(d, select = c(location, Value, Five_Year)),            
+                Ten = subset(d, select = c(location, Value, Ten_Year))
+    )
+    colnames(d) <- c("Location", "Value", "Growth")
+    
+    # Convert Growth Rate to Percentage
+    d$Growth = as.numeric(d$Growth) * 100
+    
+    # Designate axis labels
+    x <- list(title = "Median Home Value")
+    y <- list(title = "Percent Value Growth")
+    
+    # Prepare plot
+    p <- plot_ly(d, x = Value, y = Growth, text = Location, mode = "markers", color = Value, size = Value) %>%
+      layout(xaxis = x, yaxis = y)
   })
-
   
-  # Render Value Data Table
-  output$valueTbl <- renderDataTable({
-    d <- getData()
-    d <- arrange(d, desc(Value))
-    
-    #Drop Location variable
-    d$location <- NULL
-    return(d)
-
-  }, options = list(lengthMenu = c(5, 30, 50), autowidth = TRUE, pageLength = 5))
-    
-
   #Render Top Markets by Growth
   output$topByGrowth <- renderChart({
     
-      # Get Data
-      d <- getGrowthData()
-  
-      # Subset into top results
-      if (!is.null(d)) {
-        numBars <- 10
-        if (nrow(d) < numBars) {
-          numBars <- nrow(d)
-        }
-        d <- d[1:numBars,]
+    # Get Data
+    d <- getGrowthData()
+    
+    # Subset into top results
+    if (!is.null(d)) {
+      numBars <- 10
+      if (nrow(d) < numBars) {
+        numBars <- nrow(d)
       }
+      d <- d[1:numBars,]
+    }
+    
+    # Prepare data based upon input horizon
+    horizon <- isolate(input$horizon)
+    if (horizon == "5 Year") {
+      horizon <- "Five"
+    } else if (horizon == "10 Year") {
+      horizon <- "Ten"
+    }
 
-      # Configure Chart based upon input horizon
-      horizon <- input$horizon
-      if (horizon == "5 Year") {
-        horizon <- "Five"
-      } else if (horizon == "10 Year") {
-        horizon <- "Ten"
-      }
-      
-      p <- switch(horizon,
-                  Monthly = rPlot(x = list(var = "location", sort = "Monthly"), y = "Monthly", data = d, type = "bar"),
-                  Quarterly = rPlot(x = list(var = "location", sort = "Quarterly"), y = "Quarterly", data = d, type = "bar"),
-                  Annual = rPlot(x = list(var = "location", sort = "Annual"), y = "Annual", data = d, type = "bar"),
-                  Five = rPlot(x = list(var = "location", sort = "Five_Year"), y = "Five_Year", data = d, type = "bar"),
-                  Ten = rPlot(x = list(var = "location", sort = "Ten_Year"), y = "Ten_Year", data = d, type = "bar")
-      )
-      p$addParams(height = 300, width = 1050, dom = 'topByGrowth', title = paste("Top Markets by ", input$horizon, " Growth"))
-      p$guides(x = list(title = "Market", ticks = unique(d$location)))
-      p$guides(y = list(title = paste(input$horizon,"  Growth Rate")))
-      return(p)
+    d <- switch(horizon,
+                Monthly = subset(d, select = c(location, Monthly)),
+                Quarterly = subset(d, select = c(location, Quarterly)),            
+                Annual = subset(d, select = c(location, Annual)),            
+                Five = subset(d, select = c(location, Five_Year)),            
+                Ten = subset(d, select = c(location, Ten_Year))
+    )
+    colnames(d) <- c("location", "Growth")
+    d$Growth <- as.numeric(d$Growth) * 100
+    
+    #Prepare plot
+    p <- nPlot(Growth~location, data = d)
+    p$addParams(dom = "topByGrowth", type = "discreteBarChart")
+    p$set(width = 1200, height = 300)
+    p$xAxis(staggerLabels = TRUE)
+    p$yAxis(axisLabel = "Growth Rate (%)", width = 50)
+    return(p)
   })
+  
 
-  # Render Growth Data Table
-  output$growthTbl <- renderDataTable({
+  # Render Market Data Table
+  output$marketTbl <- renderDataTable({
     
     d <- getGrowthData()
-
+    
     #Drop location variable
     d$location <- NULL 
     return(d)
   }, options = list(lengthMenu = c(5, 30, 50), autowidth = TRUE, pageLength = 5))
   
+
+  output$valueHist <- renderPlot({
+    # Get Data
+    d <- getData()
+
+    # Render error message if not enough data to produce histogram
+    validate(
+      need(nrow(d) > 1, "Not enough data to produce histogram.")
+    )
+    
+    # Subset Data
+    d <- subset(d, select = c("location", "Value"))
+    
+    # Convert Value to ($000)
+    d$Value <- as.numeric(d$Value) / 1000
+    
+    #Set Parameters
+    bins <- seq(min(d$Value), max(d$Value), length.out = 31)
+    
+    #Draw Histogram
+    hist(as.numeric(d$Value), breaks = bins, col = "skyblue", border = "white",
+         xlab = "Median Home Values ($000)", 
+         main = "Histogram of Median Home Values")
+  })
+  
+
+  #Render Top Markets by Home Value Growth TimeSeries
+  output$topMarketsTS <- renderPlot({
+    # Get Data
+    d <- getGrowthData()
+    
+    # Set number of markets to plot.  Markets are sorted by Growth (desc)
+    numMarkets <- 10
+    
+    # Merge current with historical data for number of markets
+    d <- mergeMarketData(d, numMarkets)
+
+    # Format for time series 
+    d <- subset(d, select = c(location, X2000.01:X2015.12))
+    d <- t(d)
+    colnames(d) <- d[1,]
+    d <- d[-1,]
+    dTS <- ts(d, start = c(2000,1), end = c(2015,12), frequency = 12)
+    
+    # Render plot
+    plot(dTS, plot.type = "single", col = 1:ncol(dTS), ylab = "Median Home Value")
+    legend("topleft", colnames(dTS), col = 1:ncol(dTS), lty = 1)
+  })
+  
   ################################################################################
-  ##                        VALUE ANALYSIS FUNCTIONS                            ##
+  ##                        MARKET SELECTOR FUNCTIONS                           ##
   ################################################################################
+  
   # State query UI
-  output$stateQuery5Ui <- renderUI({
+  output$stateUi <- renderUI({
     states <- unique(geo$StateName)
-    selectInput("state5", label = "State:", choices = c(Choose='', as.character(states)), selectize = FALSE)
+    selectInput("state", label = "State:", choices = c(Choose='', as.character(states)), selected = dflt$state, selectize = FALSE)
   })
   
   # County Query UI  
-  output$countyQuery5Ui <- renderUI({
-    if (!is.null(input$state5)) {
-      if (input$state5 != "") {
-        state <- input$state5
-      } else {
-        state <- dfltState  
-      }
-    } else {
-      state <- dfltState
+  output$countyUi <- renderUI({
+    counties <- NULL
+    if (!is.null(input$state)) {
+      counties <- unique(subset(geo, StateName == input$state, select = County))
     }
-    counties <- unique(subset(geo, StateName == state, select = County))
-    selectInput("county5", label = "County:", choices = c(Choose='', as.character(counties$County)), selected = dfltCounty, selectize = FALSE)
+    selectInput("county", label = "County:", choices = c(Choose='', as.character(counties$County)), selected = dflt$county, selectize = FALSE)
   })
   
-
-  output$cityQuery5Ui <- renderUI({
+  
+  output$cityUi <- renderUI({
     cities <- NULL
     
-    if (!is.null(input$state5)) {
-      if (input$state5 != "") {
-        if (!is.null(input$county5)) {
-          if (input$county5 != "") {
-            cities  <- unique(subset(geo, StateName == input$state5 & County == input$county5, select = City))
+    if (!is.null(input$state)) {
+      if (input$state != "") {
+        if (!is.null(input$county)) {
+          if (input$county != "") {
+            cities  <- unique(subset(geo, StateName == input$state & County == input$county, select = City))
           } else {
-            cities  <- unique(subset(geo, StateName == input$state5, select = City))
+            cities  <- unique(subset(geo, StateName == input$state, select = City))
           }
         } else {
-          cities  <- unique(subset(geo, StateName == input$state5, select = City))
+          cities  <- unique(subset(geo, StateName == input$state, select = City))
         }
       } 
     }  
-    selectInput("city5", label = "City:", choices = c(Choose='', as.character(cities$City)), selected = dfltCity, selectize = FALSE)
+    selectInput("city", label = "City:", choices = c(Choose='', as.character(cities$City)), selected = dflt$city, selectize = FALSE)
   })
   
   
-  output$zipQuery5Ui <- renderUI({
-
+  output$zipUi <- renderUI({
     zips <- NULL
     
-    if (!is.null(input$state5)) {
-      if (input$state5 != "") {
-        zips <- unique(subset(geo, StateName == input$state5))
+    if (!is.null(input$state)) {
+      if (input$state != "") {
+        zips <- unique(subset(geo, StateName == input$state))
       }
     }
     
-    if (!is.null(input$county5)) {
-      if (input$county5 != "") {
-        zips <- unique(subset(zips, StateName == input$state5 & County == input$county5)) 
+    if (!is.null(input$county)) {
+      if (input$county != "") {
+        zips <- unique(subset(zips, StateName == input$state & County == input$county)) 
       }
     }
     
-    if (!is.null(input$city5)) {
-      if (input$city5 != "") {
-        zips <- unique(subset(zips, StateName == input$state5 & City == input$city5)) 
+    if (!is.null(input$city)) {
+      if (input$city != "") {
+        zips <- unique(subset(zips, StateName == input$state & City == input$city)) 
       }
     }
     
-    
-    selectInput("zip5", label = "Zip:", choices = c(Choose='', as.character(zips$RegionName)), selectize = FALSE)
+    selectInput("zip", label = "Zip:", choices = c(Choose='', as.character(zips$Zip)), selected = dflt$zip, selectize = FALSE)
     
   })
-
   
-  
-  # Get Data
-  selectData <- reactive({
-    level <- 0
+  #Determine level of market selected.
+  getLevel <- reactive({
+    
+    #Initialize Level
+    level <- "0"
+    
     # Get State Data 
-    if (!is.null(input$state5)) {
-      if (input$state5 != "") {
+    if (!is.null(input$state)) {
+      if (input$state != "") {
         level <- "1"
-        dfltState <<- input$state5
       }
     }
-
-    if (!is.null(input$county5)) {
-      if (input$county5 != "") {
+    
+    if (!is.null(input$county)) {
+      if (input$county != "") {
         level <- "2"
-        dfltCounty <<- input$county5
       }
     } 
     
-    if (!is.null(input$city5)) {
-      if (input$city5 != "") {
+    if (!is.null(input$city)) {
+      if (input$city != "") {
         level <- "3"
-        dfltCity <<- input$city5
       }
     } 
     
-    if (!is.null(input$zip5)) {
-      if (input$zip5 != "") {
+    if (!is.null(input$zip)) {
+      if (input$zip != "") {
         level <- "4"
-        dfltZip <<- input$zip5
-        
       }
     } 
-    if (level =="1") {
-      d <- switch(input$rtype,
-                  "1" = hvi1brState,
-                  "2" = hvi2brState,
-                  "3" = hvi3brState,
-                  "4" = hvi4brState,
-                  "5" = hvi5brState,
-                  "6" = hviCondoState,
-                  "7" = hviSFHState,
-                  "8" = hviAllState)
-      d <- subset(d, RegionName == input$state5, select = X2000.01:X2016.01)
-    }
     
-    if (level == "2") {
-      d <- switch(input$rtype,
-                  "1" = hvi1brCounty,
-                  "2" = hvi2brCounty,
-                  "3" = hvi3brCounty,
-                  "4" = hvi4brCounty,
-                  "5" = hvi5brCounty,
-                  "6" = hviCondoCounty,
-                  "7" = hviSFHCounty,
-                  "8" = hviAllCounty)
-      d <- subset(d, StateName == input$state5 & RegionName == input$county5, select = X2000.01:X2016.01)
-    }  
+    return(level)
+  })
+  
+  # Get Current Data
+  selectCurrentData <- reactive({
+    level <- getLevel()
     
-    if (level == "3") {   
-      d <- switch(input$rtype,
-                  "1" = hvi1brCity,
-                  "2" = hvi2brCity,
-                  "3" = hvi3brCity,
-                  "4" = hvi4brCity,
-                  "5" = hvi5brCity,
-                  "6" = hviCondoCity,
-                  "7" = hviSFHCity,
-                  "8" = hviAllCity)
-      d <- subset(d, StateName == input$state5 & RegionName == input$city5, select = X2000.01:X2016.01)  
-    }   
-    
-    if (level == "4") {
-      d <- switch(input$rtype,
-                  "1" = hvi1brZip,
-                  "2" = hvi2brZip,
-                  "3" = hvi3brZip,
-                  "4" = hvi4brZip,
-                  "5" = hvi5brZip,
-                  "6" = hviCondoZip,
-                  "7" = hviSFHZip,
-                  "8" = hviAllZip)
-      d <- subset(d, RegionName == input$zip5, select = X2000.01:X2016.01)    
-    }
-  return(d)
+    d <- switch(level,
+                "1" = subset(currentState, State == input$state),
+                "2" = subset(currentCounty, StateName == input$state & County == input$county),
+                "3" = subset(currentCity, StateName == input$state & City == input$city),
+                "4" = subset(currentZip, Zip == input$zip)
+                )
   })
 
+  # Get Historical Data
+  selectHistoricalData <- reactive({
+    level <- getLevel()
 
+    d <- switch(level,
+                "1" = subset(hviAllState, State == input$state, select = X2000.01:X2015.12),
+                "2" = subset(hviAllCounty, StateName == input$state & County == input$county, select = X2000.01:X2015.12),
+                "3" = subset(hviAllCity, StateName == input$state & City == input$city, select = X2000.01:X2015.12),
+                "4" = subset(hviAllZip, Zip == input$zip, select = X2000.01:X2016.01)
+                )
+    return(d)
+  })
+
+  ################################################################################
+  ##                        VALUE ANALYSIS FUNCTIONS                            ##
+  ################################################################################
+  
+  #Render Home Value Index Box for selected market
+  output$hviBox <- renderValueBox({
+    d <- selectCurrentData()
+    validate(
+      need(!is.null(d),"")
+    )
     
-  getTimeSeries <- eventReactive(input$select, {
-    d <- selectData()
+    valueBox(
+      paste0("$", d$Value), paste(d$location, " Median Home Value "), 
+      icon = icon("dollar"), color = "green"
+    )
+  })
+  
+  #Render Five Year Growth Box for selected market
+  output$annualBox <- renderValueBox({
+    d <- selectCurrentData()
+    validate(
+      need(!is.null(d), "")
+    )
+    
+    valueBox(
+      paste0(round(d$Annual * 100,4), "%"), paste(d$location,
+        " Annual Change in Home Values"), icon = icon("bar-chart"), color = "red"    )
+  })
+  
+  #Render Annual Growth Box for selected market
+  output$fiveYearBox <- renderValueBox({
+    d <- selectCurrentData()
+    validate(
+      need(!is.null(d), "")
+    )
+    valueBox(
+      paste0(round(d$Five_Year * 100,4), "%"), paste(d$location,
+      " Five Year Change in Home Values"), icon = icon("bar-chart"), color = "orange"    )
+  })
+  
+  #Render Annual Growth Box for selected market
+  output$tenYearBox <- renderValueBox({
+    d <- selectCurrentData()
+    validate(
+      need(!is.null(d), "")
+    )
+    
+    valueBox(
+      paste0(round(d$Ten_Year * 100,4), "%"), paste(d$location,
+      " Ten Year Change in Home Values"), icon = icon("bar-chart"), color = "blue"    )
+  })
+  
+  #Gets time series for a selected market.
+  getTimeSeries <- eventReactive(input$marketSelect, {
+    d <- selectHistoricalData()
+    
+    validate(
+      need(!is.null(d), "There are no data to analyze. Please select a market and press 'Go' to process the analysis.")
+    )
 
-    if (!is.null(d)) {
-      d <- as.numeric(as.vector(d))
-      timeSeries <- ts(d, frequency = 12, start = c(2000,1))
-
-      validate(
-        need(!any(is.na(timeSeries)), "No markets meet your search criteria.  Please select new search criteria in the Market Selector")
-      )
-
+    validate(
+      need(!any(is.na(d)), "Unable to produce a timeseries with NA values. Please select a different market in the sidebar. ")
+    )
+    
+    d <- as.numeric(as.vector(d))
+    timeSeries <- ts(d, frequency = 12, start = c(2000,1))
     return(timeSeries)
-    }
+
   }, ignoreNULL = FALSE)
   
   
@@ -798,171 +822,16 @@ shinyServer(function(input, output) {
   ################################################################################
   ##              FORECAST MODEL TRAINING FUNCTIONS                             ##
   ################################################################################
-  # State query UI
-  output$stateQuery6Ui <- renderUI({
-    states <- unique(geo$StateName)
-    selectInput("state6", label = "State:", choices = c(Choose='', as.character(states)), selectize = FALSE)
-  })
-  
-  # County Query UI  
-  output$countyQuery6Ui <- renderUI({
-    if (!is.null(input$state6)) {
-      if (input$state6 != "") {
-        state <- input$state6
-      } else {
-        state <- dfltState  
-      }
-    } else {
-      state <- dfltState
-    }
-    counties <- unique(subset(geo, StateName == state, select = County))
-    selectInput("county6", label = "County:", choices = c(Choose='', as.character(counties$County)), selected = dfltCounty, selectize = FALSE)
-  })
-  
-  
-  output$cityQuery6Ui <- renderUI({
-    cities <- NULL
-    
-    if (!is.null(input$state6)) {
-      if (input$state6 != "") {
-        if (!is.null(input$county6)) {
-          if (input$county6 != "") {
-            cities  <- unique(subset(geo, StateName == input$state6 & County == input$county6, select = City))
-          } else {
-            cities  <- unique(subset(geo, StateName == input$state6, select = City))
-          }
-        } else {
-          cities  <- unique(subset(geo, StateName == input$state6, select = City))
-        }
-      } 
-    }  
-    selectInput("city6", label = "City:", choices = c(Choose='', as.character(cities$City)), selected = dfltCity, selectize = FALSE)
-  })
-  
-  
-  output$zipQuery6Ui <- renderUI({
-    zips <- NULL
-    
-    if (!is.null(input$state6)) {
-      if (input$state6 != "") {
-        zips <- unique(subset(geo, StateName == input$state6))
-      }
-    }
-    
-    if (!is.null(input$county6)) {
-      if (input$county6 != "") {
-        zips <- unique(subset(zips, StateName == input$state6 & County == input$county6)) 
-      }
-    }
-    
-    if (!is.null(input$city6)) {
-      if (input$city6 != "") {
-        zips <- unique(subset(zips, StateName == input$state6 & City == input$city6)) 
-      }
-    }
-    
-    
-    selectInput("zip6", label = "Zip:", choices = c(Choose='', as.character(zips$RegionName)), selectize = FALSE)
-    
-  })
-  
-  # Select Data for Model Training Page
-  selectData2 <- function() {
-    
-    level <- 0
-    # Get State Data 
-    if (!is.null(input$state6)) {
-      if (input$state6 != "") {
-        level <- "1"
-        dfltState <<- input$state6
-      }
-    }
-    
-    if (!is.null(input$county6)) {
-      if (input$county6 != "") {
-        level <- "2"
-        dfltCounty <<- input$county6
-      }
-    } 
-    
-    if (!is.null(input$city6)) {
-      if (input$city6 != "") {
-        level <- "3"
-        dfltCity <<- input$city6
-      }
-    } 
-    
-    if (!is.null(input$zip6)) {
-      if (input$zip6 != "") {
-        level <- "4"
-        dfltZip <<- input$zip6
-        
-      }
-    } 
-    if (level =="1") {
-      d <- switch(input$rtype2,
-                  "1" = hvi1brState,
-                  "2" = hvi2brState,
-                  "3" = hvi3brState,
-                  "4" = hvi4brState,
-                  "5" = hvi5brState,
-                  "6" = hviCondoState,
-                  "7" = hviSFHState,
-                  "8" = hviAllState)
-      d <- subset(d, RegionName == input$state6, select = X2000.01:X2016.01)
-    }
-    
-    if (level == "2") {
-      d <- switch(input$rtype2,
-                  "1" = hvi1brCounty,
-                  "2" = hvi2brCounty,
-                  "3" = hvi3brCounty,
-                  "4" = hvi4brCounty,
-                  "5" = hvi5brCounty,
-                  "6" = hviCondoCounty,
-                  "7" = hviSFHCounty,
-                  "8" = hviAllCounty)
-      d <- subset(d, StateName == input$state6 & RegionName == input$county6, select = X2000.01:X2016.01)
-    }  
-    
-    if (level == "3") {   
-      d <- switch(input$rtype2,
-                  "1" = hvi1brCity,
-                  "2" = hvi2brCity,
-                  "3" = hvi3brCity,
-                  "4" = hvi4brCity,
-                  "5" = hvi5brCity,
-                  "6" = hviCondoCity,
-                  "7" = hviSFHCity,
-                  "8" = hviAllCity)
-      d <- subset(d, StateName == input$state6 & RegionName == input$city6, select = X2000.01:X2016.01)  
-    }   
-    
-    if (level == "4") {
-      d <- switch(input$rtype2,
-                  "1" = hvi1brZip,
-                  "2" = hvi2brZip,
-                  "3" = hvi3brZip,
-                  "4" = hvi4brZip,
-                  "5" = hvi5brZip,
-                  "6" = hviCondoZip,
-                  "7" = hviSFHZip,
-                  "8" = hviAllZip)
-      d <- subset(d, RegionName == input$zip6, select = X2000.01:X2016.01)    
-    }
-    return(d)
-  }
-  
-  
+
   # Render model select
   output$modelsUi <- renderUI({
-    selectInput("model", label = "Prediction Models:", choices = c(Choose='',as.character(modelData$code)), selected = dfltModel, selectize = FALSE)
+    selectInput("model", label = "Prediction Models:", choices = c(Choose='',as.character(modelData$code)), selected = dflt$model, selectize = FALSE)
   })
   
   # Render model name
   output$modelNameUi <- renderText({
     if (is.null(input$model)) {
-      m <- dfltModel
+      m <- dflt$model
     } else {
       m <- input$model
     }
@@ -972,7 +841,7 @@ shinyServer(function(input, output) {
   # Render model description
   output$modelDescUi <- renderText({
     if (is.null(input$model)) {
-      m <- dfltModel
+      m <- dflt$model
     } else {
       m <- input$model
     }
@@ -983,14 +852,25 @@ shinyServer(function(input, output) {
   # Split data into training and test/validation set
   splitData <- function() {
     
-
     if (is.null(input$split)) {
-      y <- dfltSplit
+      y <- dflt$split
     } else {
       y <- as.numeric(input$split)
     }
     
-    d <- selectData2()
+    validate(
+      need(input$state != "", "Please select a market using the geographic selectors in the sidebar. ")
+    )
+    
+    d <- selectHistoricalData()
+    
+    validate(
+      need(!is.null(d), "There are no data for the market selected.  Please select another market.")
+    )
+    
+    validate(
+      need(!any(is.na(d)), "Unable to produce a timeseries with NA values. Please select a different market in the sidebar. ")
+    )
 
     if (!any(is.na(d))) {
       # Create time series object on full data
@@ -1007,12 +887,12 @@ shinyServer(function(input, output) {
     }
   }
   
-  
-  
+
   # Get plot options, specifically, number of periods to forecast and to include
-  getForecastOptions <- eventReactive(input$train, {
+  getForecastOptions <- function() {
+ 
     # Determine number of periods to forecast
-    if (is.null(input$split)) {
+    if (is.null(input$split) || input$split == "") {
       periods <- 12
     } else {
       periods <- (2015 - as.integer(input$split)) * 12
@@ -1026,21 +906,23 @@ shinyServer(function(input, output) {
     }
     
     # Determine ylimit at peak price
-    maximum <- as.integer(max(selectData2()))
+    maximum <- as.integer(max(selectHistoricalData()))
     
     #Combine into a list and return
     l <- list(periods = periods, include = include, maximum = maximum)
     
-  }, ignoreNULL = FALSE)
+  }
   
   
   # Prepare predictions
-  trainModel <- function(d) {
-    if (is.null(input$model)) {
-      m <- dfltModel
-    } else {
-      m <- input$model
-    }
+  trainModel <- function(model, data) {
+    m <- model()
+    d <- data()
+    
+    validate(
+      need(!any(is.na(d)), "There are NA values in the training set for this market. Please change your selection criteria in Market Selector")
+    )
+    
     
     if (!is.null(d)) {
       switch (m,
@@ -1050,7 +932,7 @@ shinyServer(function(input, output) {
               TBATS = tbats(d, ic='aicc', seasonal.periods=12),
               BATS = bats(d, ic='aicc', seasonal.periods=12),
               STLM = stlm(d, s.window=12, ic='aicc', robust=TRUE, method='ets'),
-              STS = StructTS(d),
+              STS = StructTS(d, type = "level"),
               NAIVE = naive(d, getForecastOptions()$periods)
       )
     }
@@ -1077,19 +959,11 @@ shinyServer(function(input, output) {
     }
   }
   
-  # Get training forecast and test data
-  getPlotData <- function() {
+  # Get training forecast and test data for single plot on train page
+  getSinglePlotData <- eventReactive(input$train, {
     
     d <- splitData()
-
-    validate(
-      need(!is.null(d$train), "No markets match your selection criteria.  Please change your selection criteria in Market Selector")
-    )
-
-    validate(
-      need(!any(is.na(d$train)), "No markets match your selection criteria.  Please change your selection criteria in Market Selector")
-    )
-    m <- trainModel(d$train)
+    m <- trainModel(reactive(input$model), reactive(d$train))
     o <- getForecastOptions()
     p <- forecast(m, o$periods)
     a <- accuracy(p, d$test)
@@ -1103,13 +977,13 @@ shinyServer(function(input, output) {
     
     #Return list
     return(l)
-  }
+  }, ignoreNULL = FALSE)
   
   
   # Render training forecast plot
   output$modelPlot <- renderPlot({
     
-    p <- getPlotData()
+    p <- getSinglePlotData()
     plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
     lines(p$test, col = "red")
     legend("bottomright",
@@ -1126,221 +1000,274 @@ shinyServer(function(input, output) {
   })
   
   output$accuracy <- renderDataTable({
-    a <- getPlotData()
+    a <- getSinglePlotData()
     a$accuracy
   })
   
   ################################################################################
   ##                        MODEL COMPARISON FUNCTIONS                          ##
   ################################################################################
-  # State query UI
-  output$stateQuery7Ui <- renderUI({
-    states <- unique(geo$StateName)
-    selectInput("state7", label = "State:", choices = c(Choose='', as.character(states)), selectize = FALSE)
-  })
-  
-  # County Query UI  
-  output$countyQuery7Ui <- renderUI({
-    if (!is.null(input$state7)) {
-      if (input$state7 != "") {
-        state <- input$state7
-      } else {
-        state <- dfltState  
-      }
-    } else {
-      state <- dfltState
-    }
-    counties <- unique(subset(geo, StateName == state, select = County))
-    selectInput("county7", label = "County:", choices = c(Choose='', as.character(counties$County)), selected = dfltCounty, selectize = FALSE)
-  })
-  
-  
-  output$cityQuery7Ui <- renderUI({
-    cities <- NULL
-    
-    if (!is.null(input$state7)) {
-      if (input$state7 != "") {
-        if (!is.null(input$county7)) {
-          if (input$county7 != "") {
-            cities  <- unique(subset(geo, StateName == input$state7 & County == input$county7, select = City))
-          } else {
-            cities  <- unique(subset(geo, StateName == input$state7, select = City))
-          }
-        } else {
-          cities  <- unique(subset(geo, StateName == input$state7, select = City))
-        }
-      } 
-    }  
-    selectInput("city7", label = "City:", choices = c(Choose='', as.character(cities$City)), selected = dfltCity, selectize = FALSE)
-  })
-  
-  
-  output$zipQuery7Ui <- renderUI({
-    
-    zips <- NULL
-    
-    if (!is.null(input$state7)) {
-      if (input$state7 != "") {
-        zips <- unique(subset(geo, StateName == input$state7))
-      }
-    }
-    
-    if (!is.null(input$county7)) {
-      if (input$county7 != "") {
-        zips <- unique(subset(zips, StateName == input$state7 & County == input$county7)) 
-      }
-    }
-    
-    if (!is.null(input$city7)) {
-      if (input$city7 != "") {
-        zips <- unique(subset(zips, StateName == input$state7 & City == input$city7)) 
-      }
-    }
-    
-    
-    selectInput("zip7", label = "Zip:", choices = c(Choose='', as.character(zips$RegionName)), selectize = FALSE)
-    
-  })
-  
-    
-  # Select Data for Model Training Page
-  selectData3 <- eventReactive(input$select2, {
-    level <- 0
-    # Get State Data 
-    if (!is.null(input$state7)) {
-      if (input$state7 != "") {
-        level <- "1"
-        dfltState <<- input$state7
-      }
-    }
-    
-    if (!is.null(input$county7)) {
-      if (input$county7 != "") {
-        level <- "2"
-        dfltCounty <<- input$county7
-      }
-    } 
-    
-    if (!is.null(input$city7)) {
-      if (input$city7 != "") {
-        level <- "3"
-        dfltCity <<- input$city7
-      }
-    } 
-    
-    if (!is.null(input$zip7)) {
-      if (input$zip7 != "") {
-        level <- "4"
-        dfltZip <<- input$zip7
-        
-      }
-    } 
-    if (level =="1") {
-      d <- switch(input$rtype3,
-                  "1" = hvi1brState,
-                  "2" = hvi2brState,
-                  "3" = hvi3brState,
-                  "4" = hvi4brState,
-                  "5" = hvi5brState,
-                  "6" = hviCondoState,
-                  "7" = hviSFHState,
-                  "8" = hviAllState)
-      d <- subset(d, RegionName == input$state7, select = X2000.01:X2016.01)
-    }
-    
-    if (level == "2") {
-      d <- switch(input$rtype3,
-                  "1" = hvi1brCounty,
-                  "2" = hvi2brCounty,
-                  "3" = hvi3brCounty,
-                  "4" = hvi4brCounty,
-                  "5" = hvi5brCounty,
-                  "6" = hviCondoCounty,
-                  "7" = hviSFHCounty,
-                  "8" = hviAllCounty)
-      d <- subset(d, StateName == input$state7 & RegionName == input$county7, select = X2000.01:X2016.01)
-    }  
-    
-    if (level == "3") {   
-      d <- switch(input$rtype3,
-                  "1" = hvi1brCity,
-                  "2" = hvi2brCity,
-                  "3" = hvi3brCity,
-                  "4" = hvi4brCity,
-                  "5" = hvi5brCity,
-                  "6" = hviCondoCity,
-                  "7" = hviSFHCity,
-                  "8" = hviAllCity)
-      d <- subset(d, StateName == input$state7 & RegionName == input$city7, select = X2000.01:X2016.01)  
-    }   
-    
-    if (level == "4") {
-      d <- switch(input$rtype3,
-                  "1" = hvi1brZip,
-                  "2" = hvi2brZip,
-                  "3" = hvi3brZip,
-                  "4" = hvi4brZip,
-                  "5" = hvi5brZip,
-                  "6" = hviCondoZip,
-                  "7" = hviSFHZip,
-                  "8" = hviAllZip)
-      d <- subset(d, RegionName == input$zip7, select = X2000.01:X2016.01)    
-    }
-    return(d)
-  }, ignoreNULL = FALSE)  
-  
-  splitData2 <- function() {
-    y <- dfltSplit
-
-    d <- selectData3()
+  #Render Home Value Index Box for selected market
+  output$hviBox2 <- renderValueBox({
+    d <- selectCurrentData()
     validate(
-      need(!any(is.na(d)), "There are no markets that match your selection criteria.  Please change your options in Market Selector")
+      need(!is.null(d),"")
     )
     
-    # Create time series object on full data
-    marketPrices  <- as.numeric(as.vector(d))
-    tSeries       <- ts(marketPrices, frequency = 12, start = c(2000,1))
+    valueBox(
+      paste0("$", d$Value), paste(d$location, " Median Home Value "), 
+      icon = icon("dollar"), color = "green"
+    )
+  })
+  
+  #Render Five Year Growth Box for selected market
+  output$annualBox2 <- renderValueBox({
+    d <- selectCurrentData()
+    validate(
+      need(!is.null(d), "")
+    )
     
-    #Split into training and test set
-    tsTest  <- window(tSeries, start = c(y+1,1))
-    tsTrain <- window(tSeries, end = c(y,12))
+    valueBox(
+      paste0(round(d$Annual * 100,4), "%"), paste(d$location,
+                                                  " Annual Change in Home Values"), icon = icon("bar-chart"), color = "red"    )
+  })
+  
+  #Render Annual Growth Box for selected market
+  output$fiveYearBox2 <- renderValueBox({
+    d <- selectCurrentData()
+    validate(
+      need(!is.null(d), "")
+    )
+    valueBox(
+      paste0(round(d$Five_Year * 100,4), "%"), paste(d$location,
+                                                     " Five Year Change in Home Values"), icon = icon("bar-chart"), color = "orange"    )
+  })
+  
+  #Render Annual Growth Box for selected market
+  output$tenYearBox2 <- renderValueBox({
+    d <- selectCurrentData()
+    validate(
+      need(!is.null(d), "")
+    )
+    
+    valueBox(
+      paste0(round(d$Ten_Year * 100,4), "%"), paste(d$location,
+                                                  " Ten Year Change in Home Values"), icon = icon("bar-chart"), color = "blue"    )
+  })
+
+  # clear Accuracy Statistics
+  observeEvent(input$compare, {
+    accuracyArima	  <<- 	NULL
+    accuracyEts	    <<- 	NULL
+    accuracyNaive	  <<- 	NULL
+    accuracyNeural	<<- 	NULL
+    accuracyBats	  <<- 	NULL
+    accuracyTbats	  <<- 	NULL
+    accuracyStlm	  <<- 	NULL
+    accuracySts	    <<- 	NULL
+  })
+  
+  # Get Arima Plot Data
+  getArimaPlotData <- eventReactive(input$compare, {
+
+    d <- splitData()
+    m <- auto.arima(d$train, ic='aicc', stepwise=FALSE)
+    o <- getForecastOptions()
+    p <- forecast(m, o$periods)
+    a <- accuracy(p, d$test)
+    accuracyArima <<- t(a)
     
     #Combine into a list
-    l <- list("train" = tsTrain, "test" = tsTest)
+    p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
+              "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
+              "prediction" = p, "results" = accuracyArima)
     
-    return(l)
-  }
+    #Return list
+    return(p)
+  }, ignoreNULL = FALSE)
   
-  
-  
-  
-  getForecastOptions2 <- eventReactive(input$select2, {
-    periods <- 12
-    include <- 192 - periods
-    maximum <- as.integer(max(selectData3()))
+
+  # Get ETS Plot Data
+  getEtsPlotData <- eventReactive(input$compare, {
     
-    #Combine into a list and return
-    l <- list(periods = periods, include = include, maximum = maximum)
+    d <- splitData()
+    m <- ets(d$train, ic='aicc', restrict=FALSE)
+    o <- getForecastOptions()
+    p <- forecast(m, o$periods)
+    a <- accuracy(p, d$test)
+    accuracyEts <<- t(a)
     
-    return(l)
+    #Combine into a list
+    p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
+              "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
+              "prediction" = p, "results" = accuracyEts)
+    
+    #Return list
+    return(p)
+  }, ignoreNULL = FALSE)
+  
+
+  # Get Naive Plot Data
+  getNaivePlotData <- eventReactive(input$compare, {
+    
+    d <- splitData()
+    m <- naive(d$train, getForecastOptions()$periods)
+    o <- getForecastOptions()
+    p <- forecast(m, o$periods)
+    a <- accuracy(p, d$test)
+    accuracyNaive <<- t(a)
+    
+    #Combine into a list
+    p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
+              "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
+              "prediction" = p, "results" = accuracyNaive)
+    
+    #Return list
+    return(p)
+  }, ignoreNULL = FALSE)
+  
+  
+  # Get Neural Plot Data
+  getNeuralPlotData <- eventReactive(input$compare, {
+    
+    d <- splitData()
+    m <- nnetar(d$train, p=12, size=25)
+    o <- getForecastOptions()
+    p <- forecast(m, o$periods)
+    a <- accuracy(p, d$test)
+    accuracyNeural <<- t(a)
+    
+    #Combine into a list
+    p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
+              "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
+              "prediction" = p, "results" = accuracyNeural)
+    
+    #Return list
+    return(p)
+  }, ignoreNULL = FALSE)
+  
+  
+  # Get BATS Plot Data
+  getBATSPlotData <- eventReactive(input$compare, {
+    
+    d <- splitData()
+    m <- bats(d$train, ic='aicc', seasonal.periods=12)
+    o <- getForecastOptions()
+    p <- forecast(m, o$periods)
+    a <- accuracy(p, d$test)
+    accuracyBats <<- t(a)
+    
+    #Combine into a list
+    p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
+              "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
+              "prediction" = p, "results" = accuracyBats)
+    
+    #Return list
+    return(p)
+  }, ignoreNULL = FALSE)
+  
+  
+  # Get TBATS Plot Data
+  getTBATSPlotData <- eventReactive(input$compare, {
+    
+    d <- splitData()
+    m <- tbats(d$train, ic='aicc', seasonal.periods=12)
+    o <- getForecastOptions()
+    p <- forecast(m, o$periods)
+    a <- accuracy(p, d$test)
+    accuracyTbats <<- t(a)
+    
+    #Combine into a list
+    p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
+              "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
+              "prediction" = p, "results" = accuracyTbats)
+    
+    #Return list
+    return(p)
+  }, ignoreNULL = FALSE)
+  
+  # Get STLM Plot Data
+  getSTLMPlotData <- eventReactive(input$compare, {
+    
+    d <- splitData()
+    m <- stlm(d$train, s.window=12, ic='aicc', robust=TRUE, method='ets')
+    o <- getForecastOptions()
+    p <- forecast(m, o$periods)
+    a <- accuracy(p, d$test)
+    accuracyStlm <<- t(a)
+    
+    #Combine into a list
+    p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
+              "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
+              "prediction" = p, "results" = accuracyStlm)
+    
+    #Return list
+    return(p)
+  }, ignoreNULL = FALSE)
+  
+  # Get STS Plot Data
+  getSTSPlotData <- eventReactive(input$compare, {
+    
+    d <- splitData()
+    m <- StructTS(d$train, type = "level")
+    o <- getForecastOptions()
+    p <- forecast(m, o$periods)
+    a <- accuracy(p, d$test)
+    accuracySts <<- t(a)
+  
+    #Combine into a list
+    p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
+              "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
+              "prediction" = p, "results" = accuracySts)    
+    
+    #Return list
+    return(p)
+  }, ignoreNULL = FALSE)
+  
+  #Summarize performance error statistics 
+  errorStats <- eventReactive(input$compare, {
+    
+    accuracyTbl <- NULL
+    
+    validate(
+      need(input$state != "", "Please select a market using the geographic selectors in the sidebar. ")
+    )
+    
+    `%then%` <- shiny:::`%OR%`
+    
+    validate(
+      need(accuracyArima  != "", "Unable to prepare performance metrics with this data.  Please select a different market in the sidebar.")  %then%
+      need(accuracyEts  != "", "Unable to prepare performance metrics with this data.  Please select a different market in the sidebar.")  %then%
+      need(accuracyNaive  != "", "Unable to prepare performance metrics with this data.  Please select a different market in the sidebar.")  %then%
+      need(accuracyNeural  != "", "Unable to prepare performance metrics with this data.  Please select a different market in the sidebar.")  %then%
+      need(accuracyBats  != "", "Unable to prepare performance metrics with this data.  Please select a different market in the sidebar.")  %then%
+      need(accuracyTbats  != "", "Unable to prepare performance metrics with this data.  Please select a different market in the sidebar.")  %then%
+      need(accuracyStlm  != "", "Unable to prepare performance metrics with this data.  Please select a different market in the sidebar.")  %then%
+      need(accuracySts  != "", "Unable to prepare performance metrics with this data.  Please select a different market in the sidebar.")  %then%
+      need(accuracySts  != "", "Unable to prepare performance metrics with this data.  Please select a different market in the sidebar.")
+    )
+    
+    accuracyTbl <-  as.data.frame(rbind(round(accuracyArima[,2],3),
+                                         round(accuracyEts[,2],3),
+                                         round(accuracyNaive[,2],3),
+                                         round(accuracyNeural[,2],3),
+                                         round(accuracyBats[,2],3),
+                                         round(accuracyTbats[,2],3),
+                                         round(accuracyStlm[,2],3),
+                                         round(accuracySts[,2],3)))
+
+    modelNames <- as.vector(c("Arima", "ETS", "Naive", "Neural", "BATS", "TBATS", "STLM", "STS"))
+    accuracyTbl <- data.frame(modelNames, accuracyTbl)
+    colnames(accuracyTbl) <- c("Model", "ME", "RMSE", "MAE", "MPE", "MAPE", "MASE", "ACF1", "THEILS")
+    accuracyTbl
     
   }, ignoreNULL = FALSE)
   
   
   
+  #Plot Arima model prediction 
   output$arima <- renderPlot({
-    d <- splitData2()
-    m <- auto.arima(d$train, ic='aicc', stepwise=FALSE)
-    o <- getForecastOptions2()
-    p <- forecast(m, o$periods)
-    a <- accuracy(p, d$test)
-    accuracyArima <<- t(a)
-
-    #Combine into a plot data list
-    p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
-              "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
-              "prediction" = p, "results" = accuracyArima)
-    
+    p <- getArimaPlotData()
     plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
     lines(p$test, col = "red")
     legend("bottomright",
@@ -1357,18 +1284,7 @@ shinyServer(function(input, output) {
   })
   
   output$ets <- renderPlot({
-    d <- splitData2()
-    m <- ets(d$train, ic='aicc', restrict=FALSE)
-    o <- getForecastOptions2()
-    p <- forecast(m, o$periods)
-    a <- accuracy(p, d$test)
-    accuracyEts <<- t(a)
-    
-    #Combine into a plot data list
-    p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
-              "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
-              "prediction" = p, "results" = accuracyEts)
-    
+    p <- getEtsPlotData()
     plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
     lines(p$test, col = "red")
     legend("bottomright",
@@ -1385,18 +1301,7 @@ shinyServer(function(input, output) {
   })
   
   output$naive <- renderPlot({
-    d <- splitData2()
-    m <- naive(d$train, getForecastOptions2()$periods)
-    o <- getForecastOptions2()
-    p <- forecast(m, o$periods)
-    a <- accuracy(p, d$test)
-    accuracyNaive <<- t(a)
-    
-    #Combine into a plot data list
-    p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
-              "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
-              "prediction" = p, "results" = accuracyNaive)
-    
+    p <- getNaivePlotData()
     plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
     lines(p$test, col = "red")
     legend("bottomright",
@@ -1413,18 +1318,7 @@ shinyServer(function(input, output) {
   })
 
   output$neural <- renderPlot({
-    d <- splitData2()
-    m <- nnetar(d$train, p=12, size=25)
-    o <- getForecastOptions2()
-    p <- forecast(m, o$periods)
-    a <- accuracy(p, d$test)
-    accuracyNeural <<- t(a)
-    
-    #Combine into a plot data list
-    p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
-              "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
-              "prediction" = p, "results" = accuracyNeural)
-    
+    p <- getNeuralPlotData()
     plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
     lines(p$test, col = "red")
     legend("bottomright",
@@ -1441,18 +1335,7 @@ shinyServer(function(input, output) {
   })
   
   output$bats <- renderPlot({
-    d <- splitData2()
-    m <- bats(d$train, ic='aicc', seasonal.periods=12)
-    o <- getForecastOptions2()
-    p <- forecast(m, o$periods)
-    a <- accuracy(p, d$test)
-    accuracyBats <<- t(a)
-    
-    #Combine into a plot data list
-    p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
-              "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
-              "prediction" = p, "results" = accuracyBats)
-    
+    p <- getBATSPlotData()
     plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
     lines(p$test, col = "red")
     legend("bottomright",
@@ -1470,18 +1353,7 @@ shinyServer(function(input, output) {
   
   
   output$tbats <- renderPlot({
-    d <- splitData2()
-    m <- tbats(d$train, ic='aicc', seasonal.periods=12)
-    o <- getForecastOptions2()
-    p <- forecast(m, o$periods)
-    a <- accuracy(p, d$test)
-    accuracyTbats <<- t(a)
-    
-    #Combine into a plot data list
-    p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
-              "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
-              "prediction" = p, "results" = accuracyTbats)
-    
+    p <- getTBATSPlotData()
     plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
     lines(p$test, col = "red")
     legend("bottomright",
@@ -1499,18 +1371,7 @@ shinyServer(function(input, output) {
   
   
   output$stlm <- renderPlot({
-    d <- splitData2()
-    m <- stlm(d$train, s.window=12, ic='aicc', robust=TRUE, method='ets')
-    o <- getForecastOptions2()
-    p <- forecast(m, o$periods)
-    a <- accuracy(p, d$test)
-    accuracyStlm <<- t(a)
-    
-    #Combine into a plot data list
-    p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
-              "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
-              "prediction" = p, "results" = accuracyStlm)
-    
+    p <- getSTLMPlotData()
     plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
     lines(p$test, col = "red")
     legend("bottomright",
@@ -1528,18 +1389,7 @@ shinyServer(function(input, output) {
   
   
   output$sts <- renderPlot({
-    d <- splitData2()
-    m <- StructTS(d$train, type = "level")
-    o <- getForecastOptions2()
-    p <- forecast(m, o$periods)
-    a <- accuracy(p, d$test)
-    accuracySts <<- t(a)
-    
-    #Combine into a plot data list
-    p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
-              "periods" = o$periods, "maximum" = o$maximum, "include" = o$include,
-              "prediction" = p, "results" = accuracySts)
-    
+    p <- getSTSPlotData()
     plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
     lines(p$test, col = "red")
     legend("bottomright",
@@ -1555,208 +1405,98 @@ shinyServer(function(input, output) {
            text.font=3)
   })
   
+  #Render Performance Model Error Statistics Barchart
+  output$measurementsBar <- renderChart({
+    
+    e <- errorStats()
+    
+    p <- switch (input$measurements,
+      ME = nPlot(ME~Model, data = e, type = "discreteBarChart", dom = "measurementsBar", height = 400, width = 550),
+      RMSE = nPlot(RMSE~Model, data = e, type = "discreteBarChart", dom = "measurementsBar", height = 400, width = 550),
+      MAE = nPlot(MAE~Model, data = e, type = "discreteBarChart", dom = "measurementsBar", height = 400, width = 550),
+      MPE = nPlot(MPE~Model, data = e, type = "discreteBarChart", dom = "measurementsBar", height = 400, width = 550),
+      MAPE = nPlot(MAPE~Model, data = e, type = "discreteBarChart", dom = "measurementsBar", height = 400, width = 550),
+      MASE = nPlot(MASE~Model, data = e, type = "discreteBarChart", dom = "measurementsBar", height = 400, width = 550),
+      ACF1 = nPlot(ACF1~Model, data = e, type = "discreteBarChart", dom = "measurementsBar", height = 400, width = 550),
+      THEILS = nPlot(THEILS~Model, data = e, type = "discreteBarChart", dom = "measurementsBar", height = 400, width = 550)
+    )
+    p$xAxis(staggerLabels = TRUE)
+    p$yAxis(axisLabel = "Error Rate", width = 65)
+    return(p)
+  })
+  
   
   #Summary Table
   output$modelsumm <- renderDataTable({
-    accuracyArima <<- formatAccuracy(accuracyArima)
-    accuracyEts <<- formatAccuracy(accuracyEts)
-    accuracyNaive <<- formatAccuracy(accuracyNaive)
-    accuracyNeural <<- formatAccuracy(accuracyNeural)
-    accuracyBats <<- formatAccuracy(accuracyBats)
-    accuracyTbats <<- formatAccuracy(accuracyTbats)
-    accuracyStlm <<- formatAccuracy(accuracyStlm)
-    accuracySts <<- formatAccuracy(accuracySts)
     
-    accuracyArima  <<-  as.numeric(t(accuracyArima)[2,])
-    accuracyEts  <<-  as.numeric(t(accuracyEts)[2,])
-    accuracyNaive  <<-  as.numeric(t(accuracyNaive)[2,])
-    accuracyNeural  <<-  as.numeric(t(accuracyNeural)[2,])
-    accuracyBats  <<-  as.numeric(t(accuracyBats)[2,])
-    accuracyTbats  <<-  as.numeric(t(accuracyTbats)[2,])
-    accuracyStlm  <<-  as.numeric(t(accuracyStlm)[2,])
-    accuracySts  <<-  as.numeric(t(accuracySts)[2,])
+    validate(
+      need(input$state != "", "Please select a market using the geographic selectors in the sidebar. ")
+    )
     
-    accuracyTbl <<-  as.data.frame(rbind(accuracyArima,
-                    accuracyEts,
-                    accuracyNaive,
-                    accuracyNeural,
-                    accuracyBats,
-                    accuracyTbats,
-                    accuracyStlm,
-                    accuracySts)[,-8])
-    
-    modelNames <- as.vector(c("Arima", "ETS", "Naive", "Neural", "BATS", "TBATS", "STLM", "STS"))
-    accuracyTbl <<- data.frame(modelNames, accuracyTbl)
-    colnames(accuracyTbl) <<- c("Model", "ME", "RMSE", "MAE", "MPE", "MAPE", "MASE", "ACF1")
-    accuracyTbl
+    e <- errorStats()
 
-    
+    e <- rename(e, c("THEILS" = "Theil's U"))  
+    e
+
   })
   
   ################################################################################
   ##                        MARKET FORECAST FUNCTIONS                           ##
   ################################################################################
-  # State query UI
-  output$stateQuery8Ui <- renderUI({
-    states <- unique(geo$StateName)
-    selectInput("state8", label = "State:", choices = c(Choose='', as.character(states)), selectize = FALSE)
+  #Render Home Value Index Box for selected market
+  output$hviBox3 <- renderValueBox({
+    d <- selectCurrentData()
+    validate(
+      need(!is.null(d),"")
+    )
+    
+    valueBox(
+      paste0("$", d$Value), paste(d$location, " Median Home Value "), 
+      icon = icon("dollar"), color = "green"
+    )
   })
   
-  # County Query UI  
-  output$countyQuery8Ui <- renderUI({
-    if (!is.null(input$state8)) {
-      if (input$state8 != "") {
-        state <- input$state8
-      } else {
-        state <- dfltState  
-      }
-    } else {
-      state <- dfltState
-    }
-    counties <- unique(subset(geo, StateName == state, select = County))
-    selectInput("county8", label = "County:", choices = c(Choose='', as.character(counties$County)), selected = dfltCounty, selectize = FALSE)
+  #Render Five Year Growth Box for selected market
+  output$annualBox3 <- renderValueBox({
+    d <- selectCurrentData()
+    validate(
+      need(!is.null(d), "")
+    )
+    
+    valueBox(
+      paste0(round(d$Annual * 100,4), "%"), paste(d$location,
+                                                  " Annual Change in Home Values"), icon = icon("bar-chart"), color = "red"    )
   })
   
-  
-  output$cityQuery8Ui <- renderUI({
-    cities <- NULL
-    
-    if (!is.null(input$state8)) {
-      if (input$state8 != "") {
-        if (!is.null(input$county8)) {
-          if (input$county8 != "") {
-            cities  <- unique(subset(geo, StateName == input$state8 & County == input$county8, select = City))
-          } else {
-            cities  <- unique(subset(geo, StateName == input$state8, select = City))
-          }
-        } else {
-          cities  <- unique(subset(geo, StateName == input$state8, select = City))
-        }
-      } 
-    }  
-    selectInput("city8", label = "City:", choices = c(Choose='', as.character(cities$City)), selected = dfltCity, selectize = FALSE)
+  #Render Annual Growth Box for selected market
+  output$fiveYearBox3 <- renderValueBox({
+    d <- selectCurrentData()
+    validate(
+      need(!is.null(d), "")
+    )
+    valueBox(
+      paste0(round(d$Five_Year * 100,4), "%"), paste(d$location,
+                                                     " Five Year Change in Home Values"), icon = icon("bar-chart"), color = "orange"    )
   })
   
-  
-  output$zipQuery8Ui <- renderUI({
+  #Render Annual Growth Box for selected market
+  output$tenYearBox3 <- renderValueBox({
+    d <- selectCurrentData()
+    validate(
+      need(!is.null(d), "")
+    )
     
-    zips <- NULL
-    
-    if (!is.null(input$state8)) {
-      if (input$state8 != "") {
-        zips <- unique(subset(geo, StateName == input$state8))
-      }
-    }
-    
-    if (!is.null(input$county8)) {
-      if (input$county8 != "") {
-        zips <- unique(subset(zips, StateName == input$state8 & County == input$county8)) 
-      }
-    }
-    
-    if (!is.null(input$city8)) {
-      if (input$city8 != "") {
-        zips <- unique(subset(zips, StateName == input$state8 & City == input$city8)) 
-      }
-    }
-    
-    
-    selectInput("zip8", label = "Zip:", choices = c(Choose='', as.character(zips$RegionName)), selectize = FALSE)
-    
+    valueBox(
+      paste0(round(d$Ten_Year * 100,4), "%"), paste(d$location,
+                                                    " Ten Year Change in Home Values"), icon = icon("bar-chart"), color = "blue"    )
   })
   
-  
-  # Select Data for Model Training Page
-  selectData4 <- eventReactive(input$select3, {
-    level <- 0
-    # Get State Data 
-    if (!is.null(input$state8)) {
-      if (input$state8 != "") {
-        level <- "1"
-        dfltState <<- input$state8
-      }
-    }
-    
-    if (!is.null(input$county8)) {
-      if (input$county8 != "") {
-        level <- "2"
-        dfltCounty <<- input$county8
-      }
-    } 
-    
-    if (!is.null(input$city8)) {
-      if (input$city8 != "") {
-        level <- "3"
-        dfltCity <<- input$city8
-      }
-    } 
-    
-    if (!is.null(input$zip8)) {
-      if (input$zip8 != "") {
-        level <- "4"
-        dfltZip <<- input$zip8
-        
-      }
-    } 
-    if (level =="1") {
-      d <- switch(input$rtype4,
-                  "1" = hvi1brState,
-                  "2" = hvi2brState,
-                  "3" = hvi3brState,
-                  "4" = hvi4brState,
-                  "5" = hvi5brState,
-                  "6" = hviCondoState,
-                  "7" = hviSFHState,
-                  "8" = hviAllState)
-      d <- subset(d, RegionName == input$state8, select = X2000.01:X2016.01)
-    }
-    
-    if (level == "2") {
-      d <- switch(input$rtype4,
-                  "1" = hvi1brCounty,
-                  "2" = hvi2brCounty,
-                  "3" = hvi3brCounty,
-                  "4" = hvi4brCounty,
-                  "5" = hvi5brCounty,
-                  "6" = hviCondoCounty,
-                  "7" = hviSFHCounty,
-                  "8" = hviAllCounty)
-      d <- subset(d, StateName == input$state8 & RegionName == input$county8, select = X2000.01:X2016.01)
-    }  
-    
-    if (level == "3") {   
-      d <- switch(input$rtype4,
-                  "1" = hvi1brCity,
-                  "2" = hvi2brCity,
-                  "3" = hvi3brCity,
-                  "4" = hvi4brCity,
-                  "5" = hvi5brCity,
-                  "6" = hviCondoCity,
-                  "7" = hviSFHCity,
-                  "8" = hviAllCity)
-      d <- subset(d, StateName == input$state8 & RegionName == input$city8, select = X2000.01:X2016.01)  
-    }   
-    
-    if (level == "4") {
-      d <- switch(input$rtype4,
-                  "1" = hvi1brZip,
-                  "2" = hvi2brZip,
-                  "3" = hvi3brZip,
-                  "4" = hvi4brZip,
-                  "5" = hvi5brZip,
-                  "6" = hviCondoZip,
-                  "7" = hviSFHZip,
-                  "8" = hviAllZip)
-      d <- subset(d, RegionName == input$zip8, select = X2000.01:X2016.01)    
-    }
-    return(d)
-  }, ignoreNULL = FALSE)  
-  
+  #Render Arima forecast
   output$arimaForecast <- renderPlot({
     periods <- as.integer(input$forecastRange) * 12
     
     #Get data and convert to timeseries
-    d  <- selectData4()
+    d  <- selectHistoricalData()
     v  <- as.numeric(as.vector(d))
     d  <- ts(v, frequency = 12, start = c(2000,1))
     m  <- auto.arima(d, ic='aicc', stepwise=FALSE)
@@ -1765,12 +1505,12 @@ shinyServer(function(input, output) {
     plot.forecast(f, include = 36)
   })
   
-  
+  # Render ETS Forecast
   output$etsForecast <- renderPlot({
     periods <- as.integer(input$forecastRange) * 12
     
     #Get data and convert to timeseries
-    d  <- selectData4()
+    d  <- selectHistoricalData()
     v  <- as.numeric(as.vector(d))
     d  <- ts(v, frequency = 12, start = c(2000,1))
     m  <- ets(d, ic='aicc', restrict=FALSE)
@@ -1779,12 +1519,12 @@ shinyServer(function(input, output) {
     plot.forecast(f, include = 36)
   })
   
-  
+  # Render Naive Forecast
   output$naiveForecast <- renderPlot({
     periods <- as.integer(input$forecastRange) * 12
     
     #Get data and convert to timeseries
-    d  <- selectData4()
+    d  <- selectHistoricalData()
     v  <- as.numeric(as.vector(d))
     d  <- ts(v, frequency = 12, start = c(2000,1))
     m  <- naive(d, periods)
@@ -1793,12 +1533,12 @@ shinyServer(function(input, output) {
     plot.forecast(f, include = 36)
   })
   
-  
+  # Render Neural Network  Forecast
   output$neuralForecast <- renderPlot({
     periods <- as.integer(input$forecastRange) * 12
     
     #Get data and convert to timeseries
-    d  <- selectData4()
+    d  <- selectHistoricalData()
     v  <- as.numeric(as.vector(d))
     d  <- ts(v, frequency = 12, start = c(2000,1))
     m  <- nnetar(d, p=12, size=25)
@@ -1807,12 +1547,12 @@ shinyServer(function(input, output) {
     plot.forecast(f, include = 36)
   })
   
-  
+  # Render BATS Forecast
   output$batsForecast <- renderPlot({
     periods <- as.integer(input$forecastRange) * 12
     
     #Get data and convert to timeseries
-    d  <- selectData4()
+    d  <- selectHistoricalData()
     v  <- as.numeric(as.vector(d))
     d  <- ts(v, frequency = 12, start = c(2000,1))
     m  <- bats(d, ic='aicc', seasonal.periods=12)
@@ -1821,12 +1561,12 @@ shinyServer(function(input, output) {
     plot.forecast(f, include = 36)
   })
   
-  
+  # Render TBATS Forecast
   output$tbatsForecast <- renderPlot({
     periods <- as.integer(input$forecastRange) * 12
     
     #Get data and convert to timeseries
-    d  <- selectData4()
+    d  <- selectHistoricalData()
     v  <- as.numeric(as.vector(d))
     d  <- ts(v, frequency = 12, start = c(2000,1))
     m  <- tbats(d, ic='aicc', seasonal.periods=12)
@@ -1835,12 +1575,12 @@ shinyServer(function(input, output) {
     plot.forecast(f, include = 36)
   })
   
-  
+  # Render STLM  Forecast
   output$stlmForecast <- renderPlot({
     periods <- as.integer(input$forecastRange) * 12
     
     #Get data and convert to timeseries
-    d  <- selectData4()
+    d  <- selectHistoricalData()
     v  <- as.numeric(as.vector(d))
     d  <- ts(v, frequency = 12, start = c(2000,1))
     m  <- stlm(d, s.window=12, ic='aicc', robust=TRUE, method='ets')
@@ -1849,12 +1589,12 @@ shinyServer(function(input, output) {
     plot.forecast(f, include = 36)
   })
   
-  
+  # Render STS Forecast
   output$stsForecast <- renderPlot({
     periods <- as.integer(input$forecastRange) * 12
     
     #Get data and convert to timeseries
-    d  <- selectData4()
+    d  <- selectHistoricalData()
     v  <- as.numeric(as.vector(d))
     d  <- ts(v, frequency = 12, start = c(2000,1))
     m  <- StructTS(d)
