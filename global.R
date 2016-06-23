@@ -46,7 +46,6 @@ hviAllZip     = read.csv("hviAllZip.csv", header = TRUE, stringsAsFactors = FALS
 hviAllCity    = read.csv("hviAllCity.csv", header = TRUE, stringsAsFactors = FALSE)
 hviAllCounty  = read.csv("hviAllCounty.csv", header = TRUE, stringsAsFactors = FALSE)
 hviAllState   = read.csv("hviAllState.csv", header = TRUE, stringsAsFactors = FALSE)
-hvisqState    = read.csv("hvisqState.csv", header = TRUE, stringsAsFactors = FALSE)
 
 # Read model data
 modelData <- read.xlsx("models.xlsx", sheetIndex = 1, header = TRUE)

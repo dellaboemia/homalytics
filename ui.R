@@ -13,7 +13,7 @@ dashboardPage(skin = "green",
                   menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
                   menuItem("Market Explorer", tabName = "explorer", icon = icon("search")),
                   conditionalPanel(
-                    condition = "input.sbm != 'dashboard' && input.sbm != 'explorer'",
+                    condition = "input.sbm == 'valueAnalysis' || input.sbm == 'trainModels' || input.sbm == 'compareModels' || input.sbm == 'forecast'",
                     uiOutput("stateUi"),
                     uiOutput("countyUi"),
                     uiOutput("cityUi"),
@@ -32,12 +32,11 @@ dashboardPage(skin = "green",
                                        menuSubItem("Build a Query", icon = icon("search"), tabName = "helpBuildQuery"),
                                        menuSubItem("Market Report", icon = icon("bar-chart"), tabName = "helpMarketReport")),
                            menuItem("Value Analyzer", icon = icon("area-chart"),
-                                    menuSubItem("Select a Market", icon = icon("map-marker"), tabName = "helpSelectMarket"),
                                     menuSubItem("Non-Seasonal Series", icon = icon("line-chart"), tabName = "helpNonSeasonal"),
                                     menuSubItem("Seasonal Series", icon = icon("bar-chart"), tabName = "helpSeasonal")),
                            menuItem("Forecast Modeler", icon = icon("bar-chart"),
                                     menuSubItem("Set Parameters", icon = icon("caret-square-o-right"), tabName = "helpSetParameters"),
-                                    menuSubItem("Train Models", icon = icon("gears"), tabName = "helpTrainModels"),
+                                    menuSubItem("Analyze Models", icon = icon("gears"), tabName = "helpAnalyzeModels"),
                                     menuSubItem("Compare Models", icon = icon("check-circle"), tabName = "helpCompareModels")),
                            menuSubItem("Market Forecaster", icon = icon("line-chart"),tabName = "helpMarketForecaster")
                            )
@@ -87,8 +86,10 @@ dashboardPage(skin = "green",
                                          paste("The menus to the left will walk you through the process of exploring markets, reviewing price trends, training 
                                                forecast models, evaluating model performance accuracy and predict home prices, 3, 5 or 10 years out.")),
                                        p(
-                                         paste("To get started, click on the Market Explorer menu on the left."))
-                                         )
+                                         paste("To get started, click on the Market Explorer menu on the left.  For help, click on the help tab on 
+                                               the sidebar panel.")),
+                                       p("Enjoy!")
+                                     )# end of box
                                ),# end of column
                               column(width = 8,
                                 box(
@@ -287,10 +288,10 @@ dashboardPage(skin = "green",
                                width = 3,
                                background = "navy",
                                p("Select a market to analyze, then press 'Go' to run the analysis"),
-                               actionButton("marketSelect", label = "Go")
+                               actionButton("analyze", label = "Go")
                              ),# end of box
                             conditionalPanel(
-                              condition = "input.marketSelect",
+                              condition = "input.analyze",
                               valueBoxOutput("hviBox", width = 3),
                               valueBoxOutput("annualBox", width = 2),
                               valueBoxOutput("fiveYearBox", width = 2),
@@ -343,7 +344,7 @@ dashboardPage(skin = "green",
                             fluidRow(
                               box(
                                 title = "Model Training Parameters",
-                                status = "warning", width = 12,
+                                status = "primary", width = 12,
                                 solidHeader = TRUE,
                                 box(
                                   title = "Cross Validation",
@@ -562,10 +563,19 @@ dashboardPage(skin = "green",
                                  ),# end of box
                             conditionalPanel(
                               condition = "input.forecast",
-                              valueBoxOutput("hviBox3", width = 2),
-                              valueBoxOutput("annualBox3", width = 2),
-                              valueBoxOutput("fiveYearBox3", width = 2),
-                              valueBoxOutput("tenYearBox3", width = 2),
+                              column(width = 8,
+                                     fluidRow(
+                                       valueBoxOutput("minPredictionBox", width = 4),
+                                       valueBoxOutput("maxPredictionBox", width = 4),
+                                       valueBoxOutput("meanPredictionBox", width = 4)
+                                     ),# end of fluidrow
+                                     fluidRow(
+                                       valueBoxOutput("BATSBox", width = 2),
+                                       valueBoxOutput("TBATSBox", width = 2),
+                                       valueBoxOutput("STLMBox", width = 2),
+                                       valueBoxOutput("STSBox", width = 2)
+                                     )# end of fluidrow
+                               ),#end of column
                               column(width = 12,
                                    fluidRow(
                                      box(
@@ -576,10 +586,17 @@ dashboardPage(skin = "green",
                                        collapsible = TRUE,
                                        box(
                                          status = "primary",
-                                         width = 12,
-                                         title = "Summary by Forecast Model",
+                                         width = 6,
+                                         title = "Forecast Summary Plot",
                                          solidHeader = FALSE,
-                                         plotOutput("forecastSummary")
+                                         plotOutput("forecastSummaryPlot")
+                                       ),# end of box
+                                       box(
+                                         status = "primary",
+                                         width = 6,
+                                         title = "Prediction Summary Plot",
+                                         solidHeader = FALSE,
+                                         showOutput("predictionPlot", "nvd3")
                                        )# end of box
                                      )# end of box
                                    ),# end of fluidrow
@@ -595,14 +612,14 @@ dashboardPage(skin = "green",
                                          width = 6,
                                          title = "Arima Model Forecast",
                                          solidHeader = FALSE,
-                                         plotOutput("arimaForecast")
+                                         plotOutput("arimaForecastPlot")
                                        ),# end of box
                                        box(
                                          status = "primary",
                                          width = 6,
                                          title = "Exponential Smoothing (ETS) Model Forecast",
                                          solidHeader = FALSE,
-                                         plotOutput("etsForecast")
+                                         plotOutput("etsForecastPlot")
                                        )# end of box
                                      )# end of box
                                    ),# end of fluidrow
@@ -618,14 +635,14 @@ dashboardPage(skin = "green",
                                          width = 6,
                                          title = "Naive Model Forecast",
                                          solidHeader = FALSE,
-                                         plotOutput("naiveForecast")
+                                         plotOutput("naiveForecastPlot")
                                        ),# end of box
                                        box(
                                          status = "primary",
                                          width = 6,
                                          title = "Neural Network Model Forecast",
                                          solidHeader = FALSE,
-                                         plotOutput("neuralForecast")
+                                         plotOutput("neuralForecastPlot")
                                        )# end of box
                                      )# end of box
                                    ),# end of fluidrow
@@ -641,14 +658,14 @@ dashboardPage(skin = "green",
                                          width = 6,
                                          title = "BATS Model Forecast",
                                          solidHeader = FALSE,
-                                         plotOutput("batsForecast")
+                                         plotOutput("batsForecastPlot")
                                        ),# end of box
                                        box(
                                          status = "primary",
                                          width = 6,
                                          title = "TBATS Model Forecast",
                                          solidHeader = FALSE,
-                                         plotOutput("tbatsForecast")
+                                         plotOutput("tbatsForecastPlot")
                                        )# end of box
                                      )# end of box
                                    ),# end of fluidrow
@@ -664,14 +681,14 @@ dashboardPage(skin = "green",
                                          width = 6,
                                          title = "STLM Model Forecast",
                                          solidHeader = FALSE,
-                                         plotOutput("stlmForecast")
+                                         plotOutput("stlmForecastPlot")
                                        ),# end of box
                                        box(
                                          status = "primary",
                                          width = 6,
                                          title = "STS Model Forecast",
                                          solidHeader = FALSE,
-                                         plotOutput("stsForecast")
+                                         plotOutput("stsForecastPlot")
                                        )# end of box
                                      )# end of box
                                    )# end of fluidrow
@@ -682,26 +699,92 @@ dashboardPage(skin = "green",
                       ),# end of tabItem
                 tabItem(tabName = "helpAbout"
                 ), #end of tabItem
-                tabItem(tabName = "helpWelcome"
-                ), #end of tabItem
+                tabItem(tabName = "helpWelcome",
+                        column(width = 4,
+                               box(
+                                   title = "Analytics for the Real Estate Market",
+                                   width = 12,
+                                   height = 550,
+                                   background = "green",
+                                   solidHeader = FALSE,
+                                   collapsible = FALSE,
+                                   collapsed = FALSE,
+                                   h3("Welcome to shinyHome"),
+                                   p(
+                                     paste("Here, we use statistical inference and forecast modeling techniques to 
+                                           explore and forecast over 13,000 real estate markets in the United States.  
+                                           This tool will enable you to:")),
+                                   tags$ul(
+                                     tags$li("get a snapshot and timeseries of the states and cities with the highest annual increase in median home values
+                                             on this", span("Dashboard page,", style = "color:white")),
+                                     tags$li("explore home price indices and growth rates across various markets at several levels of granularity in 
+                                             the", span("Market Explorer,", style = "color:white")),
+                                     tags$li("select a market and analyze and decompose price movements into their seasonal, trend and irregular components in the"
+                                             , span("Value Analyzer,", style = "color:white")),
+                                     tags$li("train the most popular forecasting models and compare predictive accuracies in the", span("Forecast Modeler,", style = "color:white"), "and"),
+                                     tags$li("use these models to forecast home prices in virtually every US real estate market in the", span("Market Forecaster.", 
+                                                                                                                                              style = "color:white"))
+                                     )
+                               )# end of box
+                        ), #end of column
+                        column(width = 4,
+                               box(
+                                 title = "Application Organization",
+                                 width = 12,
+                                 height = 550,
+                                 background = "green",
+                                 solidHeader = FALSE,
+                                 collapsible = FALSE,
+                                 collapsed = FALSE,
+                                 h3("Explore, Train, Compare, Forecast"),
+                                 p(
+                                   paste("The app is organized to take you from market exploration, to selection, model training and forecasting.  
+                                         The pages are summarized as follows:")),
+                                 tags$ul(
+                                   tags$li("Dashboard: Provides some basic statistics on home values and home value growth in the United States"),
+                                   tags$li("Market Explorer: This is a query based page that allows you to explore markets by home value, rate
+                                           of home value growth, and geography."),
+                                   tags$li("Value Analyzer: Once you have selected a market, you can analyze price movements from a seasonal, 
+                                           trend, and irregular components"),
+                                   tags$li("Forecast Modeler - Train Models: You will select a market, designate a training and test set, select a 
+                                                   forecast algorithm, train the model and evaluate its performance."),
+                                   tags$li("Forecast Modeler - Compare Models: This page will allow you to run eight of the most popular forecast 
+                                           algorithms, and compare their predictive accuracy, side-by-side."),
+                                   tags$li("Market Forecaster: You will be able to select a market and forecast home values for up to 10 years.")),
+                                 p(
+                                   paste("To get started, click on the Market Explorer menu on the left.  For help, click on the help tab on 
+                                         the sidebar panel.")),
+                                 p(
+                                   paste("Enjoy!"))
+                               )# end of box
+                         )# end of column
+                ),# end oftabItem
                 tabItem(tabName = "helpDashboard",
                         column(width = 4,
                                box(
-                                 status = "primary",
                                  width = 12,
+                                 background = "green",
                                  solidHeader = FALSE,
-                                 h2("Dashboard"),
-                                 p(class = "text-muted",
+                                 collapsible = FALSE,
+                                 collapsed = FALSE,
+                                 h3("Dashboard"),
+                                 p(
                                    paste("The Dashboard provides an introduction to the site and some basic 
                                          statistics on the US housing market such as:")),
-                                 tags$ol(class = "text-muted",
-                                   tags$li("US Home Value Index – Median Home Price"),
-                                   tags$li("US Monthly Percent Change in Home Values"),
-                                   tags$li("US Annual  Percent Change in Home Values"),
-                                   tags$li("The top 10 states by median home value growth"),
-                                   tags$li("The top 10 counties by median home value growth"),
-                                   tags$li("The top 10 cities by median home value growth")
-                                 )# end of tags$ol
+                                 tags$ol(
+                                   tags$li("US Home Value Index – Median Home Price [1]"),
+                                   tags$li("Market with highest median home value [2]"),
+                                   tags$li("The US annual growth in median home values [3]"),
+                                   tags$li("Market with highest annual growth in home values [4]"),
+                                   tags$li("The top 10 states by median home value growth [5]"),
+                                   tags$li("The top 10 cities by median home value growth [6]"),
+                                   tags$li("Top 10 states by median home value growth home value price time series [7]"),
+                                   tags$li("Top 10 cities by median home value growth home value time series [8]")
+                                 ),# end of tags$ol
+                                 p(
+                                   paste("The data set for this site includes current and historical home value 
+                                         indices for over 20,000 markets.  The Market Explorer page will allow you to query 
+                                         and report on markets from the state to the zip code level."))
                                )# end of box
                         ),# end of column
                         column(width = 8,
@@ -709,186 +792,140 @@ dashboardPage(skin = "green",
                                  status = "primary",
                                  width = 12,
                                  solidHeader = FALSE,
-                                 img(src = "dashboard.png", height = 574, width = 1020)
+                                 img(src = "dashboard1.png", height = 400, width = 1020),
+                                 img(src = "dashboard2.png", height = 300, width = 1020)
                                  )# end of box
                         )# end of column
                 ), #end of tabItem
                 tabItem(tabName = "helpBuildQuery",
-                        fluidRow(
-                           box(
-                             status = "primary",
-                             width = 12,
-                             solidHeader = FALSE,
-                             img(src = "queryBuilder.png", height = 434, width = 1646)
-                           )# end of box
-                        ), #end of fluidrow
-                        box(
-                          status = "primary",
-                          width = 12,
-                          solidHeader = FALSE,
-                          fluidRow(
-                            column(width = 4,
-                                   box(
-                                     status = "primary",
-                                     width = 12,
-                                     solidHeader = FALSE,
-                                     h2("Market Explorer"),
-                                     p(class = "text-muted",
-                                       paste("The Market Explorer ranks real estate markets by median home value and/or growth in 
-                                             home value according to your query that we help you build.  The query builder enables you 
-                                             to filter markets by home value range, rate of growth, and geography.")),
-                                     h3("Building a Query"),
-                                     h4("Setting Home Value Range"),
-                                     tags$ul(class = "text-muted",
-                                             tags$li("Use the Home Value Range slider to set the lower 
-                                                     and upper bound on home values you wish to analyze. [1]"),
-                                             tags$li("If you wish to include all homes with values over $2m, 
-                                                     check the box labeled “Include all values exceeding $2m”. [2]")
-                                     )# end of tags$ul
-                                   )# end of box
-                            ),#end of column
-                            column(width = 4,
+                        column(width = 4,
+                               box(
+                                 title = "Market Explorer",
+                                 width = 12,
+                                 background = "green",
+                                 solidHeader = FALSE,
+                                 collapsible = FALSE,
+                                 collapsed = FALSE,
+                                 p(
+                                   paste("The Market Explorer ranks real estate markets by median home value 
+                                         and/or growth in home value according to your query that we help you build.  
+                                         The query builder enables you to filter markets by home value range, rate of growth, 
+                                         and geography.")),
+                                 h3("Query Builder"),
+                                 tags$strong("Set Level of Analysis [1]"),
+                                 p(
+                                   paste("You can analyze markets at four levels:")),
+                                 tags$ol(
+                                   tags$li("State: State level analysis including all 50 states"),
+                                   tags$li("County: County level analysis, including one or more counties 
+                                           within a selected state.  If the state is not selected, all US counties are presented"),
+                                   tags$li("City: City level analysis, including one or more cities within a selected state or 
+                                           county.  If no city is selected, all US cities are presented"),
+                                   tags$li("Zip:  Zip code level analysis, including one or more zip codes, within a selected 
+                                           state, and county or city.  If no state, county or city is selected, all markets at the 
+                                           zip code level are presented.")
+                                  ),# end of tags$ol
+                                 tags$strong("Set Geographic Filter [2]"),
+                                 p(
+                                   paste("The Geographic Filter enables you to select the Level of Analysis, as well as 
+                                         the specific geography to analyze. Once you select the level of analysis, state, 
+                                         county, and city selectors appear which will allow you to further filter markets by a 
+                                         geography that accords with the level of analysis.")),
+                                 tags$strong("Set Home Value Range [3]"),
+                                 tags$ul(
+                                   tags$li("Use the Home Value Range slider to set the lower and upper bound on home values you wish to analyze."),
+                                   tags$li("If you wish to include all homes with values over $2m, check the box labeled 'Include all values exceeding $2m'.")
+                                   ),# end of tags$ul
+                                 tags$strong("Set Growth Rate [4]"),
+                                 p(
+                                   paste("First, select the Time Horizon over which home value growth will be filtered.  Options are:")),
+                                 tags$ul(
+                                   tags$li("Monthly"),
+                                   tags$li("Quarterly"),
+                                   tags$li("Annual"),
+                                   tags$li("Five Year"),
+                                   tags$li("Ten Year")
+                                 ),# end of tags$ul
+                                 p(
+                                   paste("Next, enter the minimum growth rate in percentage for the time horizon selected.")),
+                                 tags$strong("Go!"),
+                                 p(
+                                   paste("Once you have made your selection, press 'Go' to process your query."))
+                               )# end of box
+                        ),#end of column
+                        column(width = 8,
+                               box(
+                                 status = "primary",
+                                 width = 12,
+                                 solidHeader = FALSE,
+                                 img(src = "queryBuilder.png", height = 600, width = 1020)
+                               )# end of box
+                        )# end of column
+                ),# end of tabItem
+                tabItem(tabName = "helpMarketReport",
+                        fluidPage(
+                          column(width = 4,
+                                 box(
+                                   title = "Market Explorer Report",
+                                   width = 12,
+                                   background = "green",
+                                   solidHeader = FALSE,
+                                   collapsible = FALSE,
+                                   collapsed = FALSE,
+                                   p(
+                                     paste("This page provides several plots and a table that allows you to analyze and 
+                                           compare markets by home values, home value growth and geography.  The page includes:")),
+                                   tags$ul(
+                                     tags$li("Value Growth by Value Scatterplot: This graphic illuminates the relationship between home values and home value growth.  [1]"),
+                                     tags$li("Distribution of Median Home Values:  This illuminates the distribution of current home values according your query. [2]"),
+                                     tags$li("Markets Table: This table lists the markets, their median home values, and home value growth rates, according to your query [3]"),
+                                     tags$li("Top Markets By Growth: This bar chart shows the top markets by growth over the time horizon selected [4]"),
+                                     tags$li("Median Home Values for Top Growth Markets:  This chart provides the historical price movements for the top markets by growth listed above [5]")
+                                   )# end of tags$ul
+                                 )# end of box
+                          ),# end of column
+                          column(width = 8,
                                  box(
                                    status = "primary",
                                    width = 12,
                                    solidHeader = FALSE,
-                                   h4("Selecting Growth Rate"),
-                                   p(class = "text-muted",
-                                     paste("First, select the Time Horizon over which home value growth will be filtered. [3]  Options are:")),  
-                                   tags$ul(class = "text-muted",
-                                           tags$li("Monthly"),
-                                           tags$li("Quarterly"),
-                                           tags$li("Annual"),
-                                           tags$li("5 Year"),
-                                           tags$li("10 Year")
-                                           ),# end of tags$ul
-                                   p(class = "text-muted",
-                                     paste("Next, slide the left side of the Growth Rate slider to the minimum growth rate 
-                                           to be to be included in the analysis. [4]"))
+                                   img(src = "marketExplorer1.png", height = 500, width = 1020),
+                                   img(src = "marketExplorer2.png", height = 500, width = 1020)
                                  )# end of box
-                            ),#end of column
-                            column(width = 4,
-                                   box(
-                                     status = "primary",
-                                     width = 12,
-                                     solidHeader = FALSE,
-                                     h4("Set Geographic Filter"),
-                                     p(class = "text-muted",
-                                       paste("The Geographic Filter enables you to select the Level of Analysis, as well as the specific 
-                                             geography to analyze.")),
-                                     h5("Level of Analysis"),
-                                     p(class = "text-muted",
-                                       paste("You can analyze markets at four levels of analysis: [5]")),
-                                     tags$ul(class = "text-muted",
-                                             tags$li("State – State level analysis including all 50 states"),
-                                             tags$li("County – County level analysis, including one or more counties within a selected state"),
-                                             tags$li("City – City level analysis, including one or more cities within a selected state or county"),
-                                             tags$li("Zip – Zipcode level analysis, including one or more zipcodes, within a selected state, and county or city")
-                                     ),# end of tags$ul
-                                   h5("Geography"),
-                                   p(class = "text-muted",
-                                     paste("Once you select the level of analysis, state, county, and city selectors appear which 
-                                           will allow you to further filter markets by a geography that accords with the level of 
-                                           analysis. [6]")),
-                                   tags$ul(class = "text-muted",
-                                           tags$li("If you have selected the State level, the analysis will include all 50 states at the state level"),
-                                           tags$li("If you have selected the County level, you must select the state in which the county resides"),
-                                           tags$li("If you have selected the City level, you must select the state, county is optional"),
-                                           tags$li("If you have selected the Zip level, you must select state and city, county is optional")
-                                       ),# end of tags$ul
-                                   p(class = "text-muted",
-                                     paste("Once you have made your selection, press GO [7] to process your query.  Should there be no data that meets the selected criteria, you will see an error messaging 
-                                       so indicating and you will be instructed to change your selection criteria in the Query Builder."))
-                                   )# end of box
-                            )# end of column
-                          )# end of fluidRow
-                        )# end of box
-                ),# end of tabItem
-                tabItem(tabName = "helpMarketReport",
-                        column(width = 4,
-                               box(
-                                 status = "primary",
-                                 width = 12,
-                                 solidHeader = FALSE,
-                                 h2("Market Report"),
-                                 h3("Markets by Growth"),
-                                 h4("Top Markets by Growth Chart"),
-                                 p(class = "text-muted",
-                                   paste("The bar chart depicts the top 10 markets by rate of growth
-                                         over the selected horizon and home value range. [1]")),
-                                 h4("Top Markets by Growth Table"),
-                                 p(class = "text-muted",
-                                   paste("This table lists the markets by growth rate over the selected horizon.  
-                                         The table also provides the median home value. [2]")),
-                                 h3("Markets by Value"),
-                                 h4("Top Markets by Value Chart"),
-                                 p(class = "text-muted",
-                                   paste("The bar chart depicts the top 10 markets by median home value
-                                         over the selected horizon and home value range. [3]")),
-                                 h4("Top Markets by Value Table"),
-                                 p(class = "text-muted",
-                                   paste("This table lists the markets by median home value over 
-                                         the selected horizon.  The table also provides the growth rate information 
-                                         over the selected time horizon. [4]"))
-                               )# end of box
-                        ),# end of column
-                        column(width = 8,
-                               box(
-                                 status = "primary",
-                                 width = 12,
-                                 solidHeader = FALSE,
-                                 img(src = "marketReport.png", height = 574, width = 1020)
-                               )# end of box
-                        )# end of column
+                          )# end of column
+                    )# end of fluidpage
                 ), #end of tabItem
-                tabItem(tabName = "helpSelectMarket",
-                        column(width = 4,
-                               box(
-                                 status = "primary",
-                                 width = 12,
-                                 solidHeader = FALSE,
-                                 h2("Value Analyzer"),
-                                 p(class = "text-muted",
-                                   paste("The Value Analyzer allows you to analyze home value price movements for selected
-                                         markets over time.  You will be able to analyze and decompose price movements into their 
-                                         seasonal and non-seasonal components")),
-                                 h3("Select a Market"),
-                                 h4("Select a Geographic Market"),
-                                 p(class = "text-muted",
-                                   paste(" The Market Selector enables you to select a specific market at the state, county, city,
-                                         and zipcode levels. [1]")),
-                                 p(class = "text-muted",
-                                   paste("Press GO to run the analysis. [3]"))
-                               )# end of box
-                        ),# end of column
-                        column(width = 8,
-                               box(
-                                 status = "primary",
-                                 width = 12,
-                                 solidHeader = FALSE,
-                                 img(src = "marketSelector.png", height = 574, width = 1020)
-                               )# end of box
-                        )# end of column
-                ),#end of tabItem
                 tabItem(tabName = "helpNonSeasonal",
                         column(width = 4,
                                box(
-                                 status = "primary",
+                                 title = "Value Analysis",
                                  width = 12,
+                                 background = "green",
                                  solidHeader = FALSE,
-                                 h2("Explore Non-Seasonal Home Value Time Series"),
-                                 p(class = "text-muted",
+                                 collapsible = FALSE,
+                                 collapsed = FALSE,
+                                 p(
+                                   paste("The Value Analyzer allows you to analyze home value price movements for selected markets.  
+                                         You will be able to analyze and decompose price movements into their seasonal and non-seasonal components. ")),
+                                 h3("Explore Non-Seasonal Home Value Time Series"),
+                                 tags$strong("Select a Market [1:3]"),
+                                 p(
+                                   paste("Whereas we queried multiple markets in the Market Explorer, here you will be selecting a specific market at either the state, 
+                                         county, city or zip code level.  Once you have selected a market, press the 'Go' button to reveal some key statistics [3] and 
+                                         the seasonal and non-seasonal time series.")),
+                                 tags$strong("Non-Seasonal Home Value Time Series [4]"),
+                                 p(
                                    paste("A non-seasonal time series consists of a trend component and an irregular component. 
                                          Decomposing the time series involves the separation of the time series into these components, 
                                          that is, estimating the trend component and the irregular component.  Here we show the trend 
                                          component by calculating the simple moving average (SMA) of the time series.")),
-                                 h3("Span Order"),
-                                 p(class = "text-muted",
+                                 tags$em("Span Order"),
+                                 p(
                                    paste("To conducted a SMA, you need to specify the order (span) of the simple moving average.  
                                          Using the Span Order slider, select a span order between 1 and 10.  Through trial-and-error, 
                                          you will unveil a smooth SMA showing the trend component without excessive random fluctuation. [1]")),
-                                 h3("Simple Moving Average"),
-                                 p(class = "text-muted",
+                                 tags$strong("Simple Moving Average"),
+                                 p(
                                    paste("The plot shows an estimate of home value trend with a simple moving average of median home values for the market, from 2000 thru 2015. 
                                          A simple moving average (SMA) is a simple, or arithmetic, moving average that is calculated by adding the 
                                          median home value of homes in the selected market for a number of time periods and then dividing this total 
@@ -901,63 +938,71 @@ dashboardPage(skin = "green",
                                  status = "primary",
                                  width = 12,
                                  solidHeader = FALSE,
-                                 img(src = "nonSeasonal.png", height = 574, width = 1020)
+                                 img(src = "valueAnalyzer1.png", height = 574, width = 1020)
                                )# end of box
                         )# end of column
                       ),#end tabItem
                 tabItem(tabName = "helpSeasonal",
                         column(width = 4,
                                box(
-                                 status = "primary",
+                                 title = "Value Analysis",
                                  width = 12,
+                                 background = "green",
                                  solidHeader = FALSE,
-                                 h2("Explore Seasonal Home Value Time Series"),
-                                 p(class = "text-muted",
+                                 collapsible = FALSE,
+                                 collapsed = FALSE,
+                                 h3("Explore Seasonal Home Value Time Series [5]"),
+                                 p(
                                    paste("A seasonal time series consists of a trend component, a seasonal component and an irregular component. 
                                          Decomposing the time series means separating the time series into these three components.  
-                                         Click the tab labeled 'Seasonal'.  This will reveal four charts:")),
-                                 tags$ul(class = "text-muted",
-                                         tags$li("Observed Trend – the original time series [1]"),
-                                         tags$li("Trend Component [2]"),
-                                         tags$li("Seasonal Component [3]"),
-                                         tags$li("Random Component [4]")
-                                 )# end of tags$ul
-                               )# end of box
-                             ),# end of column
+                                         Click the tab labeled “Seasonal”.  This will reveal four charts:")),
+                                 tags$ul(
+                                   tags$li("Observed Trend: This is the original observed time series from the data."),
+                                   tags$li("Trend Component: The Trend Component at time t, that reflects the long-term progression of the series (secular variation). 
+                                           A trend exists when there is an increasing or decreasing direction in the data. "),
+                                   tags$li("Seasonal Component: The Seasonal Component at time t, reflecting seasonality (seasonal variation). A seasonal pattern exists 
+                                           when a time series is influenced by seasonal factors. Seasonality is always of a fixed and known period (e.g., the quarter of 
+                                           the year, the month, or day of the week)."),
+                                   tags$li("Random Component: The Random Component (or 'noise') at time t, that describes random, irregular influences. It represents the 
+                                           residuals or remainder of the time series after the other components have been removed."),
+                                   tags$li("Median Home Values for Top Growth Markets:  This chart provides the historical price movements for the top markets by growth listed above [5]")
+                                   )# end of tags$ul
+                                   )#end of box
+                                   ),#end of column
                         column(width = 8,
                                box(
                                  status = "primary",
                                  width = 12,
                                  solidHeader = FALSE,
-                                 img(src = "seasonal.png", height = 574, width = 1020)
+                                 img(src = "valueAnalyzer2.png", height = 574, width = 1020)
                                )# end of box
-                        )# end of column
+                        )# end of column                
                 ), #end of tabItem
                 tabItem(tabName = "helpSetParameters",
                         column(width = 4,
                                box(
-                                 status = "primary",
+                                 title = "Forecast Modeler",
                                  width = 12,
+                                 background = "green",
                                  solidHeader = FALSE,
-                                 h2("Set Model Training Parameters"),
-                                 h3("Select a Market"),
-                                 h4("Select a Geographic Market"),
-                                 p(class = "text-muted",
-                                   paste(" The Market Selector enables you to select a specific market at the state, county, city,
-                                         and zipcode levels. [1]")),
-                                 h3("Select Training Parameters"),
-                                 h4("Set Cross Validation"),
-                                 p(class = "text-muted",
+                                 collapsible = FALSE,
+                                 collapsed = FALSE,
+                                 h3("Set Model Training Parameters"),
+                                 tags$strong("Select a Market [1]"),
+                                 p(
+                                   paste("Select Market: Confirm or select a market using the selectors in the sidebar panel  [1]")),
+                                 tags$strong("Cross Validation [2]"),
+                                 p(
                                    paste("The home value time series data ranges from January 2000 thru December 2015.  
                                          To train the forecast algorithm, and to ascertain predictive accuracy, 
                                          the data must be split into a training set and a test set. The training 
                                          set will contain n series, starting at January 2000.  The test set will 
                                          start at series n +1 and continue through December 2015. Use the Training 
-                                         Set Split slider to set the last year of the training set.  The default value is 2014. [3]")),
-                                 h4("Select Forecast Algorithm"),
-                                 p(class = "text-muted",
+                                         Set Split slider to set the last year of the training set.  The default value is 2014. [2]")),
+                                 tags$strong("Select Forecast Algorithm [3]"),
+                                 p(
                                    paste("There are eight time series forecast algorithms available for modeling, and they are:")),
-                                 tags$ul(class = "text-muted",
+                                 tags$ul(
                                          tags$li("Arima -Autoregressive Integrated Moving Average"),
                                          tags$li("ETS – Automated Time Series Forecasting with Exponential Smoothing"),
                                          tags$li("Naïve Forecasting"),
@@ -967,10 +1012,10 @@ dashboardPage(skin = "green",
                                          tags$li("STLM - Seasonal-Trend Decomposition Procedure Based on Loess"),
                                          tags$li("STS - Basic Structural Model")
                                  ),# end of tags$ul
-                                 p(class = "text-muted",
-                                   paste("Use the selector to select the forecast algorithm [4], then press the 'Train Forecast Model'
+                                 p(
+                                   paste("Use the selector to select the forecast algorithm, then press the 'Train Forecast Model'
                                          button to create the forecast model based upon the training set and 
-                                         to calculate predictions on the test set.  [5]"))
+                                         to calculate predictions on the test set. [4]"))
                                )# end of box
                         ),# end of column
                         column(width = 8,
@@ -978,32 +1023,46 @@ dashboardPage(skin = "green",
                                  status = "primary",
                                  width = 12,
                                  solidHeader = FALSE,
-                                 img(src = "trainingParameters.png", height = 574, width = 1020)
+                                 img(src = "trainParameters.png", height = 574, width = 1020)
                                )# end of box
                         )# end of column
                 ), #end of tabItem
-                tabItem(tabName = "helpTrainModels",
+                tabItem(tabName = "helpAnalyzeModels",
                         column(width = 4,
                                box(
-                                 status = "primary",
+                                 title = "Forecast Modeler",
                                  width = 12,
+                                 background = "green",
                                  solidHeader = FALSE,
-                                 h2("Train Models"),
-                                 p(class = "text-muted",
+                                 collapsible = FALSE,
+                                 collapsed = FALSE,
+                                 h3("Analyze Models"),
+                                 p(
                                    paste("The following exhibits include the model prediction and the prediction accuracy report.")),
-                                 h3("Model Prediction"),
-                                 p(class = "text-muted",
+                                 tags$strong("Model Prediction [5]"),
+                                 p(
                                    paste("This plot includes the training component of the home value time series in black, 
                                          as well as a training prediction in red with the confidence interval shaded in light blue.  
                                          The dark blue line depicts actual test data.  [1]")),
-                                 h3("Prediction Accuracy"),
-                                 p(class = "text-muted",
+                                 tags$strong("Prediction Accuracy [6]"),
+                                 p(
                                    paste("The prediction accuracy report provides several indices for assessing prediction accuracy 
-                                         on both the training and test sets.  [2]")),
-                                 p(class = "text-muted",
+                                         on both the training and test sets, and they are:")),
+                                 tags$ul(
+                                   tags$li("ME: Mean Error"),
+                                   tags$li("RMSE: Root Mean Squared Error"),
+                                   tags$li("MAE: Mean Absolute Error"),
+                                   tags$li("MPE: Mean Percentage Error"),
+                                   tags$li("MAPE: Mean Absolute Percentage Error"),
+                                   tags$li("MASE: Mean Absolute Scaled Error"),
+                                   tags$li("ACF1: Autocorrelation of errors at lag 1.")
+                                 ),# end of tags$ul
+                                 p(
+                                   paste("You may select a column to sort the data by the statistic selected.")),
+                                 p(
                                    paste("To evaluate other training models, change the selection in the ‘Prediction Models’ 
                                          selector [3] and press the ‘Train Forecast Model’ button. [4]"))
-                                   )# end of box
+                               )# end of box
                          ),# end of column
                         column(width = 8,
                                box(
@@ -1015,79 +1074,92 @@ dashboardPage(skin = "green",
                         )# end of column
                 ), #end of tabItem
                 tabItem(tabName = "helpCompareModels",
-                        column(width = 4,
-                               box(
-                                 status = "primary",
-                                 width = 12,
-                                 solidHeader = FALSE,
-                                 h2("Compare Models"),
-                                 p(class = "text-muted",
-                                   paste("The purpose of this page is to provide you with a convenient way to train all 
-                                         eight models on a market at once and to evaluate and compare performance among and 
-                                         between the various forecast algorithms side-by-side.")),
-                                 h3("Market Selector"),
-                                 h4("Select a Geographic Market"),
-                                 p(class = "text-muted",
-                                   paste(" The Market Selector enables you to select a specific market at the state, county, city,
-                                         and zipcode levels. [1]")),
-                                 p(class = "text-muted",
-                                   paste("Press GO to run the analysis. [3]")),
-                                 h3("Model Performance Summary"),
-                                 p(class = "text-muted",
-                                   paste("The prediction accuracy measures are calculated for each forecast algorithm and are presented 
-                                         in a sortable datatable format.  To rank the forecast algorithms by a specific error statistic, 
-                                         click on the caret next to the column heading for the error statistic. [4]")),
-                                 h3("Model Performance"),
-                                 p(class = "text-muted",
-                                   paste("The rest of the page presents the prediction plots for each of the eight forecast models 
-                                         in a 4 by 2 arrangement. [5]"))
-                               )# end of box
-                        ),# end of column
-                        column(width = 8,
-                               box(
-                                 status = "primary",
-                                 width = 12,
-                                 solidHeader = FALSE,
-                                 img(src = "modelCompare.png", height = 574, width = 1020)
-                               )# end of box
-                        )# end of column                        
+                        fluidPage(
+                          column(width = 4,
+                                 box(
+                                   title = "Forecast Modeler",
+                                   width = 12,
+                                   background = "green",
+                                   solidHeader = FALSE,
+                                   collapsible = FALSE,
+                                   collapsed = FALSE,
+                                   h3("Compare Models"),
+                                   p(
+                                     paste("The purpose of this page is to provide you with a convenient way to train all 
+                                           eight models on a market at once and to evaluate and compare performance among and 
+                                           between the various forecast algorithms side-by-side.")),
+                                   tags$strong("Market Selector  [1,2]"),
+                                   p(
+                                     paste("As before confirm or select a market then press “Go” to run the training models.  
+                                           Please be patient as we are running eight algorithms.  The progress bar in the upper 
+                                           right corner reveals progress through the training process.")),
+                                   tags$strong("Market Summary [3]"),
+                                   p(
+                                     paste("The value boxes indicate basic statistics on the market selected, such as median home 
+                                           value and annual, five-year, and ten-year growth percentages.")),
+                                   tags$strong("Model Performance Summary"),
+                                   p(
+                                     paste("Model Performance Error Metrics Chart:  Select a measurement and see the relative 
+                                           performance of each of the models, for the selected metric. [4]")),
+                                   p(
+                                     paste("Model Performance Error Metrics Table: The prediction accuracy measures are calculated for each 
+                                           forecast algorithm and are presented in a sortable datatable format.  To rank the forecast algorithms 
+                                           by a specific error statistic, click on the caret next to the column heading for the error statistic. [5].")),
+                                   p(
+                                     paste("The rest of the page presents the prediction plots for each of the eight forecast models 
+                                           in a 4 by 2 arrangement. [6:13]"))
+                                 )# end of box
+                          ),# end of column
+                          column(width = 8,
+                                 box(
+                                   status = "primary",
+                                   width = 12,
+                                   solidHeader = FALSE,
+                                   img(src = "modelCompare1.png", height = 574, width = 1020),
+                                   img(src = "modelCompare2.png", height = 574, width = 1020),
+                                   img(src = "modelCompare3.png", height = 574, width = 1020)
+                                 )# end of box
+                          )# end of column
+                        )# end of fluidpage
                 ), #end of tabItem
                 tabItem(tabName = "helpMarketForecaster",
                         column(width = 4,
                                box(
-                                 status = "primary",
+                                 title = "Market Forecaster",
                                  width = 12,
+                                 background = "green",
                                  solidHeader = FALSE,
-                                 h2("Market Forecaster"),
-                                 p(class = "text-muted",
+                                 collapsible = FALSE,
+                                 collapsed = FALSE,
+                                 p(
                                    paste("This page enables you to create between 1 and 10 year home value forecasts for your selected market.  
                                          Forecasts produced by each of the eight forecast models are presented with confidence intervals 
                                          for comparative purposes.")),
-                                 h3("Forecast Options"),
-                                 h4("Select a Geographic Market"),
-                                 p(class = "text-muted",
-                                   paste(" The Market Selector enables you to select a specific market at the state, county, city,
-                                         and zipcode levels. [1]")),
-                                 h4("Select Years to Forecast"),
-                                 p(class = "text-muted",
-                                   paste("Use the ‘Years to Forecast’ slider to forecast home values from 1 to 10 years. [3]")),
-                                 p(class = "text-muted",
-                                   paste("Press GO to run the analysis. [4]")),
-                                 h3("Forecast Summary"),
-                                 p(class = "text-muted",
-                                   paste("The forecast summary plots the forecasts for each of the eight forecast models on a single plot. [5]")),
-                                 h3("Model Forecasts"),
-                                 p(class = "text-muted",
-                                   paste("The rest of the page contains forecasts for each of the eight forecast models independently 
-                                         in a 4 by 2 arrangement. [6]"))
-                                   )# end of box
-                                   ),# end of column
+                                 tags$strong("Set Forecast Options"),
+                                 tags$ul(
+                                   tags$li("Select a market using the selectors in the sidebar panel [1]"),
+                                   tags$li("Indicate the number of years to forecast using the slider and press “Go” [2]")
+                                 ),# end of tags$ul
+                                 tags$strong("Review Forecast"),
+                                 tags$ul(
+                                   tags$li("Prediction Summary Valuebox:  The value boxes on the top of the page indicate 
+                                           the minimum, maximum and mean predictions among the eight forecast algorithms. [3]"),
+                                   tags$li("Forecast Summary Plot:  This chart shows the time series forecast for all eight 
+                                           algorithms on a single chart [4]"),
+                                   tags$li("Prediction Summary Plot:  This plot shows the forecasted home value at the end 
+                                           of the forecast period for each of the forecast algorithms [5]"),
+                                   tags$li("Model Forecasts:  The rest of the page reveals forecast plots for each of the forecast algorithms. [6:13]")
+                                 )# end of tags$ul
+                              )# end of box
+                         ),# end of column
                         column(width = 8,
                                box(
                                  status = "primary",
                                  width = 12,
                                  solidHeader = FALSE,
-                                 img(src = "marketForecast.png", height = 574, width = 1020)
+                                 img(src = "marketForecast1.png", height = 574, width = 1020),
+                                 img(src = "marketForecast2.png", height = 574, width = 1020),
+                                 img(src = "marketForecast3.png", height = 574, width = 1020)
                                )# end of box
                         )# end of column                        
                  ) #end of tabItem

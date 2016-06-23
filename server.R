@@ -439,7 +439,7 @@ shinyServer(function(input, output, session) {
   
   # Merge current and historical data for number of markets requested.
   mergeMarketData <- function(d,n) {
-    
+
     #if state level of analysis, remove row for USA from data frame.
     if (input$analysisLevel == 1) {
       d <- d[ which(d$State != "United States"), ]
@@ -617,7 +617,7 @@ shinyServer(function(input, output, session) {
   
   # State query UI
   output$stateUi <- renderUI({
-    states <- unique(geo$StateName)
+    states <- sort(unique(geo$StateName))
     selectInput("state", label = "State:", choices = c(Choose='', as.character(states)), selected = dflt$state, selectize = FALSE)
   })
   
@@ -626,8 +626,9 @@ shinyServer(function(input, output, session) {
     counties <- NULL
     if (!is.null(input$state)) {
       counties <- unique(subset(geo, StateName == input$state, select = County))
+      counties <- sort(counties$County)
     }
-    selectInput("county", label = "County:", choices = c(Choose='', as.character(counties$County)), selected = dflt$county, selectize = FALSE)
+    selectInput("county", label = "County:", choices = c(Choose='', as.character(counties)), selected = dflt$county, selectize = FALSE)
   })
   
   
@@ -646,8 +647,10 @@ shinyServer(function(input, output, session) {
           cities  <- unique(subset(geo, StateName == input$state, select = City))
         }
       } 
-    }  
-    selectInput("city", label = "City:", choices = c(Choose='', as.character(cities$City)), selected = dflt$city, selectize = FALSE)
+    }
+    
+    cities <- sort(cities$City)
+    selectInput("city", label = "City:", choices = c(Choose='', as.character(cities)), selected = dflt$city, selectize = FALSE)
   })
   
   
@@ -662,17 +665,19 @@ shinyServer(function(input, output, session) {
     
     if (!is.null(input$county)) {
       if (input$county != "") {
-        zips <- unique(subset(zips, StateName == input$state & County == input$county)) 
+        zips <- unique(subset(zips, StateName == input$state & County == input$county))
       }
     }
     
     if (!is.null(input$city)) {
       if (input$city != "") {
-        zips <- unique(subset(zips, StateName == input$state & City == input$city)) 
+        zips <- unique(subset(zips, StateName == input$state & City == input$city))
       }
     }
     
-    selectInput("zip", label = "Zip:", choices = c(Choose='', as.character(zips$Zip)), selected = dflt$zip, selectize = FALSE)
+    zips <- sort(zips$Zip)
+    
+    selectInput("zip", label = "Zip:", choices = c(Choose='', as.character(zips)), selected = dflt$zip, selectize = FALSE)
     
   })
   
@@ -732,6 +737,15 @@ shinyServer(function(input, output, session) {
                 "3" = subset(hviAllCity, StateName == input$state & City == input$city, select = X2000.01:X2015.12),
                 "4" = subset(hviAllZip, Zip == input$zip, select = X2000.01:X2016.01)
                 )
+    
+    validate(
+      need(!is.null(d), "There are no data to analyze. Please select a market and press 'Go' to process the analysis.")
+    )
+    
+    validate(
+      need(!any(is.na(d)), "Unable to produce a timeseries with NA values. Please select a different market in the sidebar. ")
+    )
+    
     return(d)
   })
 
@@ -741,7 +755,11 @@ shinyServer(function(input, output, session) {
   
   #Render Home Value Index Box for selected market
   output$hviBox <- renderValueBox({
-    d <- selectCurrentData()
+    
+    input$analyze
+    
+    d <- isolate(selectCurrentData())
+    
     validate(
       need(!is.null(d),"")
     )
@@ -754,7 +772,11 @@ shinyServer(function(input, output, session) {
   
   #Render Five Year Growth Box for selected market
   output$annualBox <- renderValueBox({
-    d <- selectCurrentData()
+    
+    input$analyze
+    
+    d <- isolate(selectCurrentData())    
+    
     validate(
       need(!is.null(d), "")
     )
@@ -766,7 +788,11 @@ shinyServer(function(input, output, session) {
   
   #Render Annual Growth Box for selected market
   output$fiveYearBox <- renderValueBox({
-    d <- selectCurrentData()
+
+    input$analyze
+    
+    d <- isolate(selectCurrentData())
+    
     validate(
       need(!is.null(d), "")
     )
@@ -777,7 +803,11 @@ shinyServer(function(input, output, session) {
   
   #Render Annual Growth Box for selected market
   output$tenYearBox <- renderValueBox({
-    d <- selectCurrentData()
+    
+    input$analyze
+    
+    d <- isolate(selectCurrentData())
+    
     validate(
       need(!is.null(d), "")
     )
@@ -790,14 +820,6 @@ shinyServer(function(input, output, session) {
   #Gets time series for a selected market.
   getTimeSeries <- eventReactive(input$marketSelect, {
     d <- selectHistoricalData()
-    
-    validate(
-      need(!is.null(d), "There are no data to analyze. Please select a market and press 'Go' to process the analysis.")
-    )
-
-    validate(
-      need(!any(is.na(d)), "Unable to produce a timeseries with NA values. Please select a different market in the sidebar. ")
-    )
     
     d <- as.numeric(as.vector(d))
     timeSeries <- ts(d, frequency = 12, start = c(2000,1))
@@ -863,28 +885,18 @@ shinyServer(function(input, output, session) {
     )
     
     d <- selectHistoricalData()
-    
-    validate(
-      need(!is.null(d), "There are no data for the market selected.  Please select another market.")
-    )
-    
-    validate(
-      need(!any(is.na(d)), "Unable to produce a timeseries with NA values. Please select a different market in the sidebar. ")
-    )
 
-    if (!any(is.na(d))) {
-      # Create time series object on full data
-      marketPrices  <- as.numeric(as.vector(d))
-      tSeries       <- ts(marketPrices, frequency = 12, start = c(2000,1))
-      
-      #Split into training and test set
-      tsTest  <- window(tSeries, start = c(y+1,1))
-      tsTrain <- window(tSeries, end = c(y,12))
-      
-      #Combine into a list
-      l <- list("train" = tsTrain, "test" = tsTest)
-      return(l)
-    }
+    # Create time series object on full data
+    marketPrices  <- as.numeric(as.vector(d))
+    tSeries       <- ts(marketPrices, frequency = 12, start = c(2000,1))
+    
+    #Split into training and test set
+    tsTest  <- window(tSeries, start = c(y+1,1))
+    tsTrain <- window(tSeries, end = c(y,12))
+    
+    #Combine into a list
+    l <- list("train" = tsTrain, "test" = tsTest)
+    return(l)
   }
   
 
@@ -1009,7 +1021,11 @@ shinyServer(function(input, output, session) {
   ################################################################################
   #Render Home Value Index Box for selected market
   output$hviBox2 <- renderValueBox({
-    d <- selectCurrentData()
+    
+    input$compare
+    
+    d <- isolate(selectCurrentData())
+    
     validate(
       need(!is.null(d),"")
     )
@@ -1022,7 +1038,11 @@ shinyServer(function(input, output, session) {
   
   #Render Five Year Growth Box for selected market
   output$annualBox2 <- renderValueBox({
-    d <- selectCurrentData()
+    
+    input$compare
+    
+    d <- isolate(selectCurrentData())
+    
     validate(
       need(!is.null(d), "")
     )
@@ -1034,7 +1054,11 @@ shinyServer(function(input, output, session) {
   
   #Render Annual Growth Box for selected market
   output$fiveYearBox2 <- renderValueBox({
-    d <- selectCurrentData()
+    
+    input$compare
+    
+    d <- isolate(selectCurrentData())
+    
     validate(
       need(!is.null(d), "")
     )
@@ -1045,7 +1069,11 @@ shinyServer(function(input, output, session) {
   
   #Render Annual Growth Box for selected market
   output$tenYearBox2 <- renderValueBox({
-    d <- selectCurrentData()
+
+    input$compare
+    
+    d <- isolate(selectCurrentData())
+    
     validate(
       need(!is.null(d), "")
     )
@@ -1055,18 +1083,7 @@ shinyServer(function(input, output, session) {
                                                   " Ten Year Change in Home Values"), icon = icon("bar-chart"), color = "blue"    )
   })
 
-  # clear Accuracy Statistics
-  observeEvent(input$compare, {
-    accuracyArima	  <<- 	NULL
-    accuracyEts	    <<- 	NULL
-    accuracyNaive	  <<- 	NULL
-    accuracyNeural	<<- 	NULL
-    accuracyBats	  <<- 	NULL
-    accuracyTbats	  <<- 	NULL
-    accuracyStlm	  <<- 	NULL
-    accuracySts	    <<- 	NULL
-  })
-  
+
   # Get Arima Plot Data
   getArimaPlotData <- eventReactive(input$compare, {
 
@@ -1075,7 +1092,7 @@ shinyServer(function(input, output, session) {
     o <- getForecastOptions()
     p <- forecast(m, o$periods)
     a <- accuracy(p, d$test)
-    accuracyArima <<- t(a)
+    accuracyArima <- t(a)
     
     #Combine into a list
     p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
@@ -1095,7 +1112,7 @@ shinyServer(function(input, output, session) {
     o <- getForecastOptions()
     p <- forecast(m, o$periods)
     a <- accuracy(p, d$test)
-    accuracyEts <<- t(a)
+    accuracyEts <- t(a)
     
     #Combine into a list
     p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
@@ -1115,7 +1132,7 @@ shinyServer(function(input, output, session) {
     o <- getForecastOptions()
     p <- forecast(m, o$periods)
     a <- accuracy(p, d$test)
-    accuracyNaive <<- t(a)
+    accuracyNaive <- t(a)
     
     #Combine into a list
     p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
@@ -1135,7 +1152,7 @@ shinyServer(function(input, output, session) {
     o <- getForecastOptions()
     p <- forecast(m, o$periods)
     a <- accuracy(p, d$test)
-    accuracyNeural <<- t(a)
+    accuracyNeural <- t(a)
     
     #Combine into a list
     p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
@@ -1155,7 +1172,7 @@ shinyServer(function(input, output, session) {
     o <- getForecastOptions()
     p <- forecast(m, o$periods)
     a <- accuracy(p, d$test)
-    accuracyBats <<- t(a)
+    accuracyBats <- t(a)
     
     #Combine into a list
     p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
@@ -1175,7 +1192,7 @@ shinyServer(function(input, output, session) {
     o <- getForecastOptions()
     p <- forecast(m, o$periods)
     a <- accuracy(p, d$test)
-    accuracyTbats <<- t(a)
+    accuracyTbats <- t(a)
     
     #Combine into a list
     p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
@@ -1194,7 +1211,7 @@ shinyServer(function(input, output, session) {
     o <- getForecastOptions()
     p <- forecast(m, o$periods)
     a <- accuracy(p, d$test)
-    accuracyStlm <<- t(a)
+    accuracyStlm <- t(a)
     
     #Combine into a list
     p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
@@ -1213,7 +1230,7 @@ shinyServer(function(input, output, session) {
     o <- getForecastOptions()
     p <- forecast(m, o$periods)
     a <- accuracy(p, d$test)
-    accuracySts <<- t(a)
+    accuracySts <- t(a)
   
     #Combine into a list
     p <- list("train" = d$train, "test" = d$test, "model" = m$model, 
@@ -1233,6 +1250,15 @@ shinyServer(function(input, output, session) {
       need(input$state != "", "Please select a market using the geographic selectors in the sidebar. ")
     )
     
+    accuracyArima  <-	isolate(getArimaPlotData())
+    accuracyEts	   <-	isolate(getEtsPlotData())
+    accuracyNaive	 <-	isolate(getNaivePlotData())
+    accuracyNeural <-	isolate(getNeuralPlotData())
+    accuracyBats	 <-	isolate(getBATSPlotData())
+    accuracyTbats	 <-	isolate(getTBATSPlotData())
+    accuracyStlm	 <-	isolate(getSTLMPlotData())
+    accuracySts	   <-	isolate(getSTSPlotData())
+    
     `%then%` <- shiny:::`%OR%`
     
     validate(
@@ -1247,14 +1273,14 @@ shinyServer(function(input, output, session) {
       need(accuracySts  != "", "Unable to prepare performance metrics with this data.  Please select a different market in the sidebar.")
     )
     
-    accuracyTbl <-  as.data.frame(rbind(round(accuracyArima[,2],3),
-                                         round(accuracyEts[,2],3),
-                                         round(accuracyNaive[,2],3),
-                                         round(accuracyNeural[,2],3),
-                                         round(accuracyBats[,2],3),
-                                         round(accuracyTbats[,2],3),
-                                         round(accuracyStlm[,2],3),
-                                         round(accuracySts[,2],3)))
+    accuracyTbl <-  as.data.frame(rbind(round(accuracyArima$results[,2],3),
+                                         round(accuracyEts$results[,2],3),
+                                         round(accuracyNaive$results[,2],3),
+                                         round(accuracyNeural$results[,2],3),
+                                         round(accuracyBats$results[,2],3),
+                                         round(accuracyTbats$results[,2],3),
+                                         round(accuracyStlm$results[,2],3),
+                                         round(accuracySts$results[,2],3)))
 
     modelNames <- as.vector(c("Arima", "ETS", "Naive", "Neural", "BATS", "TBATS", "STLM", "STS"))
     accuracyTbl <- data.frame(modelNames, accuracyTbl)
@@ -1267,142 +1293,181 @@ shinyServer(function(input, output, session) {
   
   #Plot Arima model prediction 
   output$arima <- renderPlot({
-    p <- getArimaPlotData()
-    plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
-    lines(p$test, col = "red")
-    legend("bottomright",
-           inset=.05,
-           cex = 1,
-           title="Legend",
-           c("Actual Values","Predicted Values"),
-           horiz=FALSE,
-           lty=c(1,1),
-           lwd=c(2,2),
-           col=c("red","blue"),
-           bg="white",
-           text.font=3)
+    
+    withProgress(message = "Preparing Arima Forecast", {
+    
+      p <- getArimaPlotData()
+      plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
+      lines(p$test, col = "red")
+      legend("bottomright",
+             inset=.05,
+             cex = 1,
+             title="Legend",
+             c("Actual Values","Predicted Values"),
+             horiz=FALSE,
+             lty=c(1,1),
+             lwd=c(2,2),
+             col=c("red","blue"),
+             bg="white",
+             text.font=3)
+    })
   })
   
+  #Plot ETS forecast
   output$ets <- renderPlot({
-    p <- getEtsPlotData()
-    plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
-    lines(p$test, col = "red")
-    legend("bottomright",
-           inset=.05,
-           cex = 1,
-           title="Legend",
-           c("Actual Values","Predicted Values"),
-           horiz=FALSE,
-           lty=c(1,1),
-           lwd=c(2,2),
-           col=c("red","blue"),
-           bg="white",
-           text.font=3)
+    
+    withProgress(message = "Preparing ETS Forecast", {
+      
+      p <- getEtsPlotData()
+      plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
+      lines(p$test, col = "red")
+      legend("bottomright",
+             inset=.05,
+             cex = 1,
+             title="Legend",
+             c("Actual Values","Predicted Values"),
+             horiz=FALSE,
+             lty=c(1,1),
+             lwd=c(2,2),
+             col=c("red","blue"),
+             bg="white",
+             text.font=3)
+    })
   })
   
+  #Preparing NAIVE forecast plot
   output$naive <- renderPlot({
-    p <- getNaivePlotData()
-    plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
-    lines(p$test, col = "red")
-    legend("bottomright",
-           inset=.05,
-           cex = 1,
-           title="Legend",
-           c("Actual Values","Predicted Values"),
-           horiz=FALSE,
-           lty=c(1,1),
-           lwd=c(2,2),
-           col=c("red","blue"),
-           bg="white",
-           text.font=3)
+    
+    withProgress(message = "Preparing Naive Forecast", {
+      
+      p <- getNaivePlotData()
+      plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
+      lines(p$test, col = "red")
+      legend("bottomright",
+             inset=.05,
+             cex = 1,
+             title="Legend",
+             c("Actual Values","Predicted Values"),
+             horiz=FALSE,
+             lty=c(1,1),
+             lwd=c(2,2),
+             col=c("red","blue"),
+             bg="white",
+             text.font=3)
+    })
   })
 
+  #Preparing Neural Forecast Plot
   output$neural <- renderPlot({
-    p <- getNeuralPlotData()
-    plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
-    lines(p$test, col = "red")
-    legend("bottomright",
-           inset=.05,
-           cex = 1,
-           title="Legend",
-           c("Actual Values","Predicted Values"),
-           horiz=FALSE,
-           lty=c(1,1),
-           lwd=c(2,2),
-           col=c("red","blue"),
-           bg="white",
-           text.font=3)
+    
+    withProgress(message = "Preparing Neural Forecast", {
+      
+      p <- getNeuralPlotData()
+      plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
+      lines(p$test, col = "red")
+      legend("bottomright",
+             inset=.05,
+             cex = 1,
+             title="Legend",
+             c("Actual Values","Predicted Values"),
+             horiz=FALSE,
+             lty=c(1,1),
+             lwd=c(2,2),
+             col=c("red","blue"),
+             bg="white",
+             text.font=3)
+    })
   })
   
+  #Preparing TBATS forecast plot
   output$bats <- renderPlot({
-    p <- getBATSPlotData()
-    plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
-    lines(p$test, col = "red")
-    legend("bottomright",
-           inset=.05,
-           cex = 1,
-           title="Legend",
-           c("Actual Values","Predicted Values"),
-           horiz=FALSE,
-           lty=c(1,1),
-           lwd=c(2,2),
-           col=c("red","blue"),
-           bg="white",
-           text.font=3)
+    
+    withProgress(message = "Preparing BATS Forecast", {
+      
+      p <- getBATSPlotData()
+      plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
+      lines(p$test, col = "red")
+      legend("bottomright",
+             inset=.05,
+             cex = 1,
+             title="Legend",
+             c("Actual Values","Predicted Values"),
+             horiz=FALSE,
+             lty=c(1,1),
+             lwd=c(2,2),
+             col=c("red","blue"),
+             bg="white",
+             text.font=3)
+    })
   })
   
   
+  #Preparing TBATS forecast plot
   output$tbats <- renderPlot({
-    p <- getTBATSPlotData()
-    plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
-    lines(p$test, col = "red")
-    legend("bottomright",
-           inset=.05,
-           cex = 1,
-           title="Legend",
-           c("Actual Values","Predicted Values"),
-           horiz=FALSE,
-           lty=c(1,1),
-           lwd=c(2,2),
-           col=c("red","blue"),
-           bg="white",
-           text.font=3)
+    
+    withProgress(message = "Preparing TBATS Forecast", {
+      
+      p <- getTBATSPlotData()
+      plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
+      lines(p$test, col = "red")
+      legend("bottomright",
+             inset=.05,
+             cex = 1,
+             title="Legend",
+             c("Actual Values","Predicted Values"),
+             horiz=FALSE,
+             lty=c(1,1),
+             lwd=c(2,2),
+             col=c("red","blue"),
+             bg="white",
+             text.font=3)
+    })
   })
   
   
+  #Preparing STLM forecast plot
   output$stlm <- renderPlot({
-    p <- getSTLMPlotData()
-    plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
-    lines(p$test, col = "red")
-    legend("bottomright",
-           inset=.05,
-           cex = 1,
-           title="Legend",
-           c("Actual Values","Predicted Values"),
-           horiz=FALSE,
-           lty=c(1,1),
-           lwd=c(2,2),
-           col=c("red","blue"),
-           bg="white",
-           text.font=3)
+    
+    withProgress(message = "Preparing STLM Forecast", {
+      
+      p <- getSTLMPlotData()
+      plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
+      lines(p$test, col = "red")
+      legend("bottomright",
+             inset=.05,
+             cex = 1,
+             title="Legend",
+             c("Actual Values","Predicted Values"),
+             horiz=FALSE,
+             lty=c(1,1),
+             lwd=c(2,2),
+             col=c("red","blue"),
+             bg="white",
+             text.font=3)
+    })
   })
   
   
+  #Prepare STS Forecast Plot
   output$sts <- renderPlot({
-    p <- getSTSPlotData()
-    plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
-    lines(p$test, col = "red")
-    legend("bottomright",
-           inset=.05,
-           cex = 1,
-           title="Legend",
-           c("Actual Values","Predicted Values"),
-           horiz=FALSE,
-           lty=c(1,1),
-           lwd=c(2,2),
-           col=c("red","blue"),
-           bg="white",
-           text.font=3)
+    
+    withProgress(message = "Preparing STS Forecast", {
+      
+      p <- getSTSPlotData()
+      plot(p$prediction, include = p$include, ylim=c(0,as.numeric(p$maximum)))
+      lines(p$test, col = "red")
+      legend("bottomright",
+             inset=.05,
+             cex = 1,
+             title="Legend",
+             c("Actual Values","Predicted Values"),
+             horiz=FALSE,
+             lty=c(1,1),
+             lwd=c(2,2),
+             col=c("red","blue"),
+             bg="white",
+             text.font=3)
+    })
   })
   
   #Render Performance Model Error Statistics Barchart
@@ -1443,71 +1508,43 @@ shinyServer(function(input, output, session) {
   ################################################################################
   ##                        MARKET FORECAST FUNCTIONS                           ##
   ################################################################################
-  #Render Home Value Index Box for selected market
-  output$hviBox3 <- renderValueBox({
-    d <- selectCurrentData()
-    validate(
-      need(!is.null(d),"")
-    )
+  #Calculate Arima Forecast
+  arimaForecastData <- reactive({
     
-    valueBox(
-      paste0("$", d$Value), paste(d$location, " Median Home Value "), 
-      icon = icon("dollar"), color = "green"
-    )
-  })
-  
-  #Render Five Year Growth Box for selected market
-  output$annualBox3 <- renderValueBox({
-    d <- selectCurrentData()
-    validate(
-      need(!is.null(d), "")
-    )
-    
-    valueBox(
-      paste0(round(d$Annual * 100,4), "%"), paste(d$location,
-                                                  " Annual Change in Home Values"), icon = icon("bar-chart"), color = "red"    )
-  })
-  
-  #Render Annual Growth Box for selected market
-  output$fiveYearBox3 <- renderValueBox({
-    d <- selectCurrentData()
-    validate(
-      need(!is.null(d), "")
-    )
-    valueBox(
-      paste0(round(d$Five_Year * 100,4), "%"), paste(d$location,
-                                                     " Five Year Change in Home Values"), icon = icon("bar-chart"), color = "orange"    )
-  })
-  
-  #Render Annual Growth Box for selected market
-  output$tenYearBox3 <- renderValueBox({
-    d <- selectCurrentData()
-    validate(
-      need(!is.null(d), "")
-    )
-    
-    valueBox(
-      paste0(round(d$Ten_Year * 100,4), "%"), paste(d$location,
-                                                    " Ten Year Change in Home Values"), icon = icon("bar-chart"), color = "blue"    )
-  })
-  
-  #Render Arima forecast
-  output$arimaForecast <- renderPlot({
-    periods <- as.integer(input$forecastRange) * 12
-    
+    isolate({
+      periods <- as.integer(input$forecastRange) * 12
+    })
+      
     #Get data and convert to timeseries
     d  <- selectHistoricalData()
     v  <- as.numeric(as.vector(d))
     d  <- ts(v, frequency = 12, start = c(2000,1))
     m  <- auto.arima(d, ic='aicc', stepwise=FALSE)
     f  <- forecast(m, periods)
-    ARIMA <<- f$mean
-    plot.forecast(f, include = 36)
+
   })
   
-  # Render ETS Forecast
-  output$etsForecast <- renderPlot({
-    periods <- as.integer(input$forecastRange) * 12
+  #Render Arima forecast
+  output$arimaForecastPlot <- renderPlot({
+    
+    input$forecast
+    
+    withProgress(message = "Preparing Arima Forecast", {
+      
+      d <- isolate(arimaForecastData())
+      
+      plot.forecast(d, include = 36)
+        
+    })
+  })
+
+  
+  #Calculate ETS Forecast
+  etsForecastData <- reactive({
+    
+    isolate({
+      periods <- as.integer(input$forecastRange) * 12
+    })
     
     #Get data and convert to timeseries
     d  <- selectHistoricalData()
@@ -1515,13 +1552,31 @@ shinyServer(function(input, output, session) {
     d  <- ts(v, frequency = 12, start = c(2000,1))
     m  <- ets(d, ic='aicc', restrict=FALSE)
     f  <- forecast(m, periods)
-    ETS <<- f$mean
-    plot.forecast(f, include = 36)
+    
   })
   
-  # Render Naive Forecast
-  output$naiveForecast <- renderPlot({
-    periods <- as.integer(input$forecastRange) * 12
+  
+  # Render ETS Forecast
+  output$etsForecastPlot <- renderPlot({
+    
+    input$forecast
+    
+    withProgress(message = "Preparing ETS Forecast", {
+      
+      d <- isolate(etsForecastData())
+      
+      plot.forecast(d, include = 36)
+      
+    })
+  })
+  
+  
+  #Calculate Naive Forecast
+  naiveForecastData <- reactive({
+    
+    isolate({
+      periods <- as.integer(input$forecastRange) * 12
+    })
     
     #Get data and convert to timeseries
     d  <- selectHistoricalData()
@@ -1529,13 +1584,30 @@ shinyServer(function(input, output, session) {
     d  <- ts(v, frequency = 12, start = c(2000,1))
     m  <- naive(d, periods)
     f  <- forecast(m, periods)
-    NAIVE <<- f$mean
-    plot.forecast(f, include = 36)
+    
   })
   
-  # Render Neural Network  Forecast
-  output$neuralForecast <- renderPlot({
-    periods <- as.integer(input$forecastRange) * 12
+  # Render Naive Forecast
+  output$naiveForecastPlot <- renderPlot({
+    
+    input$forecast
+    
+    withProgress(message = "Preparing Naive Forecast", {
+      
+      d <- isolate(naiveForecastData())
+      
+      plot.forecast(d, include = 36)      
+      
+    })
+  })
+  
+  
+  #Calculate Neural Network  Forecast
+  neuralForecastData <- reactive({
+    
+    isolate({
+      periods <- as.integer(input$forecastRange) * 12
+    })
     
     #Get data and convert to timeseries
     d  <- selectHistoricalData()
@@ -1543,13 +1615,32 @@ shinyServer(function(input, output, session) {
     d  <- ts(v, frequency = 12, start = c(2000,1))
     m  <- nnetar(d, p=12, size=25)
     f  <- forecast(m, periods)
-    NEURAL <<- f$mean
-    plot.forecast(f, include = 36)
+    
   })
   
-  # Render BATS Forecast
-  output$batsForecast <- renderPlot({
-    periods <- as.integer(input$forecastRange) * 12
+  
+  # Render Neural Network  Forecast
+  output$neuralForecastPlot <- renderPlot({
+    
+    input$forecast
+    
+    withProgress(message = "Preparing Neural Forecast", {
+
+      d <- isolate(neuralForecastData())
+      
+      plot.forecast(d, include = 36)      
+      
+
+    })
+  })
+  
+  
+  #Calculate BATS Network  Forecast
+  batsForecastData <- reactive({
+    
+    isolate({
+      periods <- as.integer(input$forecastRange) * 12
+    })
     
     #Get data and convert to timeseries
     d  <- selectHistoricalData()
@@ -1557,13 +1648,31 @@ shinyServer(function(input, output, session) {
     d  <- ts(v, frequency = 12, start = c(2000,1))
     m  <- bats(d, ic='aicc', seasonal.periods=12)
     f  <- forecast(m, periods)
-    BATS <<- f$mean
-    plot.forecast(f, include = 36)
+    
   })
   
-  # Render TBATS Forecast
-  output$tbatsForecast <- renderPlot({
-    periods <- as.integer(input$forecastRange) * 12
+  # Render BATS Forecast
+  output$batsForecastPlot <- renderPlot({
+    
+    input$forecast
+    
+    withProgress(message = "Preparing BATS Forecast", {
+      
+      d <- isolate(batsForecastData())
+      
+      plot.forecast(d, include = 36)      
+      
+      
+    })
+  })
+
+  
+  #Calculate TBATS Network  Forecast
+  tbatsForecastData <- reactive({
+    
+    isolate({
+      periods <- as.integer(input$forecastRange) * 12
+    })
     
     #Get data and convert to timeseries
     d  <- selectHistoricalData()
@@ -1571,13 +1680,30 @@ shinyServer(function(input, output, session) {
     d  <- ts(v, frequency = 12, start = c(2000,1))
     m  <- tbats(d, ic='aicc', seasonal.periods=12)
     f  <- forecast(m, periods)
-    TBATS <<- f$mean
-    plot.forecast(f, include = 36)
+    
   })
   
-  # Render STLM  Forecast
-  output$stlmForecast <- renderPlot({
-    periods <- as.integer(input$forecastRange) * 12
+  # Render TBATS Forecast
+  output$tbatsForecastPlot <- renderPlot({
+    
+    input$forecast
+    
+    withProgress(message = "Preparing TBATS Forecast", {
+      
+      d <- isolate(tbatsForecastData())
+      
+      plot.forecast(d, include = 36)      
+      
+    })
+  })
+  
+  
+  #Calculate STLM Network  Forecast
+  stlmForecastData <- reactive({
+    
+    isolate({
+      periods <- as.integer(input$forecastRange) * 12
+    })
     
     #Get data and convert to timeseries
     d  <- selectHistoricalData()
@@ -1585,27 +1711,197 @@ shinyServer(function(input, output, session) {
     d  <- ts(v, frequency = 12, start = c(2000,1))
     m  <- stlm(d, s.window=12, ic='aicc', robust=TRUE, method='ets')
     f  <- forecast(m, periods)
-    STLM <<- f$mean
-    plot.forecast(f, include = 36)
+    
   })
   
-  # Render STS Forecast
-  output$stsForecast <- renderPlot({
-    periods <- as.integer(input$forecastRange) * 12
+  # Render STLM  Forecast
+  output$stlmForecastPlot <- renderPlot({
+    
+    input$forecast
+    
+    withProgress(message = "Preparing STLM Forecast", {
+      
+      d <- isolate(stlmForecastData())
+      
+      plot.forecast(d, include = 36)      
+      
+    })
+  })
+  
+  
+  #Calculate STLM Network  Forecast
+  stsForecastData <- reactive({
+
+    isolate({
+      periods <- as.integer(input$forecastRange) * 12
+    })
     
     #Get data and convert to timeseries
     d  <- selectHistoricalData()
     v  <- as.numeric(as.vector(d))
     d  <- ts(v, frequency = 12, start = c(2000,1))
-    m  <- StructTS(d)
+    m  <- StructTS(d, type = "level")
     f  <- forecast(m, periods)
-    STS <<- f$mean
-    plot.forecast(f, include = 36)
+    
   })
   
-  output$forecastSummary <- renderPlot({
-    forecasts <- ts.union(ARIMA, ETS, NAIVE, NEURAL, BATS, TBATS, STLM, STS)
+  # Render STS Forecast
+  output$stsForecastPlot <- renderPlot({
+    
+    input$forecast
+    
+    withProgress(message = "Preparing STS Forecast", {
+      
+      d <- isolate(stsForecastData())
+      
+      plot.forecast(d, include = 36)      
+      
+    })
+  })
+  
+  #Combine all model forecasts into a list
+  getForecasts <- reactive({
+    
+    withProgress(message = "Summarizing Forecast Results", {
+    
+      ARIMA   <-   arimaForecastData()
+      ETS     <-   etsForecastData()
+      NAIVE   <-   naiveForecastData()
+      NEURAL  <-   neuralForecastData()
+      BATS    <-   batsForecastData()
+      TBATS   <-   tbatsForecastData()
+      STLM    <-   stlmForecastData()
+      STS     <-   stsForecastData()
+      
+      
+      l <- list(ARIMA, ETS, NAIVE, NEURAL, BATS, TBATS, STLM, STS)
+    })
+    
+    return(l)
+    
+  })
+  
+  #Forecast Summary Plot
+  output$forecastSummaryPlot <- renderPlot({
+
+    input$forecast
+    
+    f <- isolate(getForecasts())
+      
+    ARIMA   <-   f[[1]]
+    ETS     <-   f[[2]]
+    NAIVE   <-   f[[3]]
+    NEURAL  <-   f[[4]]
+    BATS    <-   f[[5]]
+    TBATS   <-   f[[6]]
+    STLM    <-   f[[7]]
+    STS     <-   f[[8]]
+
+    lgnd <- c("ARIMA", "ETS", "NAIVE", "NEURAL", "BATS", "TBATS", "STLM", "STS")
+    forecasts <- ts.union(ARIMA$mean, ETS$mean, NAIVE$mean, NEURAL$mean, BATS$mean, TBATS$mean, STLM$mean, STS$mean)
     plot(forecasts, plot.type = "single", col = 1:ncol(forecasts))
-    legend("topleft", colnames(forecasts), col = 1:ncol(forecasts), lty = 1)
+    legend("topleft", lgnd, col = 1:ncol(forecasts), lty = 1)
+    
+  })
+  
+  predictionData <- reactive({
+    
+    input$forecast
+    
+    f <- isolate(getForecasts())
+    
+    ARIMA   <-   f[[1]]
+    ETS     <-   f[[2]]
+    NAIVE   <-   f[[3]]
+    NEURAL  <-   f[[4]]
+    BATS    <-   f[[5]]
+    TBATS   <-   f[[6]]
+    STLM    <-   f[[7]]
+    STS     <-   f[[8]]
+    
+    
+    prediction_ARIMA	<-	as.vector(as.numeric(ARIMA$mean[length(ARIMA$mean)]))
+    prediction_ETS	<-	as.vector(as.numeric(ETS$mean[length(ETS$mean)]))
+    prediction_NAIVE	<-	as.vector(as.numeric(NAIVE$mean[length(NAIVE$mean)]))
+    prediction_NEURAL	<-	as.vector(as.numeric(NEURAL$mean[length(NEURAL$mean)]))
+    prediction_BATS	<-	as.vector(as.numeric(BATS$mean[length(BATS$mean)]))
+    prediction_TBATS	<-	as.vector(as.numeric(TBATS$mean[length(TBATS$mean)]))
+    prediction_STLM	<-	as.vector(as.numeric(STLM$mean[length(STLM$mean)]))
+    prediction_STS	<-	as.vector(as.numeric(STS$mean[length(STS$mean)]))
+    
+    prediction <-	as.vector(c( prediction_ARIMA , prediction_ETS , prediction_NAIVE , prediction_NEURAL , prediction_BATS , prediction_TBATS , prediction_STLM , prediction_STS ))
+    
+    models <- c("Arima", "ETS", "Naive", "Neural", "BATS", "TBATS", "STLM", "STS")
+    
+    d <- data.frame(models, prediction)
+    
+    colnames(d) <- c("Model","Prediction")
+
+    return(d)
+    
+  })
+  
+  #Prediction Summary Chart
+  output$predictionPlot <- renderChart({
+
+    input$forecast
+    
+      
+    d <- predictionData()
+    p <- nPlot(Prediction~Model, data = d, type = "discreteBarChart", dom = "predictionPlot", height = 400, width = 600)
+    p$set(title = "Predicted Median Home Values at End of Forecast Period")
+    p$xAxis(staggerLabels = TRUE)
+    return(p)
+ })
+  
+  #Render Minimum prediction box
+  output$minPredictionBox <- renderValueBox({
+    
+    input$forecast
+    
+    d <- isolate(predictionData())
+    l <- isolate(selectCurrentData()$location)
+
+    validate(
+      need(!is.null(d),"")
+    )
+      
+    valueBox(
+      paste0("$", round(min(d$Prediction),0)), paste("Minimum median home value prediction at end of forecast period for the ", l," market."), 
+             icon = icon("dollar"), color = "red")
+  })
+  
+  #Render Maxium prediction box
+  output$maxPredictionBox <- renderValueBox({
+    
+    input$forecast
+    
+    d <- isolate(predictionData())
+    l <- isolate(selectCurrentData()$location)
+    
+    validate(
+      need(!is.null(d),"")
+    )
+    
+    valueBox(
+      paste0("$", round(max(d$Prediction),0)), paste("Maximum median home value prediction at end of forecast period for the ", l," market."), 
+      icon = icon("dollar"), color = "orange")
+  })
+  
+  #Render Maxium prediction box
+  output$meanPredictionBox <- renderValueBox({
+    
+    input$forecast
+    
+    d <- isolate(predictionData())
+    l <- isolate(selectCurrentData()$location)
+    
+    validate(
+      need(!is.null(d),"")
+    )
+    
+    valueBox(
+      paste0("$", round(mean(d$Prediction),0)), paste("Mean median home value prediction at end of forecast period for the ", l," market."), 
+      icon = icon("dollar"), color = "blue")
   })
 })

@@ -1,27 +1,4 @@
-"State","StateName","County","City","RegionName"
-"AK","Alaska","Anchorage","Anchorage",99501
-"AK","Alaska","Anchorage","Anchorage",99502
-"AK","Alaska","Anchorage","Anchorage",99503
-"AK","Alaska","Anchorage","Anchorage",99504
-"AK","Alaska","Anchorage","Anchorage",99507
-"AK","Alaska","Anchorage","Anchorage",99508
-"AK","Alaska","Anchorage","Anchorage",99515
-"AK","Alaska","Anchorage","Anchorage",99516
-"AK","Alaska","Anchorage","Anchorage",99517
-"AK","Alaska","Anchorage","Anchorage",99518
-"AK","Alaska","Anchorage","Anchorage",99567
-"AK","Alaska","Anchorage","Anchorage",99577
-"AK","Alaska","Anchorage","Anchorage",99587
-"AK","Alaska","Fairbanks North Star","Fairbanks",99701
-"AK","Alaska","Fairbanks North Star","Fairbanks",99709
-"AK","Alaska","Fairbanks North Star","Fairbanks",99712
-"AK","Alaska","Fairbanks North Star","North Pole",99705
-"AK","Alaska","Juneau","Juneau",99801
-"AK","Alaska","Ketchikan Gateway","Ketchikan",99901
-"AK","Alaska","Kodiak Island","Kodiak",99615
-"AK","Alaska","Matanuska Susitna","Knik-Fairview",99623
-"AK","Alaska","Matanuska Susitna","Palmer",99645
-"AK","Alaska","Matanuska Susitna","Tanaina",99654
+"State","StateName","County","City","Zip"
 "AL","Alabama","Baldwin","Bay Minette",36507
 "AL","Alabama","Baldwin","Bon Secour",36511
 "AL","Alabama","Baldwin","Daphne",36526
@@ -221,84 +198,29 @@
 "AL","Alabama","Tuscaloosa","Tuscaloosa",35405
 "AL","Alabama","Tuscaloosa","Tuscaloosa",35406
 "AL","Alabama","Tuscaloosa","Vance",35490
-"AR","Arkansas","Benton","Bella Vista",72714
-"AR","Arkansas","Benton","Bella Vista",72715
-"AR","Arkansas","Benton","Bentonville",72712
-"AR","Arkansas","Benton","Cave Springs",72718
-"AR","Arkansas","Benton","Centerton",72719
-"AR","Arkansas","Benton","Decatur",72722
-"AR","Arkansas","Benton","Garfield",72732
-"AR","Arkansas","Benton","Gentry",72734
-"AR","Arkansas","Benton","Gravette",72736
-"AR","Arkansas","Benton","Lowell",72745
-"AR","Arkansas","Benton","Pea Ridge",72751
-"AR","Arkansas","Benton","Rogers",72756
-"AR","Arkansas","Benton","Rogers",72758
-"AR","Arkansas","Benton","Siloam Springs",72761
-"AR","Arkansas","Crawford","Alma",72921
-"AR","Arkansas","Crawford","Mountainburg",72946
-"AR","Arkansas","Crawford","Mulberry",72947
-"AR","Arkansas","Crawford","Rudy",72952
-"AR","Arkansas","Crawford","Van Buren",72956
-"AR","Arkansas","Faulkner","Conway",72032
-"AR","Arkansas","Faulkner","Conway",72034
-"AR","Arkansas","Faulkner","Greenbrier",72058
-"AR","Arkansas","Faulkner","Mayflower",72106
-"AR","Arkansas","Faulkner","Twin Groves",72039
-"AR","Arkansas","Faulkner","Vilonia",72173
-"AR","Arkansas","Garland","Hot Springs",71901
-"AR","Arkansas","Garland","Hot Springs",71913
-"AR","Arkansas","Garland","Pearcy",71964
-"AR","Arkansas","Garland","Royal",71968
-"AR","Arkansas","Independence","Batesville",72501
-"AR","Arkansas","Lonoke","Austin",72007
-"AR","Arkansas","Lonoke","Cabot",72023
-"AR","Arkansas","Lonoke","Carlisle",72024
-"AR","Arkansas","Lonoke","England",72046
-"AR","Arkansas","Lonoke","Lonoke",72086
-"AR","Arkansas","Lonoke","Ward",72176
-"AR","Arkansas","Phillips","Helena - West Helena",72342
-"AR","Arkansas","Pulaski","Jacksonville",72076
-"AR","Arkansas","Pulaski","Little Rock",72103
-"AR","Arkansas","Pulaski","Little Rock",72201
-"AR","Arkansas","Pulaski","Little Rock",72202
-"AR","Arkansas","Pulaski","Little Rock",72204
-"AR","Arkansas","Pulaski","Little Rock",72205
-"AR","Arkansas","Pulaski","Little Rock",72206
-"AR","Arkansas","Pulaski","Little Rock",72207
-"AR","Arkansas","Pulaski","Little Rock",72209
-"AR","Arkansas","Pulaski","Little Rock",72210
-"AR","Arkansas","Pulaski","Little Rock",72211
-"AR","Arkansas","Pulaski","Little Rock",72212
-"AR","Arkansas","Pulaski","Little Rock",72223
-"AR","Arkansas","Pulaski","Little Rock",72227
-"AR","Arkansas","Pulaski","Maumelle",72113
-"AR","Arkansas","Pulaski","North Little Rock",72114
-"AR","Arkansas","Pulaski","North Little Rock",72116
-"AR","Arkansas","Pulaski","North Little Rock",72117
-"AR","Arkansas","Pulaski","North Little Rock",72118
-"AR","Arkansas","Pulaski","Roland",72016
-"AR","Arkansas","Pulaski","Roland",72135
-"AR","Arkansas","Pulaski","Scott",72142
-"AR","Arkansas","Pulaski","Sherwood",72120
-"AR","Arkansas","Saline","Bauxite",72011
-"AR","Arkansas","Saline","Benton",72015
-"AR","Arkansas","Saline","Benton",72019
-"AR","Arkansas","Saline","Bryant",72022
-"AR","Arkansas","Saline","Hensley",72065
-"AR","Arkansas","Saline","Hot Springs Village",71909
-"AR","Arkansas","Saline","Paron",72122
-"AR","Arkansas","Saline","Shannon Hills",72002
-"AR","Arkansas","Sebastian","Barling",72923
-"AR","Arkansas","Sebastian","Fort Smith",72901
-"AR","Arkansas","Sebastian","Fort Smith",72903
-"AR","Arkansas","Sebastian","Fort Smith",72904
-"AR","Arkansas","Sebastian","Fort Smith",72908
-"AR","Arkansas","Sebastian","Fort Smith",72916
-"AR","Arkansas","Sebastian","Greenwood",72936
-"AR","Arkansas","Sebastian","Hackett",72937
-"AR","Arkansas","Sebastian","Huntington",72940
-"AR","Arkansas","Sebastian","Lavaca",72941
+"AK","Alaska","Anchorage","Anchorage",99501
+"AK","Alaska","Anchorage","Anchorage",99502
+"AK","Alaska","Anchorage","Anchorage",99503
+"AK","Alaska","Anchorage","Anchorage",99504
+"AK","Alaska","Anchorage","Anchorage",99507
+"AK","Alaska","Anchorage","Anchorage",99508
+"AK","Alaska","Anchorage","Anchorage",99515
+"AK","Alaska","Anchorage","Anchorage",99516
+"AK","Alaska","Anchorage","Anchorage",99517
+"AK","Alaska","Anchorage","Anchorage",99518
+"AK","Alaska","Anchorage","Anchorage",99567
+"AK","Alaska","Anchorage","Anchorage",99577
+"AK","Alaska","Anchorage","Anchorage",99587
+"AK","Alaska","Fairbanks North Star","Fairbanks",99701
+"AK","Alaska","Fairbanks North Star","Fairbanks",99709
+"AK","Alaska","Fairbanks North Star","Fairbanks",99712
+"AK","Alaska","Fairbanks North Star","North Pole",99705
+"AK","Alaska","Juneau","Juneau",99801
+"AK","Alaska","Ketchikan Gateway","Ketchikan",99901
+"AK","Alaska","Kodiak Island","Kodiak",99615
+"AK","Alaska","Matanuska Susitna","Knik-Fairview",99623
+"AK","Alaska","Matanuska Susitna","Palmer",99645
+"AK","Alaska","Matanuska Susitna","Tanaina",99654
 "AZ","Arizona","Apache","Eagar",85925
 "AZ","Arizona","Apache","Springerville",85938
 "AZ","Arizona","Cochise","Benson",85602
@@ -539,6 +461,84 @@
 "AZ","Arizona","Yuma","Yuma",85364
 "AZ","Arizona","Yuma","Yuma",85365
 "AZ","Arizona","Yuma","Yuma",85367
+"AR","Arkansas","Benton","Bella Vista",72714
+"AR","Arkansas","Benton","Bella Vista",72715
+"AR","Arkansas","Benton","Bentonville",72712
+"AR","Arkansas","Benton","Cave Springs",72718
+"AR","Arkansas","Benton","Centerton",72719
+"AR","Arkansas","Benton","Decatur",72722
+"AR","Arkansas","Benton","Garfield",72732
+"AR","Arkansas","Benton","Gentry",72734
+"AR","Arkansas","Benton","Gravette",72736
+"AR","Arkansas","Benton","Lowell",72745
+"AR","Arkansas","Benton","Pea Ridge",72751
+"AR","Arkansas","Benton","Rogers",72756
+"AR","Arkansas","Benton","Rogers",72758
+"AR","Arkansas","Benton","Siloam Springs",72761
+"AR","Arkansas","Crawford","Alma",72921
+"AR","Arkansas","Crawford","Mountainburg",72946
+"AR","Arkansas","Crawford","Mulberry",72947
+"AR","Arkansas","Crawford","Rudy",72952
+"AR","Arkansas","Crawford","Van Buren",72956
+"AR","Arkansas","Faulkner","Conway",72032
+"AR","Arkansas","Faulkner","Conway",72034
+"AR","Arkansas","Faulkner","Greenbrier",72058
+"AR","Arkansas","Faulkner","Mayflower",72106
+"AR","Arkansas","Faulkner","Twin Groves",72039
+"AR","Arkansas","Faulkner","Vilonia",72173
+"AR","Arkansas","Garland","Hot Springs",71901
+"AR","Arkansas","Garland","Hot Springs",71913
+"AR","Arkansas","Garland","Pearcy",71964
+"AR","Arkansas","Garland","Royal",71968
+"AR","Arkansas","Independence","Batesville",72501
+"AR","Arkansas","Lonoke","Austin",72007
+"AR","Arkansas","Lonoke","Cabot",72023
+"AR","Arkansas","Lonoke","Carlisle",72024
+"AR","Arkansas","Lonoke","England",72046
+"AR","Arkansas","Lonoke","Lonoke",72086
+"AR","Arkansas","Lonoke","Ward",72176
+"AR","Arkansas","Phillips","Helena - West Helena",72342
+"AR","Arkansas","Pulaski","Jacksonville",72076
+"AR","Arkansas","Pulaski","Little Rock",72103
+"AR","Arkansas","Pulaski","Little Rock",72201
+"AR","Arkansas","Pulaski","Little Rock",72202
+"AR","Arkansas","Pulaski","Little Rock",72204
+"AR","Arkansas","Pulaski","Little Rock",72205
+"AR","Arkansas","Pulaski","Little Rock",72206
+"AR","Arkansas","Pulaski","Little Rock",72207
+"AR","Arkansas","Pulaski","Little Rock",72209
+"AR","Arkansas","Pulaski","Little Rock",72210
+"AR","Arkansas","Pulaski","Little Rock",72211
+"AR","Arkansas","Pulaski","Little Rock",72212
+"AR","Arkansas","Pulaski","Little Rock",72223
+"AR","Arkansas","Pulaski","Little Rock",72227
+"AR","Arkansas","Pulaski","Maumelle",72113
+"AR","Arkansas","Pulaski","North Little Rock",72114
+"AR","Arkansas","Pulaski","North Little Rock",72116
+"AR","Arkansas","Pulaski","North Little Rock",72117
+"AR","Arkansas","Pulaski","North Little Rock",72118
+"AR","Arkansas","Pulaski","Roland",72016
+"AR","Arkansas","Pulaski","Roland",72135
+"AR","Arkansas","Pulaski","Scott",72142
+"AR","Arkansas","Pulaski","Sherwood",72120
+"AR","Arkansas","Saline","Bauxite",72011
+"AR","Arkansas","Saline","Benton",72015
+"AR","Arkansas","Saline","Benton",72019
+"AR","Arkansas","Saline","Bryant",72022
+"AR","Arkansas","Saline","Hensley",72065
+"AR","Arkansas","Saline","Hot Springs Village",71909
+"AR","Arkansas","Saline","Paron",72122
+"AR","Arkansas","Saline","Shannon Hills",72002
+"AR","Arkansas","Sebastian","Barling",72923
+"AR","Arkansas","Sebastian","Fort Smith",72901
+"AR","Arkansas","Sebastian","Fort Smith",72903
+"AR","Arkansas","Sebastian","Fort Smith",72904
+"AR","Arkansas","Sebastian","Fort Smith",72908
+"AR","Arkansas","Sebastian","Fort Smith",72916
+"AR","Arkansas","Sebastian","Greenwood",72936
+"AR","Arkansas","Sebastian","Hackett",72937
+"AR","Arkansas","Sebastian","Huntington",72940
+"AR","Arkansas","Sebastian","Lavaca",72941
 "CA","California","Alameda","Alameda",94501
 "CA","California","Alameda","Alameda",94502
 "CA","California","Alameda","Albany",94706
@@ -3536,84 +3536,6 @@
 "HI","Hawaii","Maui","Makawao",96768
 "HI","Hawaii","Maui","Paia",96779
 "HI","Hawaii","Maui","Wailuku",96793
-"IA","Iowa","Dallas","Adel",50003
-"IA","Iowa","Dallas","Dallas Center",50063
-"IA","Iowa","Dallas","Dexter",50070
-"IA","Iowa","Dallas","Perry",50220
-"IA","Iowa","Dallas","Redfield",50233
-"IA","Iowa","Dallas","Van Meter",50261
-"IA","Iowa","Dallas","Waukee",50263
-"IA","Iowa","Dallas","Woodward",50276
-"IA","Iowa","Dubuque","Cascade",52033
-"IA","Iowa","Dubuque","Dubuque",52001
-"IA","Iowa","Dubuque","Dubuque",52002
-"IA","Iowa","Dubuque","Dubuque",52003
-"IA","Iowa","Dubuque","Dyersville",52040
-"IA","Iowa","Dubuque","Epworth",52045
-"IA","Iowa","Dubuque","Farley",52046
-"IA","Iowa","Dubuque","Peosta",52068
-"IA","Iowa","Dubuque","Sherrill",52073
-"IA","Iowa","Johnson","Coralville",52241
-"IA","Iowa","Johnson","Iowa City",52240
-"IA","Iowa","Johnson","Iowa City",52245
-"IA","Iowa","Johnson","Iowa City",52246
-"IA","Iowa","Johnson","Lone Tree",52755
-"IA","Iowa","Johnson","North Liberty",52317
-"IA","Iowa","Johnson","Oxford",52322
-"IA","Iowa","Johnson","Solon",52333
-"IA","Iowa","Johnson","Swisher",52338
-"IA","Iowa","Johnson","Tiffin",52340
-"IA","Iowa","O Brien","Hartley",51346
-"IA","Iowa","O Brien","Paullina",51046
-"IA","Iowa","O Brien","Sheldon",51201
-"IA","Iowa","Polk","Altoona",50009
-"IA","Iowa","Polk","Ankeny",50021
-"IA","Iowa","Polk","Ankeny",50023
-"IA","Iowa","Polk","Bondurant",50035
-"IA","Iowa","Polk","Clive",50325
-"IA","Iowa","Polk","Des Moines",50309
-"IA","Iowa","Polk","Des Moines",50310
-"IA","Iowa","Polk","Des Moines",50311
-"IA","Iowa","Polk","Des Moines",50312
-"IA","Iowa","Polk","Des Moines",50313
-"IA","Iowa","Polk","Des Moines",50314
-"IA","Iowa","Polk","Des Moines",50315
-"IA","Iowa","Polk","Des Moines",50316
-"IA","Iowa","Polk","Des Moines",50317
-"IA","Iowa","Polk","Des Moines",50320
-"IA","Iowa","Polk","Des Moines",50321
-"IA","Iowa","Polk","Elkhart",50073
-"IA","Iowa","Polk","Granger",50109
-"IA","Iowa","Polk","Grimes",50111
-"IA","Iowa","Polk","Johnston",50131
-"IA","Iowa","Polk","Mitchellville",50169
-"IA","Iowa","Polk","Pleasant Hill",50327
-"IA","Iowa","Polk","Polk City",50226
-"IA","Iowa","Polk","Runnells",50237
-"IA","Iowa","Polk","Urbandale",50322
-"IA","Iowa","Polk","Urbandale",50323
-"IA","Iowa","Polk","West Des Moines",50265
-"IA","Iowa","Polk","West Des Moines",50266
-"IA","Iowa","Polk","Windsor Heights",50324
-"IA","Iowa","Story","Ames",50010
-"IA","Iowa","Story","Ames",50014
-"IA","Iowa","Story","Cambridge",50046
-"IA","Iowa","Story","Colo",50056
-"IA","Iowa","Story","Huxley",50124
-"IA","Iowa","Story","Maxwell",50161
-"IA","Iowa","Story","Nevada",50201
-"IA","Iowa","Story","Roland",50236
-"IA","Iowa","Story","Slater",50244
-"IA","Iowa","Story","Story City",50248
-"IA","Iowa","Warren","Cumming",50061
-"IA","Iowa","Warren","Indianola",50125
-"IA","Iowa","Warren","Lacona",50139
-"IA","Iowa","Warren","Milo",50166
-"IA","Iowa","Warren","New Virginia",50210
-"IA","Iowa","Warren","Norwalk",50211
-"IA","Iowa","Woodbury","Lawton",51030
-"IA","Iowa","Woodbury","Moville",51039
-"IA","Iowa","Woodbury","Sioux City",51108
 "ID","Idaho","Ada","Boise",83702
 "ID","Idaho","Ada","Boise",83703
 "ID","Idaho","Ada","Boise",83704
@@ -4545,6 +4467,84 @@
 "IN","Indiana","Whitley","Columbia City",46725
 "IN","Indiana","Whitley","Larwill",46764
 "IN","Indiana","Whitley","South Whitley",46787
+"IA","Iowa","Dallas","Adel",50003
+"IA","Iowa","Dallas","Dallas Center",50063
+"IA","Iowa","Dallas","Dexter",50070
+"IA","Iowa","Dallas","Perry",50220
+"IA","Iowa","Dallas","Redfield",50233
+"IA","Iowa","Dallas","Van Meter",50261
+"IA","Iowa","Dallas","Waukee",50263
+"IA","Iowa","Dallas","Woodward",50276
+"IA","Iowa","Dubuque","Cascade",52033
+"IA","Iowa","Dubuque","Dubuque",52001
+"IA","Iowa","Dubuque","Dubuque",52002
+"IA","Iowa","Dubuque","Dubuque",52003
+"IA","Iowa","Dubuque","Dyersville",52040
+"IA","Iowa","Dubuque","Epworth",52045
+"IA","Iowa","Dubuque","Farley",52046
+"IA","Iowa","Dubuque","Peosta",52068
+"IA","Iowa","Dubuque","Sherrill",52073
+"IA","Iowa","Johnson","Coralville",52241
+"IA","Iowa","Johnson","Iowa City",52240
+"IA","Iowa","Johnson","Iowa City",52245
+"IA","Iowa","Johnson","Iowa City",52246
+"IA","Iowa","Johnson","Lone Tree",52755
+"IA","Iowa","Johnson","North Liberty",52317
+"IA","Iowa","Johnson","Oxford",52322
+"IA","Iowa","Johnson","Solon",52333
+"IA","Iowa","Johnson","Swisher",52338
+"IA","Iowa","Johnson","Tiffin",52340
+"IA","Iowa","O Brien","Hartley",51346
+"IA","Iowa","O Brien","Paullina",51046
+"IA","Iowa","O Brien","Sheldon",51201
+"IA","Iowa","Polk","Altoona",50009
+"IA","Iowa","Polk","Ankeny",50021
+"IA","Iowa","Polk","Ankeny",50023
+"IA","Iowa","Polk","Bondurant",50035
+"IA","Iowa","Polk","Clive",50325
+"IA","Iowa","Polk","Des Moines",50309
+"IA","Iowa","Polk","Des Moines",50310
+"IA","Iowa","Polk","Des Moines",50311
+"IA","Iowa","Polk","Des Moines",50312
+"IA","Iowa","Polk","Des Moines",50313
+"IA","Iowa","Polk","Des Moines",50314
+"IA","Iowa","Polk","Des Moines",50315
+"IA","Iowa","Polk","Des Moines",50316
+"IA","Iowa","Polk","Des Moines",50317
+"IA","Iowa","Polk","Des Moines",50320
+"IA","Iowa","Polk","Des Moines",50321
+"IA","Iowa","Polk","Elkhart",50073
+"IA","Iowa","Polk","Granger",50109
+"IA","Iowa","Polk","Grimes",50111
+"IA","Iowa","Polk","Johnston",50131
+"IA","Iowa","Polk","Mitchellville",50169
+"IA","Iowa","Polk","Pleasant Hill",50327
+"IA","Iowa","Polk","Polk City",50226
+"IA","Iowa","Polk","Runnells",50237
+"IA","Iowa","Polk","Urbandale",50322
+"IA","Iowa","Polk","Urbandale",50323
+"IA","Iowa","Polk","West Des Moines",50265
+"IA","Iowa","Polk","West Des Moines",50266
+"IA","Iowa","Polk","Windsor Heights",50324
+"IA","Iowa","Story","Ames",50010
+"IA","Iowa","Story","Ames",50014
+"IA","Iowa","Story","Cambridge",50046
+"IA","Iowa","Story","Colo",50056
+"IA","Iowa","Story","Huxley",50124
+"IA","Iowa","Story","Maxwell",50161
+"IA","Iowa","Story","Nevada",50201
+"IA","Iowa","Story","Roland",50236
+"IA","Iowa","Story","Slater",50244
+"IA","Iowa","Story","Story City",50248
+"IA","Iowa","Warren","Cumming",50061
+"IA","Iowa","Warren","Indianola",50125
+"IA","Iowa","Warren","Lacona",50139
+"IA","Iowa","Warren","Milo",50166
+"IA","Iowa","Warren","New Virginia",50210
+"IA","Iowa","Warren","Norwalk",50211
+"IA","Iowa","Woodbury","Lawton",51030
+"IA","Iowa","Woodbury","Moville",51039
+"IA","Iowa","Woodbury","Sioux City",51108
 "KS","Kansas","Douglas","Baldwin City",66006
 "KS","Kansas","Douglas","Eudora",66025
 "KS","Kansas","Douglas","Lawrence",66044
@@ -4811,6 +4811,345 @@
 "LA","Louisiana","Washington","Mount Hermon",70450
 "LA","Louisiana","West Baton Rouge","Brusly",70719
 "LA","Louisiana","West Feliciana","Saint Francisville",70775
+"ME","Maine","Sagadahoc","Bath",4530
+"ME","Maine","Sagadahoc","Bowdoin",4287
+"ME","Maine","Sagadahoc","Bowdoinham",4008
+"ME","Maine","Sagadahoc","Phippsburg",4562
+"ME","Maine","Sagadahoc","Town of Richmond",4357
+"ME","Maine","Waldo","Islesboro",4848
+"MD","Maryland","Allegany","Barton",21521
+"MD","Maryland","Allegany","Cumberland",21502
+"MD","Maryland","Allegany","Frostburg",21532
+"MD","Maryland","Allegany","Mount Savage",21545
+"MD","Maryland","Allegany","Westernport",21562
+"MD","Maryland","Anne Arundel","Annapolis",21401
+"MD","Maryland","Anne Arundel","Annapolis",21403
+"MD","Maryland","Anne Arundel","Annapolis",21405
+"MD","Maryland","Anne Arundel","Annapolis",21409
+"MD","Maryland","Anne Arundel","Arnold",21012
+"MD","Maryland","Anne Arundel","Brooklyn Park",21225
+"MD","Maryland","Anne Arundel","Churchton",20733
+"MD","Maryland","Anne Arundel","Crofton",21114
+"MD","Maryland","Anne Arundel","Crownsville",21032
+"MD","Maryland","Anne Arundel","Davidsonville",21035
+"MD","Maryland","Anne Arundel","Deale",20751
+"MD","Maryland","Anne Arundel","Edgewater",21037
+"MD","Maryland","Anne Arundel","Gambrills",21054
+"MD","Maryland","Anne Arundel","Glen Burnie",21060
+"MD","Maryland","Anne Arundel","Glen Burnie",21061
+"MD","Maryland","Anne Arundel","Glen Burnie",21108
+"MD","Maryland","Anne Arundel","Hanover",21076
+"MD","Maryland","Anne Arundel","Harwood",20776
+"MD","Maryland","Anne Arundel","Linthicum Heights",21090
+"MD","Maryland","Anne Arundel","Lothian",20711
+"MD","Maryland","Anne Arundel","Odenton",21113
+"MD","Maryland","Anne Arundel","Pasadena",21122
+"MD","Maryland","Anne Arundel","Riva",21140
+"MD","Maryland","Anne Arundel","Severn",21144
+"MD","Maryland","Anne Arundel","Severna Park",21146
+"MD","Maryland","Anne Arundel","Shady Side",20764
+"MD","Maryland","Anne Arundel","Tracys Landing",20779
+"MD","Maryland","Anne Arundel","West River",20778
+"MD","Maryland","Baltimore","Baldwin",21013
+"MD","Maryland","Baltimore","Catonsville",21228
+"MD","Maryland","Baltimore","Cockeysville",21030
+"MD","Maryland","Baltimore","Dundalk",21222
+"MD","Maryland","Baltimore","Edgemere",21219
+"MD","Maryland","Baltimore","Essex",21221
+"MD","Maryland","Baltimore","Freeland",21053
+"MD","Maryland","Baltimore","Glen Arm",21057
+"MD","Maryland","Baltimore","Halethorpe",21227
+"MD","Maryland","Baltimore","Kingsville",21087
+"MD","Maryland","Baltimore","Lochearn",21207
+"MD","Maryland","Baltimore","Lutherville Timonium",21093
+"MD","Maryland","Baltimore","Middle River",21220
+"MD","Maryland","Baltimore","Monkton",21111
+"MD","Maryland","Baltimore","Nottingham",21236
+"MD","Maryland","Baltimore","Owings Mills",21117
+"MD","Maryland","Baltimore","Parkton",21120
+"MD","Maryland","Baltimore","Parkville",21234
+"MD","Maryland","Baltimore","Perry Hall",21128
+"MD","Maryland","Baltimore","Phoenix",21131
+"MD","Maryland","Baltimore","Pikesville",21208
+"MD","Maryland","Baltimore","Randallstown",21133
+"MD","Maryland","Baltimore","Reisterstown",21136
+"MD","Maryland","Baltimore","Rosedale",21237
+"MD","Maryland","Baltimore","Sparks Glencoe",21152
+"MD","Maryland","Baltimore","Towson",21204
+"MD","Maryland","Baltimore","Towson",21286
+"MD","Maryland","Baltimore","Upperco",21155
+"MD","Maryland","Baltimore","White Marsh",21162
+"MD","Maryland","Baltimore","Windsor Mill",21244
+"MD","Maryland","Baltimore City","Baltimore",21205
+"MD","Maryland","Baltimore City","Baltimore",21206
+"MD","Maryland","Baltimore City","Baltimore",21209
+"MD","Maryland","Baltimore City","Baltimore",21210
+"MD","Maryland","Baltimore City","Baltimore",21211
+"MD","Maryland","Baltimore City","Baltimore",21212
+"MD","Maryland","Baltimore City","Baltimore",21213
+"MD","Maryland","Baltimore City","Baltimore",21214
+"MD","Maryland","Baltimore City","Baltimore",21215
+"MD","Maryland","Baltimore City","Baltimore",21216
+"MD","Maryland","Baltimore City","Baltimore",21217
+"MD","Maryland","Baltimore City","Baltimore",21218
+"MD","Maryland","Baltimore City","Baltimore",21223
+"MD","Maryland","Baltimore City","Baltimore",21224
+"MD","Maryland","Baltimore City","Baltimore",21226
+"MD","Maryland","Baltimore City","Baltimore",21229
+"MD","Maryland","Baltimore City","Baltimore",21230
+"MD","Maryland","Baltimore City","Baltimore",21231
+"MD","Maryland","Baltimore City","Baltimore",21239
+"MD","Maryland","Calvert","Chesapeake Beach",20732
+"MD","Maryland","Calvert","Dunkirk",20754
+"MD","Maryland","Calvert","Huntingtown",20639
+"MD","Maryland","Calvert","Lusby",20657
+"MD","Maryland","Calvert","North Beach",20714
+"MD","Maryland","Calvert","Owings",20736
+"MD","Maryland","Calvert","Port Republic",20676
+"MD","Maryland","Calvert","Prince Frederick",20678
+"MD","Maryland","Calvert","Saint Leonard",20685
+"MD","Maryland","Calvert","Solomons",20688
+"MD","Maryland","Calvert","Sunderland",20689
+"MD","Maryland","Caroline","Denton",21629
+"MD","Maryland","Caroline","Federalsburg",21632
+"MD","Maryland","Caroline","Goldsboro",21636
+"MD","Maryland","Caroline","Greensboro",21639
+"MD","Maryland","Caroline","Henderson",21640
+"MD","Maryland","Caroline","Marydel",21649
+"MD","Maryland","Caroline","Preston",21655
+"MD","Maryland","Caroline","Ridgely",21660
+"MD","Maryland","Carroll","Finksburg",21048
+"MD","Maryland","Carroll","Hampstead",21074
+"MD","Maryland","Carroll","Keymar",21757
+"MD","Maryland","Carroll","Manchester",21102
+"MD","Maryland","Carroll","Mount Airy",21771
+"MD","Maryland","Carroll","New Windsor",21776
+"MD","Maryland","Carroll","Sykesville",21784
+"MD","Maryland","Carroll","Taneytown",21787
+"MD","Maryland","Carroll","Union Bridge",21791
+"MD","Maryland","Carroll","Westminster",21157
+"MD","Maryland","Carroll","Westminster",21158
+"MD","Maryland","Cecil","Chesapeake City",21915
+"MD","Maryland","Cecil","Colora",21917
+"MD","Maryland","Cecil","Conowingo",21918
+"MD","Maryland","Cecil","Elkton",21921
+"MD","Maryland","Cecil","North East",21901
+"MD","Maryland","Cecil","Perryville",21903
+"MD","Maryland","Cecil","Port Deposit",21904
+"MD","Maryland","Cecil","Rising Sun",21911
+"MD","Maryland","Cecil","Warwick",21912
+"MD","Maryland","Charles","Bryans Road",20616
+"MD","Maryland","Charles","Charlotte Hall",20622
+"MD","Maryland","Charles","Cobb Island",20625
+"MD","Maryland","Charles","Hughesville",20637
+"MD","Maryland","Charles","Indian Head",20640
+"MD","Maryland","Charles","La Plata",20646
+"MD","Maryland","Charles","La Plata",20677
+"MD","Maryland","Charles","Marbury",20658
+"MD","Maryland","Charles","Nanjemoy",20662
+"MD","Maryland","Charles","Pomfret",20675
+"MD","Maryland","Charles","Waldorf",20601
+"MD","Maryland","Charles","Waldorf",20602
+"MD","Maryland","Charles","Waldorf",20603
+"MD","Maryland","Charles","Welcome",20693
+"MD","Maryland","Charles","White Plains",20695
+"MD","Maryland","Dorchester","East New Market",21631
+"MD","Maryland","Dorchester","Hurlock",21643
+"MD","Maryland","Dorchester","Vienna",21869
+"MD","Maryland","Frederick","Adamstown",21710
+"MD","Maryland","Frederick","Brunswick",21716
+"MD","Maryland","Frederick","Emmitsburg",21727
+"MD","Maryland","Frederick","Frederick",21701
+"MD","Maryland","Frederick","Frederick",21702
+"MD","Maryland","Frederick","Frederick",21703
+"MD","Maryland","Frederick","Frederick",21704
+"MD","Maryland","Frederick","Ijamsville",21754
+"MD","Maryland","Frederick","Jefferson",21755
+"MD","Maryland","Frederick","Middletown",21769
+"MD","Maryland","Frederick","Monrovia",21770
+"MD","Maryland","Frederick","Myersville",21773
+"MD","Maryland","Frederick","New Market",21774
+"MD","Maryland","Frederick","Point of Rocks",21777
+"MD","Maryland","Frederick","Rosemont",21758
+"MD","Maryland","Frederick","Sabillasville",21780
+"MD","Maryland","Frederick","Thurmont",21788
+"MD","Maryland","Frederick","Walkersville",21793
+"MD","Maryland","Frederick","Woodsboro",21798
+"MD","Maryland","Garrett","Accident",21520
+"MD","Maryland","Garrett","Friendsville",21531
+"MD","Maryland","Garrett","Grantsville",21536
+"MD","Maryland","Garrett","Mc Henry",21541
+"MD","Maryland","Garrett","Mountain Lake Park",21550
+"MD","Maryland","Garrett","Swanton",21561
+"MD","Maryland","Harford","Aberdeen",21001
+"MD","Maryland","Harford","Abingdon",21009
+"MD","Maryland","Harford","Bel Air",21014
+"MD","Maryland","Harford","Bel Air",21015
+"MD","Maryland","Harford","Belcamp",21017
+"MD","Maryland","Harford","Churchville",21028
+"MD","Maryland","Harford","Darlington",21034
+"MD","Maryland","Harford","Edgewood",21040
+"MD","Maryland","Harford","Fallston",21047
+"MD","Maryland","Harford","Forest Hill",21050
+"MD","Maryland","Harford","Havre de Grace",21078
+"MD","Maryland","Harford","Jarrettsville",21084
+"MD","Maryland","Harford","Joppa",21085
+"MD","Maryland","Harford","Pylesville",21132
+"MD","Maryland","Harford","Street",21154
+"MD","Maryland","Harford","Whiteford",21160
+"MD","Maryland","Harford","Whitehall",21161
+"MD","Maryland","Howard","Clarksville",21029
+"MD","Maryland","Howard","Columbia",21044
+"MD","Maryland","Howard","Columbia",21045
+"MD","Maryland","Howard","Columbia",21046
+"MD","Maryland","Howard","Dayton",21036
+"MD","Maryland","Howard","Elkridge",21075
+"MD","Maryland","Howard","Ellicott City",21042
+"MD","Maryland","Howard","Ellicott City",21043
+"MD","Maryland","Howard","Fulton",20759
+"MD","Maryland","Howard","Glenelg",21737
+"MD","Maryland","Howard","Glenwood",21738
+"MD","Maryland","Howard","Highland",20777
+"MD","Maryland","Howard","Jessup",20794
+"MD","Maryland","Howard","Marriottsville",21104
+"MD","Maryland","Howard","Savage",20763
+"MD","Maryland","Howard","West Friendship",21794
+"MD","Maryland","Howard","Woodbine",21797
+"MD","Maryland","Howard","Woodstock",21163
+"MD","Maryland","Kent","Chestertown",21620
+"MD","Maryland","Kent","Galena",21635
+"MD","Maryland","Kent","Kennedyville",21645
+"MD","Maryland","Kent","Millington",21651
+"MD","Maryland","Kent","Rock Hall",21661
+"MD","Maryland","Kent","Worton",21678
+"MD","Maryland","Montgomery","Ashton",20861
+"MD","Maryland","Montgomery","Bethesda",20814
+"MD","Maryland","Montgomery","Bethesda",20816
+"MD","Maryland","Montgomery","Bethesda",20817
+"MD","Maryland","Montgomery","Boyds",20841
+"MD","Maryland","Montgomery","Brookeville",20833
+"MD","Maryland","Montgomery","Burtonsville",20866
+"MD","Maryland","Montgomery","Cabin John",20818
+"MD","Maryland","Montgomery","Clarksburg",20871
+"MD","Maryland","Montgomery","Damascus",20872
+"MD","Maryland","Montgomery","Damascus",20882
+"MD","Maryland","Montgomery","Derwood",20855
+"MD","Maryland","Montgomery","Dickerson",20842
+"MD","Maryland","Montgomery","Friendship Village",20815
+"MD","Maryland","Montgomery","Gaithersburg",20877
+"MD","Maryland","Montgomery","Gaithersburg",20878
+"MD","Maryland","Montgomery","Gaithersburg",20879
+"MD","Maryland","Montgomery","Germantown",20874
+"MD","Maryland","Montgomery","Germantown",20876
+"MD","Maryland","Montgomery","Montgomery Village",20886
+"MD","Maryland","Montgomery","North Bethesda",20852
+"MD","Maryland","Montgomery","Olney",20832
+"MD","Maryland","Montgomery","Olney",20853
+"MD","Maryland","Montgomery","Poolesville",20837
+"MD","Maryland","Montgomery","Potomac",20854
+"MD","Maryland","Montgomery","Rockville",20850
+"MD","Maryland","Montgomery","Rockville",20851
+"MD","Maryland","Montgomery","Sandy Spring",20860
+"MD","Maryland","Montgomery","Silver Spring",20901
+"MD","Maryland","Montgomery","Silver Spring",20902
+"MD","Maryland","Montgomery","Silver Spring",20903
+"MD","Maryland","Montgomery","Silver Spring",20904
+"MD","Maryland","Montgomery","Silver Spring",20905
+"MD","Maryland","Montgomery","Silver Spring",20906
+"MD","Maryland","Montgomery","Silver Spring",20910
+"MD","Maryland","Montgomery","South Kensington",20895
+"MD","Maryland","Montgomery","Takoma Park",20912
+"MD","Maryland","Prince Georges","Accokeek",20607
+"MD","Maryland","Prince Georges","Beltsville",20705
+"MD","Maryland","Prince Georges","Bladensburg",20710
+"MD","Maryland","Prince Georges","Bowie",20715
+"MD","Maryland","Prince Georges","Bowie",20716
+"MD","Maryland","Prince Georges","Bowie",20720
+"MD","Maryland","Prince Georges","Bowie",20721
+"MD","Maryland","Prince Georges","Brentwood",20722
+"MD","Maryland","Prince Georges","Cheltenham",20623
+"MD","Maryland","Prince Georges","Chillum",20782
+"MD","Maryland","Prince Georges","Chillum",20783
+"MD","Maryland","Prince Georges","Clinton",20735
+"MD","Maryland","Prince Georges","College Park",20740
+"MD","Maryland","Prince Georges","Coral Hills",20743
+"MD","Maryland","Prince Georges","District Heights",20747
+"MD","Maryland","Prince Georges","East Riverdale",20737
+"MD","Maryland","Prince Georges","Forest Heights",20745
+"MD","Maryland","Prince Georges","Fort Washington",20744
+"MD","Maryland","Prince Georges","Glenn Dale",20769
+"MD","Maryland","Prince Georges","Greater Landover",20785
+"MD","Maryland","Prince Georges","Greater Upper Marlboro",20772
+"MD","Maryland","Prince Georges","Greenbelt",20770
+"MD","Maryland","Prince Georges","Kettering",20774
+"MD","Maryland","Prince Georges","Lanham Seabrook",20706
+"MD","Maryland","Prince Georges","Laurel",20707
+"MD","Maryland","Prince Georges","Laurel",20708
+"MD","Maryland","Prince Georges","Laurel",20723
+"MD","Maryland","Prince Georges","Laurel",20724
+"MD","Maryland","Prince Georges","Mount Rainier",20712
+"MD","Maryland","Prince Georges","New Carrollton",20784
+"MD","Maryland","Prince Georges","Suitland-Silver Hill",20746
+"MD","Maryland","Prince Georges","Temple Hills",20748
+"MD","Maryland","Queen Annes","Centreville",21617
+"MD","Maryland","Queen Annes","Chester",21619
+"MD","Maryland","Queen Annes","Church Hill",21623
+"MD","Maryland","Queen Annes","Grasonville",21638
+"MD","Maryland","Queen Annes","Queen Anne",21657
+"MD","Maryland","Queen Annes","Queenstown",21658
+"MD","Maryland","Queen Annes","Stevensville",21666
+"MD","Maryland","Saint Marys","Avenue",20609
+"MD","Maryland","Saint Marys","Bushwood",20618
+"MD","Maryland","Saint Marys","California",20619
+"MD","Maryland","Saint Marys","Callaway",20620
+"MD","Maryland","Saint Marys","Clements",20624
+"MD","Maryland","Saint Marys","Great Mills",20634
+"MD","Maryland","Saint Marys","Hollywood",20636
+"MD","Maryland","Saint Marys","Leonardtown",20650
+"MD","Maryland","Saint Marys","Lexington Park",20653
+"MD","Maryland","Saint Marys","Mechanicsville",20659
+"MD","Maryland","Saint Marys","Piney Point",20674
+"MD","Maryland","Saint Marys","Ridge",20680
+"MD","Maryland","Saint Marys","Saint Inigoes",20684
+"MD","Maryland","Somerset","Eden",21822
+"MD","Maryland","Somerset","Princess Anne",21853
+"MD","Maryland","Somerset","Westover",21871
+"MD","Maryland","Talbot","Cordova",21625
+"MD","Maryland","Talbot","Easton",21601
+"MD","Maryland","Talbot","Oxford",21654
+"MD","Maryland","Talbot","Saint Michaels",21663
+"MD","Maryland","Talbot","Tilghman",21671
+"MD","Maryland","Washington","Big Pool",21711
+"MD","Maryland","Washington","Boonsboro",21713
+"MD","Maryland","Washington","Cascade",21719
+"MD","Maryland","Washington","Clear Spring",21722
+"MD","Maryland","Washington","Fairplay",21733
+"MD","Maryland","Washington","Hagerstown",21740
+"MD","Maryland","Washington","Hagerstown",21742
+"MD","Maryland","Washington","Hancock",21750
+"MD","Maryland","Washington","Keedysville",21756
+"MD","Maryland","Washington","Maugansville",21767
+"MD","Maryland","Washington","Rohrersville",21779
+"MD","Maryland","Washington","Sharpsburg",21782
+"MD","Maryland","Washington","Smithsburg",21783
+"MD","Maryland","Washington","Williamsport",21795
+"MD","Maryland","Wicomico","Delmar",21875
+"MD","Maryland","Wicomico","Fruitland",21826
+"MD","Maryland","Wicomico","Hebron",21830
+"MD","Maryland","Wicomico","Mardela Springs",21837
+"MD","Maryland","Wicomico","Parsonsburg",21849
+"MD","Maryland","Wicomico","Pittsville",21850
+"MD","Maryland","Wicomico","Quantico",21856
+"MD","Maryland","Wicomico","Salisbury",21801
+"MD","Maryland","Wicomico","Salisbury",21804
+"MD","Maryland","Wicomico","Sharptown",21861
+"MD","Maryland","Wicomico","Tyaskin",21865
+"MD","Maryland","Wicomico","Willards",21874
+"MD","Maryland","Worcester","Berlin",21811
+"MD","Maryland","Worcester","Newark",21841
+"MD","Maryland","Worcester","Ocean City",21842
+"MD","Maryland","Worcester","Pocomoke City",21851
+"MD","Maryland","Worcester","Snow Hill",21863
 "MA","Massachusetts","Barnstable","Barnstable",2601
 "MA","Massachusetts","Barnstable","Barnstable",2630
 "MA","Massachusetts","Barnstable","Barnstable",2632
@@ -5261,345 +5600,6 @@
 "MA","Massachusetts","Worcester","Worcester",1607
 "MA","Massachusetts","Worcester","Worcester",1609
 "MA","Massachusetts","Worcester","Worcester",1610
-"MD","Maryland","Allegany","Barton",21521
-"MD","Maryland","Allegany","Cumberland",21502
-"MD","Maryland","Allegany","Frostburg",21532
-"MD","Maryland","Allegany","Mount Savage",21545
-"MD","Maryland","Allegany","Westernport",21562
-"MD","Maryland","Anne Arundel","Annapolis",21401
-"MD","Maryland","Anne Arundel","Annapolis",21403
-"MD","Maryland","Anne Arundel","Annapolis",21405
-"MD","Maryland","Anne Arundel","Annapolis",21409
-"MD","Maryland","Anne Arundel","Arnold",21012
-"MD","Maryland","Anne Arundel","Brooklyn Park",21225
-"MD","Maryland","Anne Arundel","Churchton",20733
-"MD","Maryland","Anne Arundel","Crofton",21114
-"MD","Maryland","Anne Arundel","Crownsville",21032
-"MD","Maryland","Anne Arundel","Davidsonville",21035
-"MD","Maryland","Anne Arundel","Deale",20751
-"MD","Maryland","Anne Arundel","Edgewater",21037
-"MD","Maryland","Anne Arundel","Gambrills",21054
-"MD","Maryland","Anne Arundel","Glen Burnie",21060
-"MD","Maryland","Anne Arundel","Glen Burnie",21061
-"MD","Maryland","Anne Arundel","Glen Burnie",21108
-"MD","Maryland","Anne Arundel","Hanover",21076
-"MD","Maryland","Anne Arundel","Harwood",20776
-"MD","Maryland","Anne Arundel","Linthicum Heights",21090
-"MD","Maryland","Anne Arundel","Lothian",20711
-"MD","Maryland","Anne Arundel","Odenton",21113
-"MD","Maryland","Anne Arundel","Pasadena",21122
-"MD","Maryland","Anne Arundel","Riva",21140
-"MD","Maryland","Anne Arundel","Severn",21144
-"MD","Maryland","Anne Arundel","Severna Park",21146
-"MD","Maryland","Anne Arundel","Shady Side",20764
-"MD","Maryland","Anne Arundel","Tracys Landing",20779
-"MD","Maryland","Anne Arundel","West River",20778
-"MD","Maryland","Baltimore","Baldwin",21013
-"MD","Maryland","Baltimore","Catonsville",21228
-"MD","Maryland","Baltimore","Cockeysville",21030
-"MD","Maryland","Baltimore","Dundalk",21222
-"MD","Maryland","Baltimore","Edgemere",21219
-"MD","Maryland","Baltimore","Essex",21221
-"MD","Maryland","Baltimore","Freeland",21053
-"MD","Maryland","Baltimore","Glen Arm",21057
-"MD","Maryland","Baltimore","Halethorpe",21227
-"MD","Maryland","Baltimore","Kingsville",21087
-"MD","Maryland","Baltimore","Lochearn",21207
-"MD","Maryland","Baltimore","Lutherville Timonium",21093
-"MD","Maryland","Baltimore","Middle River",21220
-"MD","Maryland","Baltimore","Monkton",21111
-"MD","Maryland","Baltimore","Nottingham",21236
-"MD","Maryland","Baltimore","Owings Mills",21117
-"MD","Maryland","Baltimore","Parkton",21120
-"MD","Maryland","Baltimore","Parkville",21234
-"MD","Maryland","Baltimore","Perry Hall",21128
-"MD","Maryland","Baltimore","Phoenix",21131
-"MD","Maryland","Baltimore","Pikesville",21208
-"MD","Maryland","Baltimore","Randallstown",21133
-"MD","Maryland","Baltimore","Reisterstown",21136
-"MD","Maryland","Baltimore","Rosedale",21237
-"MD","Maryland","Baltimore","Sparks Glencoe",21152
-"MD","Maryland","Baltimore","Towson",21204
-"MD","Maryland","Baltimore","Towson",21286
-"MD","Maryland","Baltimore","Upperco",21155
-"MD","Maryland","Baltimore","White Marsh",21162
-"MD","Maryland","Baltimore","Windsor Mill",21244
-"MD","Maryland","Baltimore City","Baltimore",21205
-"MD","Maryland","Baltimore City","Baltimore",21206
-"MD","Maryland","Baltimore City","Baltimore",21209
-"MD","Maryland","Baltimore City","Baltimore",21210
-"MD","Maryland","Baltimore City","Baltimore",21211
-"MD","Maryland","Baltimore City","Baltimore",21212
-"MD","Maryland","Baltimore City","Baltimore",21213
-"MD","Maryland","Baltimore City","Baltimore",21214
-"MD","Maryland","Baltimore City","Baltimore",21215
-"MD","Maryland","Baltimore City","Baltimore",21216
-"MD","Maryland","Baltimore City","Baltimore",21217
-"MD","Maryland","Baltimore City","Baltimore",21218
-"MD","Maryland","Baltimore City","Baltimore",21223
-"MD","Maryland","Baltimore City","Baltimore",21224
-"MD","Maryland","Baltimore City","Baltimore",21226
-"MD","Maryland","Baltimore City","Baltimore",21229
-"MD","Maryland","Baltimore City","Baltimore",21230
-"MD","Maryland","Baltimore City","Baltimore",21231
-"MD","Maryland","Baltimore City","Baltimore",21239
-"MD","Maryland","Calvert","Chesapeake Beach",20732
-"MD","Maryland","Calvert","Dunkirk",20754
-"MD","Maryland","Calvert","Huntingtown",20639
-"MD","Maryland","Calvert","Lusby",20657
-"MD","Maryland","Calvert","North Beach",20714
-"MD","Maryland","Calvert","Owings",20736
-"MD","Maryland","Calvert","Port Republic",20676
-"MD","Maryland","Calvert","Prince Frederick",20678
-"MD","Maryland","Calvert","Saint Leonard",20685
-"MD","Maryland","Calvert","Solomons",20688
-"MD","Maryland","Calvert","Sunderland",20689
-"MD","Maryland","Caroline","Denton",21629
-"MD","Maryland","Caroline","Federalsburg",21632
-"MD","Maryland","Caroline","Goldsboro",21636
-"MD","Maryland","Caroline","Greensboro",21639
-"MD","Maryland","Caroline","Henderson",21640
-"MD","Maryland","Caroline","Marydel",21649
-"MD","Maryland","Caroline","Preston",21655
-"MD","Maryland","Caroline","Ridgely",21660
-"MD","Maryland","Carroll","Finksburg",21048
-"MD","Maryland","Carroll","Hampstead",21074
-"MD","Maryland","Carroll","Keymar",21757
-"MD","Maryland","Carroll","Manchester",21102
-"MD","Maryland","Carroll","Mount Airy",21771
-"MD","Maryland","Carroll","New Windsor",21776
-"MD","Maryland","Carroll","Sykesville",21784
-"MD","Maryland","Carroll","Taneytown",21787
-"MD","Maryland","Carroll","Union Bridge",21791
-"MD","Maryland","Carroll","Westminster",21157
-"MD","Maryland","Carroll","Westminster",21158
-"MD","Maryland","Cecil","Chesapeake City",21915
-"MD","Maryland","Cecil","Colora",21917
-"MD","Maryland","Cecil","Conowingo",21918
-"MD","Maryland","Cecil","Elkton",21921
-"MD","Maryland","Cecil","North East",21901
-"MD","Maryland","Cecil","Perryville",21903
-"MD","Maryland","Cecil","Port Deposit",21904
-"MD","Maryland","Cecil","Rising Sun",21911
-"MD","Maryland","Cecil","Warwick",21912
-"MD","Maryland","Charles","Bryans Road",20616
-"MD","Maryland","Charles","Charlotte Hall",20622
-"MD","Maryland","Charles","Cobb Island",20625
-"MD","Maryland","Charles","Hughesville",20637
-"MD","Maryland","Charles","Indian Head",20640
-"MD","Maryland","Charles","La Plata",20646
-"MD","Maryland","Charles","La Plata",20677
-"MD","Maryland","Charles","Marbury",20658
-"MD","Maryland","Charles","Nanjemoy",20662
-"MD","Maryland","Charles","Pomfret",20675
-"MD","Maryland","Charles","Waldorf",20601
-"MD","Maryland","Charles","Waldorf",20602
-"MD","Maryland","Charles","Waldorf",20603
-"MD","Maryland","Charles","Welcome",20693
-"MD","Maryland","Charles","White Plains",20695
-"MD","Maryland","Dorchester","East New Market",21631
-"MD","Maryland","Dorchester","Hurlock",21643
-"MD","Maryland","Dorchester","Vienna",21869
-"MD","Maryland","Frederick","Adamstown",21710
-"MD","Maryland","Frederick","Brunswick",21716
-"MD","Maryland","Frederick","Emmitsburg",21727
-"MD","Maryland","Frederick","Frederick",21701
-"MD","Maryland","Frederick","Frederick",21702
-"MD","Maryland","Frederick","Frederick",21703
-"MD","Maryland","Frederick","Frederick",21704
-"MD","Maryland","Frederick","Ijamsville",21754
-"MD","Maryland","Frederick","Jefferson",21755
-"MD","Maryland","Frederick","Middletown",21769
-"MD","Maryland","Frederick","Monrovia",21770
-"MD","Maryland","Frederick","Myersville",21773
-"MD","Maryland","Frederick","New Market",21774
-"MD","Maryland","Frederick","Point of Rocks",21777
-"MD","Maryland","Frederick","Rosemont",21758
-"MD","Maryland","Frederick","Sabillasville",21780
-"MD","Maryland","Frederick","Thurmont",21788
-"MD","Maryland","Frederick","Walkersville",21793
-"MD","Maryland","Frederick","Woodsboro",21798
-"MD","Maryland","Garrett","Accident",21520
-"MD","Maryland","Garrett","Friendsville",21531
-"MD","Maryland","Garrett","Grantsville",21536
-"MD","Maryland","Garrett","Mc Henry",21541
-"MD","Maryland","Garrett","Mountain Lake Park",21550
-"MD","Maryland","Garrett","Swanton",21561
-"MD","Maryland","Harford","Aberdeen",21001
-"MD","Maryland","Harford","Abingdon",21009
-"MD","Maryland","Harford","Bel Air",21014
-"MD","Maryland","Harford","Bel Air",21015
-"MD","Maryland","Harford","Belcamp",21017
-"MD","Maryland","Harford","Churchville",21028
-"MD","Maryland","Harford","Darlington",21034
-"MD","Maryland","Harford","Edgewood",21040
-"MD","Maryland","Harford","Fallston",21047
-"MD","Maryland","Harford","Forest Hill",21050
-"MD","Maryland","Harford","Havre de Grace",21078
-"MD","Maryland","Harford","Jarrettsville",21084
-"MD","Maryland","Harford","Joppa",21085
-"MD","Maryland","Harford","Pylesville",21132
-"MD","Maryland","Harford","Street",21154
-"MD","Maryland","Harford","Whiteford",21160
-"MD","Maryland","Harford","Whitehall",21161
-"MD","Maryland","Howard","Clarksville",21029
-"MD","Maryland","Howard","Columbia",21044
-"MD","Maryland","Howard","Columbia",21045
-"MD","Maryland","Howard","Columbia",21046
-"MD","Maryland","Howard","Dayton",21036
-"MD","Maryland","Howard","Elkridge",21075
-"MD","Maryland","Howard","Ellicott City",21042
-"MD","Maryland","Howard","Ellicott City",21043
-"MD","Maryland","Howard","Fulton",20759
-"MD","Maryland","Howard","Glenelg",21737
-"MD","Maryland","Howard","Glenwood",21738
-"MD","Maryland","Howard","Highland",20777
-"MD","Maryland","Howard","Jessup",20794
-"MD","Maryland","Howard","Marriottsville",21104
-"MD","Maryland","Howard","Savage",20763
-"MD","Maryland","Howard","West Friendship",21794
-"MD","Maryland","Howard","Woodbine",21797
-"MD","Maryland","Howard","Woodstock",21163
-"MD","Maryland","Kent","Chestertown",21620
-"MD","Maryland","Kent","Galena",21635
-"MD","Maryland","Kent","Kennedyville",21645
-"MD","Maryland","Kent","Millington",21651
-"MD","Maryland","Kent","Rock Hall",21661
-"MD","Maryland","Kent","Worton",21678
-"MD","Maryland","Montgomery","Ashton",20861
-"MD","Maryland","Montgomery","Bethesda",20814
-"MD","Maryland","Montgomery","Bethesda",20816
-"MD","Maryland","Montgomery","Bethesda",20817
-"MD","Maryland","Montgomery","Boyds",20841
-"MD","Maryland","Montgomery","Brookeville",20833
-"MD","Maryland","Montgomery","Burtonsville",20866
-"MD","Maryland","Montgomery","Cabin John",20818
-"MD","Maryland","Montgomery","Clarksburg",20871
-"MD","Maryland","Montgomery","Damascus",20872
-"MD","Maryland","Montgomery","Damascus",20882
-"MD","Maryland","Montgomery","Derwood",20855
-"MD","Maryland","Montgomery","Dickerson",20842
-"MD","Maryland","Montgomery","Friendship Village",20815
-"MD","Maryland","Montgomery","Gaithersburg",20877
-"MD","Maryland","Montgomery","Gaithersburg",20878
-"MD","Maryland","Montgomery","Gaithersburg",20879
-"MD","Maryland","Montgomery","Germantown",20874
-"MD","Maryland","Montgomery","Germantown",20876
-"MD","Maryland","Montgomery","Montgomery Village",20886
-"MD","Maryland","Montgomery","North Bethesda",20852
-"MD","Maryland","Montgomery","Olney",20832
-"MD","Maryland","Montgomery","Olney",20853
-"MD","Maryland","Montgomery","Poolesville",20837
-"MD","Maryland","Montgomery","Potomac",20854
-"MD","Maryland","Montgomery","Rockville",20850
-"MD","Maryland","Montgomery","Rockville",20851
-"MD","Maryland","Montgomery","Sandy Spring",20860
-"MD","Maryland","Montgomery","Silver Spring",20901
-"MD","Maryland","Montgomery","Silver Spring",20902
-"MD","Maryland","Montgomery","Silver Spring",20903
-"MD","Maryland","Montgomery","Silver Spring",20904
-"MD","Maryland","Montgomery","Silver Spring",20905
-"MD","Maryland","Montgomery","Silver Spring",20906
-"MD","Maryland","Montgomery","Silver Spring",20910
-"MD","Maryland","Montgomery","South Kensington",20895
-"MD","Maryland","Montgomery","Takoma Park",20912
-"MD","Maryland","Prince Georges","Accokeek",20607
-"MD","Maryland","Prince Georges","Beltsville",20705
-"MD","Maryland","Prince Georges","Bladensburg",20710
-"MD","Maryland","Prince Georges","Bowie",20715
-"MD","Maryland","Prince Georges","Bowie",20716
-"MD","Maryland","Prince Georges","Bowie",20720
-"MD","Maryland","Prince Georges","Bowie",20721
-"MD","Maryland","Prince Georges","Brentwood",20722
-"MD","Maryland","Prince Georges","Cheltenham",20623
-"MD","Maryland","Prince Georges","Chillum",20782
-"MD","Maryland","Prince Georges","Chillum",20783
-"MD","Maryland","Prince Georges","Clinton",20735
-"MD","Maryland","Prince Georges","College Park",20740
-"MD","Maryland","Prince Georges","Coral Hills",20743
-"MD","Maryland","Prince Georges","District Heights",20747
-"MD","Maryland","Prince Georges","East Riverdale",20737
-"MD","Maryland","Prince Georges","Forest Heights",20745
-"MD","Maryland","Prince Georges","Fort Washington",20744
-"MD","Maryland","Prince Georges","Glenn Dale",20769
-"MD","Maryland","Prince Georges","Greater Landover",20785
-"MD","Maryland","Prince Georges","Greater Upper Marlboro",20772
-"MD","Maryland","Prince Georges","Greenbelt",20770
-"MD","Maryland","Prince Georges","Kettering",20774
-"MD","Maryland","Prince Georges","Lanham Seabrook",20706
-"MD","Maryland","Prince Georges","Laurel",20707
-"MD","Maryland","Prince Georges","Laurel",20708
-"MD","Maryland","Prince Georges","Laurel",20723
-"MD","Maryland","Prince Georges","Laurel",20724
-"MD","Maryland","Prince Georges","Mount Rainier",20712
-"MD","Maryland","Prince Georges","New Carrollton",20784
-"MD","Maryland","Prince Georges","Suitland-Silver Hill",20746
-"MD","Maryland","Prince Georges","Temple Hills",20748
-"MD","Maryland","Queen Annes","Centreville",21617
-"MD","Maryland","Queen Annes","Chester",21619
-"MD","Maryland","Queen Annes","Church Hill",21623
-"MD","Maryland","Queen Annes","Grasonville",21638
-"MD","Maryland","Queen Annes","Queen Anne",21657
-"MD","Maryland","Queen Annes","Queenstown",21658
-"MD","Maryland","Queen Annes","Stevensville",21666
-"MD","Maryland","Saint Marys","Avenue",20609
-"MD","Maryland","Saint Marys","Bushwood",20618
-"MD","Maryland","Saint Marys","California",20619
-"MD","Maryland","Saint Marys","Callaway",20620
-"MD","Maryland","Saint Marys","Clements",20624
-"MD","Maryland","Saint Marys","Great Mills",20634
-"MD","Maryland","Saint Marys","Hollywood",20636
-"MD","Maryland","Saint Marys","Leonardtown",20650
-"MD","Maryland","Saint Marys","Lexington Park",20653
-"MD","Maryland","Saint Marys","Mechanicsville",20659
-"MD","Maryland","Saint Marys","Piney Point",20674
-"MD","Maryland","Saint Marys","Ridge",20680
-"MD","Maryland","Saint Marys","Saint Inigoes",20684
-"MD","Maryland","Somerset","Eden",21822
-"MD","Maryland","Somerset","Princess Anne",21853
-"MD","Maryland","Somerset","Westover",21871
-"MD","Maryland","Talbot","Cordova",21625
-"MD","Maryland","Talbot","Easton",21601
-"MD","Maryland","Talbot","Oxford",21654
-"MD","Maryland","Talbot","Saint Michaels",21663
-"MD","Maryland","Talbot","Tilghman",21671
-"MD","Maryland","Washington","Big Pool",21711
-"MD","Maryland","Washington","Boonsboro",21713
-"MD","Maryland","Washington","Cascade",21719
-"MD","Maryland","Washington","Clear Spring",21722
-"MD","Maryland","Washington","Fairplay",21733
-"MD","Maryland","Washington","Hagerstown",21740
-"MD","Maryland","Washington","Hagerstown",21742
-"MD","Maryland","Washington","Hancock",21750
-"MD","Maryland","Washington","Keedysville",21756
-"MD","Maryland","Washington","Maugansville",21767
-"MD","Maryland","Washington","Rohrersville",21779
-"MD","Maryland","Washington","Sharpsburg",21782
-"MD","Maryland","Washington","Smithsburg",21783
-"MD","Maryland","Washington","Williamsport",21795
-"MD","Maryland","Wicomico","Delmar",21875
-"MD","Maryland","Wicomico","Fruitland",21826
-"MD","Maryland","Wicomico","Hebron",21830
-"MD","Maryland","Wicomico","Mardela Springs",21837
-"MD","Maryland","Wicomico","Parsonsburg",21849
-"MD","Maryland","Wicomico","Pittsville",21850
-"MD","Maryland","Wicomico","Quantico",21856
-"MD","Maryland","Wicomico","Salisbury",21801
-"MD","Maryland","Wicomico","Salisbury",21804
-"MD","Maryland","Wicomico","Sharptown",21861
-"MD","Maryland","Wicomico","Tyaskin",21865
-"MD","Maryland","Wicomico","Willards",21874
-"MD","Maryland","Worcester","Berlin",21811
-"MD","Maryland","Worcester","Newark",21841
-"MD","Maryland","Worcester","Ocean City",21842
-"MD","Maryland","Worcester","Pocomoke City",21851
-"MD","Maryland","Worcester","Snow Hill",21863
-"ME","Maine","Sagadahoc","Bath",4530
-"ME","Maine","Sagadahoc","Bowdoin",4287
-"ME","Maine","Sagadahoc","Bowdoinham",4008
-"ME","Maine","Sagadahoc","Phippsburg",4562
-"ME","Maine","Sagadahoc","Town of Richmond",4357
-"ME","Maine","Waldo","Islesboro",4848
 "MI","Michigan","Allegan","Allegan",49010
 "MI","Michigan","Allegan","Dorr",49323
 "MI","Michigan","Allegan","Douglas",49406
@@ -6277,6 +6277,71 @@
 "MN","Minnesota","Washington","Stillwater",55082
 "MN","Minnesota","Washington","Woodbury",55125
 "MN","Minnesota","Washington","Woodbury",55129
+"MS","Mississippi","Alcorn","Corinth",38834
+"MS","Mississippi","Alcorn","Rienzi",38865
+"MS","Mississippi","Bolivar","Cleveland",38732
+"MS","Mississippi","Chickasaw","Houston",38851
+"MS","Mississippi","Clarke","Enterprise",39330
+"MS","Mississippi","DeSoto","Hernando",38632
+"MS","Mississippi","DeSoto","Horn Lake",38637
+"MS","Mississippi","DeSoto","Lynchburg",38680
+"MS","Mississippi","DeSoto","Nesbit",38651
+"MS","Mississippi","DeSoto","Olive Branch",38654
+"MS","Mississippi","DeSoto","Southaven",38671
+"MS","Mississippi","DeSoto","Southaven",38672
+"MS","Mississippi","DeSoto","Walls",38641
+"MS","Mississippi","Forrest","Hattiesburg",39401
+"MS","Mississippi","Forrest","Hattiesburg",39402
+"MS","Mississippi","Forrest","Petal",39465
+"MS","Mississippi","George","Lucedale",39452
+"MS","Mississippi","Grenada","Grenada",38901
+"MS","Mississippi","Grenada","Holcomb",38940
+"MS","Mississippi","Hinds","Byram",39272
+"MS","Mississippi","Hinds","Clinton",39056
+"MS","Mississippi","Hinds","Jackson",39203
+"MS","Mississippi","Hinds","Jackson",39204
+"MS","Mississippi","Hinds","Jackson",39206
+"MS","Mississippi","Hinds","Jackson",39209
+"MS","Mississippi","Hinds","Jackson",39211
+"MS","Mississippi","Hinds","Jackson",39212
+"MS","Mississippi","Hinds","Jackson",39213
+"MS","Mississippi","Hinds","Jackson",39216
+"MS","Mississippi","Hinds","Raymond",39154
+"MS","Mississippi","Hinds","Terry",39170
+"MS","Mississippi","Jones","Ellisville",39437
+"MS","Mississippi","Jones","Laurel",39443
+"MS","Mississippi","Jones","Moselle",39459
+"MS","Mississippi","Jones","Soso",39480
+"MS","Mississippi","Lafayette","Oxford",38655
+"MS","Mississippi","Lamar","Purvis",39475
+"MS","Mississippi","Lamar","Sumrall",39482
+"MS","Mississippi","Lauderdale","Meridian",39305
+"MS","Mississippi","Lauderdale","Meridian",39307
+"MS","Mississippi","Lee","Guntown",38849
+"MS","Mississippi","Lee","Saltillo",38866
+"MS","Mississippi","Lee","Tupelo",38801
+"MS","Mississippi","Lee","Tupelo",38804
+"MS","Mississippi","Lowndes","Caledonia",39740
+"MS","Mississippi","Lowndes","Columbus",39702
+"MS","Mississippi","Lowndes","Columbus",39705
+"MS","Mississippi","Lowndes","Steens",39766
+"MS","Mississippi","Madison","Canton",39046
+"MS","Mississippi","Madison","Madison",39110
+"MS","Mississippi","Madison","Ridgeland",39157
+"MS","Mississippi","Marion","Columbia",39429
+"MS","Mississippi","Marshall","Byhalia",38611
+"MS","Mississippi","Marshall","Holly Springs",38635
+"MS","Mississippi","Marshall","Red Banks",38661
+"MS","Mississippi","Neshoba","Philadelphia",39350
+"MS","Mississippi","Newton","Union",39365
+"MS","Mississippi","Pearl River","Carriere",39426
+"MS","Mississippi","Pearl River","Picayune",39466
+"MS","Mississippi","Rankin","Brandon",39042
+"MS","Mississippi","Rankin","Brandon",39047
+"MS","Mississippi","Rankin","Florence",39073
+"MS","Mississippi","Rankin","Flowood",39232
+"MS","Mississippi","Rankin","Richland",39218
+"MS","Mississippi","Warren","Vicksburg",39183
 "MO","Missouri","Audrain","Mexico",65265
 "MO","Missouri","Audrain","Vandalia",63382
 "MO","Missouri","Bates","Adrian",64720
@@ -6481,71 +6546,6 @@
 "MO","Missouri","Saint Louis City","Saint Louis",63120
 "MO","Missouri","Saint Louis City","Saint Louis",63139
 "MO","Missouri","Saint Louis City","Saint Louis",63147
-"MS","Mississippi","Alcorn","Corinth",38834
-"MS","Mississippi","Alcorn","Rienzi",38865
-"MS","Mississippi","Bolivar","Cleveland",38732
-"MS","Mississippi","Chickasaw","Houston",38851
-"MS","Mississippi","Clarke","Enterprise",39330
-"MS","Mississippi","DeSoto","Hernando",38632
-"MS","Mississippi","DeSoto","Horn Lake",38637
-"MS","Mississippi","DeSoto","Lynchburg",38680
-"MS","Mississippi","DeSoto","Nesbit",38651
-"MS","Mississippi","DeSoto","Olive Branch",38654
-"MS","Mississippi","DeSoto","Southaven",38671
-"MS","Mississippi","DeSoto","Southaven",38672
-"MS","Mississippi","DeSoto","Walls",38641
-"MS","Mississippi","Forrest","Hattiesburg",39401
-"MS","Mississippi","Forrest","Hattiesburg",39402
-"MS","Mississippi","Forrest","Petal",39465
-"MS","Mississippi","George","Lucedale",39452
-"MS","Mississippi","Grenada","Grenada",38901
-"MS","Mississippi","Grenada","Holcomb",38940
-"MS","Mississippi","Hinds","Byram",39272
-"MS","Mississippi","Hinds","Clinton",39056
-"MS","Mississippi","Hinds","Jackson",39203
-"MS","Mississippi","Hinds","Jackson",39204
-"MS","Mississippi","Hinds","Jackson",39206
-"MS","Mississippi","Hinds","Jackson",39209
-"MS","Mississippi","Hinds","Jackson",39211
-"MS","Mississippi","Hinds","Jackson",39212
-"MS","Mississippi","Hinds","Jackson",39213
-"MS","Mississippi","Hinds","Jackson",39216
-"MS","Mississippi","Hinds","Raymond",39154
-"MS","Mississippi","Hinds","Terry",39170
-"MS","Mississippi","Jones","Ellisville",39437
-"MS","Mississippi","Jones","Laurel",39443
-"MS","Mississippi","Jones","Moselle",39459
-"MS","Mississippi","Jones","Soso",39480
-"MS","Mississippi","Lafayette","Oxford",38655
-"MS","Mississippi","Lamar","Purvis",39475
-"MS","Mississippi","Lamar","Sumrall",39482
-"MS","Mississippi","Lauderdale","Meridian",39305
-"MS","Mississippi","Lauderdale","Meridian",39307
-"MS","Mississippi","Lee","Guntown",38849
-"MS","Mississippi","Lee","Saltillo",38866
-"MS","Mississippi","Lee","Tupelo",38801
-"MS","Mississippi","Lee","Tupelo",38804
-"MS","Mississippi","Lowndes","Caledonia",39740
-"MS","Mississippi","Lowndes","Columbus",39702
-"MS","Mississippi","Lowndes","Columbus",39705
-"MS","Mississippi","Lowndes","Steens",39766
-"MS","Mississippi","Madison","Canton",39046
-"MS","Mississippi","Madison","Madison",39110
-"MS","Mississippi","Madison","Ridgeland",39157
-"MS","Mississippi","Marion","Columbia",39429
-"MS","Mississippi","Marshall","Byhalia",38611
-"MS","Mississippi","Marshall","Holly Springs",38635
-"MS","Mississippi","Marshall","Red Banks",38661
-"MS","Mississippi","Neshoba","Philadelphia",39350
-"MS","Mississippi","Newton","Union",39365
-"MS","Mississippi","Pearl River","Carriere",39426
-"MS","Mississippi","Pearl River","Picayune",39466
-"MS","Mississippi","Rankin","Brandon",39042
-"MS","Mississippi","Rankin","Brandon",39047
-"MS","Mississippi","Rankin","Florence",39073
-"MS","Mississippi","Rankin","Flowood",39232
-"MS","Mississippi","Rankin","Richland",39218
-"MS","Mississippi","Warren","Vicksburg",39183
 "MT","Montana","Beaverhead","Dillon",59725
 "MT","Montana","Cascade","Belt",59412
 "MT","Montana","Cascade","Cascade",59421
@@ -6583,402 +6583,6 @@
 "MT","Montana","Yellowstone","Huntley",59037
 "MT","Montana","Yellowstone","Laurel",59044
 "MT","Montana","Yellowstone","Shepherd",59079
-"NC","North Carolina","Alamance","Burlington",27215
-"NC","North Carolina","Alamance","Burlington",27217
-"NC","North Carolina","Alamance","Elon",27244
-"NC","North Carolina","Alamance","Graham",27253
-"NC","North Carolina","Alamance","Haw River",27258
-"NC","North Carolina","Alamance","Mebane",27302
-"NC","North Carolina","Alamance","Snow Camp",27349
-"NC","North Carolina","Buncombe","Alexander",28701
-"NC","North Carolina","Buncombe","Arden",28704
-"NC","North Carolina","Buncombe","Asheville",28801
-"NC","North Carolina","Buncombe","Asheville",28803
-"NC","North Carolina","Buncombe","Asheville",28804
-"NC","North Carolina","Buncombe","Asheville",28805
-"NC","North Carolina","Buncombe","Asheville",28806
-"NC","North Carolina","Buncombe","Barnardsville",28709
-"NC","North Carolina","Buncombe","Black Mountain",28711
-"NC","North Carolina","Buncombe","Candler",28715
-"NC","North Carolina","Buncombe","Fairview",28730
-"NC","North Carolina","Buncombe","Leicester",28748
-"NC","North Carolina","Buncombe","Montreat",28757
-"NC","North Carolina","Buncombe","Swannanoa",28778
-"NC","North Carolina","Buncombe","Weaverville",28787
-"NC","North Carolina","Burke","Connelly Springs",28612
-"NC","North Carolina","Burke","Hildebran",28637
-"NC","North Carolina","Burke","Morganton",28655
-"NC","North Carolina","Burke","Valdese",28690
-"NC","North Carolina","Cabarrus","Concord",28025
-"NC","North Carolina","Cabarrus","Concord",28027
-"NC","North Carolina","Cabarrus","Gold Hill",28071
-"NC","North Carolina","Cabarrus","Harrisburg",28075
-"NC","North Carolina","Cabarrus","Kannapolis",28081
-"NC","North Carolina","Cabarrus","Kannapolis",28083
-"NC","North Carolina","Cabarrus","Midland",28107
-"NC","North Carolina","Cabarrus","Mount Pleasant",28124
-"NC","North Carolina","Caldwell","Collettsville",28611
-"NC","North Carolina","Caldwell","Granite Falls",28630
-"NC","North Carolina","Caldwell","Hudson",28638
-"NC","North Carolina","Caldwell","Lenoir",28645
-"NC","North Carolina","Carteret","Atlantic Beach",28512
-"NC","North Carolina","Carteret","Beaufort",28516
-"NC","North Carolina","Carteret","Emerald Isle",28594
-"NC","North Carolina","Carteret","Harkers Island",28531
-"NC","North Carolina","Carteret","Morehead City",28557
-"NC","North Carolina","Carteret","Newport",28570
-"NC","North Carolina","Carteret","Stella",28582
-"NC","North Carolina","Catawba","Catawba",28609
-"NC","North Carolina","Catawba","Claremont",28610
-"NC","North Carolina","Catawba","Conover",28613
-"NC","North Carolina","Catawba","Hickory",28601
-"NC","North Carolina","Catawba","Hickory",28602
-"NC","North Carolina","Catawba","Maiden",28650
-"NC","North Carolina","Catawba","Newton",28658
-"NC","North Carolina","Catawba","Sherrills Ford",28673
-"NC","North Carolina","Catawba","Terrell",28682
-"NC","North Carolina","Cleveland","Belwood",28090
-"NC","North Carolina","Cleveland","Casar",28020
-"NC","North Carolina","Cleveland","Grover",28073
-"NC","North Carolina","Cleveland","Kings Mountain",28086
-"NC","North Carolina","Cleveland","Shelby",28150
-"NC","North Carolina","Cleveland","Shelby",28152
-"NC","North Carolina","Cumberland","Fayetteville",28301
-"NC","North Carolina","Cumberland","Fayetteville",28303
-"NC","North Carolina","Cumberland","Fayetteville",28304
-"NC","North Carolina","Cumberland","Fayetteville",28305
-"NC","North Carolina","Cumberland","Fayetteville",28306
-"NC","North Carolina","Cumberland","Fayetteville",28311
-"NC","North Carolina","Cumberland","Fayetteville",28312
-"NC","North Carolina","Cumberland","Fayetteville",28314
-"NC","North Carolina","Cumberland","Hope Mills",28348
-"NC","North Carolina","Cumberland","Linden",28356
-"NC","North Carolina","Cumberland","Parkton",28371
-"NC","North Carolina","Cumberland","Stedman",28391
-"NC","North Carolina","Cumberland","Wade",28395
-"NC","North Carolina","Davidson","Denton",27239
-"NC","North Carolina","Davidson","Lexington",27292
-"NC","North Carolina","Davidson","Lexington",27295
-"NC","North Carolina","Davidson","Linwood",27299
-"NC","North Carolina","Davidson","Thomasville",27360
-"NC","North Carolina","Davie","Advance",27006
-"NC","North Carolina","Davie","Mocksville",27028
-"NC","North Carolina","Duplin","Beulaville",28518
-"NC","North Carolina","Duplin","Chinquapin",28521
-"NC","North Carolina","Duplin","Faison",28341
-"NC","North Carolina","Duplin","Magnolia",28453
-"NC","North Carolina","Duplin","Rose Hill",28458
-"NC","North Carolina","Duplin","Teachey",28464
-"NC","North Carolina","Duplin","Wallace",28466
-"NC","North Carolina","Durham","Bahama",27503
-"NC","North Carolina","Durham","Durham",27701
-"NC","North Carolina","Durham","Durham",27703
-"NC","North Carolina","Durham","Durham",27704
-"NC","North Carolina","Durham","Durham",27705
-"NC","North Carolina","Durham","Durham",27707
-"NC","North Carolina","Durham","Durham",27712
-"NC","North Carolina","Durham","Durham",27713
-"NC","North Carolina","Durham","Rougemont",27572
-"NC","North Carolina","Edgecombe","Macclesfield",27852
-"NC","North Carolina","Edgecombe","Pinetops",27864
-"NC","North Carolina","Edgecombe","Tarboro",27886
-"NC","North Carolina","Forsyth","Belews Creek",27009
-"NC","North Carolina","Forsyth","Clemmons",27012
-"NC","North Carolina","Forsyth","Germanton",27019
-"NC","North Carolina","Forsyth","Kernersville",27284
-"NC","North Carolina","Forsyth","Lewisville",27023
-"NC","North Carolina","Forsyth","Rural Hall",27045
-"NC","North Carolina","Forsyth","Tobaccoville",27050
-"NC","North Carolina","Forsyth","Walkertown",27051
-"NC","North Carolina","Forsyth","Winston-Salem",27040
-"NC","North Carolina","Forsyth","Winston-Salem",27101
-"NC","North Carolina","Forsyth","Winston-Salem",27103
-"NC","North Carolina","Forsyth","Winston-Salem",27104
-"NC","North Carolina","Forsyth","Winston-Salem",27105
-"NC","North Carolina","Forsyth","Winston-Salem",27106
-"NC","North Carolina","Forsyth","Winston-Salem",27107
-"NC","North Carolina","Forsyth","Winston-Salem",27127
-"NC","North Carolina","Franklin","Bunn",27508
-"NC","North Carolina","Franklin","Castalia",27816
-"NC","North Carolina","Franklin","Franklinton",27525
-"NC","North Carolina","Franklin","Louisburg",27549
-"NC","North Carolina","Franklin","Youngsville",27596
-"NC","North Carolina","Gaston","Belmont",28012
-"NC","North Carolina","Gaston","Bessemer City",28016
-"NC","North Carolina","Gaston","Cherryville",28021
-"NC","North Carolina","Gaston","Cramerton",28032
-"NC","North Carolina","Gaston","Dallas",28034
-"NC","North Carolina","Gaston","Gastonia",28052
-"NC","North Carolina","Gaston","Gastonia",28054
-"NC","North Carolina","Gaston","Gastonia",28056
-"NC","North Carolina","Gaston","Lowell",28098
-"NC","North Carolina","Gaston","Mount Holly",28120
-"NC","North Carolina","Gaston","Stanley",28164
-"NC","North Carolina","Granville","Butner",27509
-"NC","North Carolina","Granville","Creedmoor",27522
-"NC","North Carolina","Granville","Oxford",27565
-"NC","North Carolina","Granville","Stem",27581
-"NC","North Carolina","Guilford","Browns Summit",27214
-"NC","North Carolina","Guilford","Climax",27233
-"NC","North Carolina","Guilford","Gibsonville",27249
-"NC","North Carolina","Guilford","Greensboro",27301
-"NC","North Carolina","Guilford","Greensboro",27401
-"NC","North Carolina","Guilford","Greensboro",27403
-"NC","North Carolina","Guilford","Greensboro",27405
-"NC","North Carolina","Guilford","Greensboro",27406
-"NC","North Carolina","Guilford","Greensboro",27407
-"NC","North Carolina","Guilford","Greensboro",27408
-"NC","North Carolina","Guilford","Greensboro",27409
-"NC","North Carolina","Guilford","Greensboro",27410
-"NC","North Carolina","Guilford","Greensboro",27455
-"NC","North Carolina","Guilford","High Point",27235
-"NC","North Carolina","Guilford","High Point",27260
-"NC","North Carolina","Guilford","High Point",27262
-"NC","North Carolina","Guilford","High Point",27265
-"NC","North Carolina","Guilford","High Point",27282
-"NC","North Carolina","Guilford","Julian",27283
-"NC","North Carolina","Guilford","Oak Ridge",27310
-"NC","North Carolina","Guilford","Pleasant Garden",27313
-"NC","North Carolina","Guilford","Summerfield",27358
-"NC","North Carolina","Guilford","Whitsett",27377
-"NC","North Carolina","Harnett","Angier",27501
-"NC","North Carolina","Harnett","Broadway",27505
-"NC","North Carolina","Harnett","Coats",27521
-"NC","North Carolina","Harnett","Dunn",28334
-"NC","North Carolina","Harnett","Erwin",28339
-"NC","North Carolina","Harnett","Lillington",27546
-"NC","North Carolina","Harnett","Spring Lake",28390
-"NC","North Carolina","Haywood","Canton",28716
-"NC","North Carolina","Haywood","Clyde",28721
-"NC","North Carolina","Haywood","Lake Junaluska",28745
-"NC","North Carolina","Haywood","Maggie Valley",28751
-"NC","North Carolina","Haywood","Waynesville",28786
-"NC","North Carolina","Henderson","East Flat Rock",28726
-"NC","North Carolina","Henderson","Etowah",28729
-"NC","North Carolina","Henderson","Flat Rock",28731
-"NC","North Carolina","Henderson","Fletcher",28732
-"NC","North Carolina","Henderson","Hendersonville",28739
-"NC","North Carolina","Henderson","Hendersonville",28791
-"NC","North Carolina","Henderson","Hendersonville",28792
-"NC","North Carolina","Henderson","Horse Shoe",28742
-"NC","North Carolina","Henderson","Mills River",28759
-"NC","North Carolina","Henderson","Saluda",28773
-"NC","North Carolina","Henderson","Zirconia",28790
-"NC","North Carolina","Iredell","Harmony",28634
-"NC","North Carolina","Iredell","Mooresville",28115
-"NC","North Carolina","Iredell","Mooresville",28117
-"NC","North Carolina","Iredell","Olin",28660
-"NC","North Carolina","Iredell","Statesville",28625
-"NC","North Carolina","Iredell","Statesville",28677
-"NC","North Carolina","Iredell","Stony Point",28678
-"NC","North Carolina","Iredell","Troutman",28166
-"NC","North Carolina","Iredell","Union Grove",28689
-"NC","North Carolina","Jackson","Cashiers",28717
-"NC","North Carolina","Jackson","Cullowhee",28723
-"NC","North Carolina","Jackson","Glenville",28736
-"NC","North Carolina","Jackson","Sapphire",28774
-"NC","North Carolina","Jackson","Sylva",28779
-"NC","North Carolina","Jackson","Whittier",28789
-"NC","North Carolina","Johnston","Benson",27504
-"NC","North Carolina","Johnston","Clayton",27520
-"NC","North Carolina","Johnston","Clayton",27527
-"NC","North Carolina","Johnston","Four Oaks",27524
-"NC","North Carolina","Johnston","Kenly",27542
-"NC","North Carolina","Johnston","Middlesex",27557
-"NC","North Carolina","Johnston","Princeton",27569
-"NC","North Carolina","Johnston","Selma",27576
-"NC","North Carolina","Johnston","Smithfield",27577
-"NC","North Carolina","Lincoln","Crouse",28033
-"NC","North Carolina","Lincoln","Denver",28037
-"NC","North Carolina","Lincoln","Iron Station",28080
-"NC","North Carolina","Lincoln","Lincolnton",28092
-"NC","North Carolina","Lincoln","Vale",28168
-"NC","North Carolina","Macon","Franklin",28734
-"NC","North Carolina","Macon","Highlands",28741
-"NC","North Carolina","Macon","Otto",28763
-"NC","North Carolina","Macon","Scaly Mountain",28775
-"NC","North Carolina","Mecklenburg","Charlotte",28202
-"NC","North Carolina","Mecklenburg","Charlotte",28203
-"NC","North Carolina","Mecklenburg","Charlotte",28204
-"NC","North Carolina","Mecklenburg","Charlotte",28205
-"NC","North Carolina","Mecklenburg","Charlotte",28206
-"NC","North Carolina","Mecklenburg","Charlotte",28207
-"NC","North Carolina","Mecklenburg","Charlotte",28208
-"NC","North Carolina","Mecklenburg","Charlotte",28209
-"NC","North Carolina","Mecklenburg","Charlotte",28210
-"NC","North Carolina","Mecklenburg","Charlotte",28211
-"NC","North Carolina","Mecklenburg","Charlotte",28212
-"NC","North Carolina","Mecklenburg","Charlotte",28213
-"NC","North Carolina","Mecklenburg","Charlotte",28214
-"NC","North Carolina","Mecklenburg","Charlotte",28215
-"NC","North Carolina","Mecklenburg","Charlotte",28216
-"NC","North Carolina","Mecklenburg","Charlotte",28217
-"NC","North Carolina","Mecklenburg","Charlotte",28226
-"NC","North Carolina","Mecklenburg","Charlotte",28262
-"NC","North Carolina","Mecklenburg","Charlotte",28269
-"NC","North Carolina","Mecklenburg","Charlotte",28270
-"NC","North Carolina","Mecklenburg","Charlotte",28273
-"NC","North Carolina","Mecklenburg","Charlotte",28277
-"NC","North Carolina","Mecklenburg","Charlotte",28278
-"NC","North Carolina","Mecklenburg","Cornelius",28031
-"NC","North Carolina","Mecklenburg","Davidson",28036
-"NC","North Carolina","Mecklenburg","Huntersville",28078
-"NC","North Carolina","Mecklenburg","Matthews",28105
-"NC","North Carolina","Mecklenburg","Mint Hill",28227
-"NC","North Carolina","Mecklenburg","Pineville",28134
-"NC","North Carolina","New Hanover","Carolina Beach",28428
-"NC","North Carolina","New Hanover","Castle Hayne",28429
-"NC","North Carolina","New Hanover","Kure Beach",28449
-"NC","North Carolina","New Hanover","Wilmington",28401
-"NC","North Carolina","New Hanover","Wilmington",28403
-"NC","North Carolina","New Hanover","Wilmington",28405
-"NC","North Carolina","New Hanover","Wilmington",28409
-"NC","North Carolina","New Hanover","Wilmington",28411
-"NC","North Carolina","New Hanover","Wilmington",28412
-"NC","North Carolina","New Hanover","Wrightsville Beach",28480
-"NC","North Carolina","Northampton","Conway",27820
-"NC","North Carolina","Northampton","Jackson",27845
-"NC","North Carolina","Onslow","Hubert",28539
-"NC","North Carolina","Onslow","Jacksonville",28540
-"NC","North Carolina","Onslow","Jacksonville",28546
-"NC","North Carolina","Onslow","Maple Hill",28454
-"NC","North Carolina","Onslow","Maysville",28555
-"NC","North Carolina","Onslow","Midway Park",28544
-"NC","North Carolina","Onslow","North Topsail Beach",28460
-"NC","North Carolina","Onslow","Richlands",28574
-"NC","North Carolina","Onslow","Swansboro",28584
-"NC","North Carolina","Orange","Carrboro",27510
-"NC","North Carolina","Orange","Cedar Grove",27231
-"NC","North Carolina","Orange","Chapel Hill",27514
-"NC","North Carolina","Orange","Chapel Hill",27516
-"NC","North Carolina","Orange","Chapel Hill",27517
-"NC","North Carolina","Orange","Efland",27243
-"NC","North Carolina","Orange","Hillsborough",27278
-"NC","North Carolina","Pender","Burgaw",28425
-"NC","North Carolina","Pender","Rocky Point",28443
-"NC","North Carolina","Pender","Rocky Point",28457
-"NC","North Carolina","Pender","Surf City",28445
-"NC","North Carolina","Pitt","Ayden",28513
-"NC","North Carolina","Pitt","Bethel",27812
-"NC","North Carolina","Pitt","Farmville",27828
-"NC","North Carolina","Pitt","Fountain",27829
-"NC","North Carolina","Pitt","Greenville",27834
-"NC","North Carolina","Pitt","Greenville",27858
-"NC","North Carolina","Pitt","Greenville",28590
-"NC","North Carolina","Pitt","Grifton",28530
-"NC","North Carolina","Pitt","Grimesland",27837
-"NC","North Carolina","Randolph","Archdale",27263
-"NC","North Carolina","Randolph","Asheboro",27203
-"NC","North Carolina","Randolph","Asheboro",27205
-"NC","North Carolina","Randolph","Franklinville",27248
-"NC","North Carolina","Randolph","Liberty",27298
-"NC","North Carolina","Randolph","Ramseur",27316
-"NC","North Carolina","Randolph","Randleman",27317
-"NC","North Carolina","Randolph","Seagrove",27341
-"NC","North Carolina","Randolph","Sophia",27350
-"NC","North Carolina","Randolph","Staley",27355
-"NC","North Carolina","Randolph","Trinity",27370
-"NC","North Carolina","Robeson","Lumberton",28358
-"NC","North Carolina","Robeson","Rennert",28386
-"NC","North Carolina","Rockingham","Eden",27288
-"NC","North Carolina","Rockingham","Madison",27025
-"NC","North Carolina","Rockingham","Mayodan",27027
-"NC","North Carolina","Rockingham","Reidsville",27320
-"NC","North Carolina","Rockingham","Ruffin",27326
-"NC","North Carolina","Rockingham","Stokesdale",27357
-"NC","North Carolina","Rockingham","Stoneville",27048
-"NC","North Carolina","Rowan","China Grove",28023
-"NC","North Carolina","Rowan","Cleveland",27013
-"NC","North Carolina","Rowan","Landis",28088
-"NC","North Carolina","Rowan","Mount Ulla",28125
-"NC","North Carolina","Rowan","Rockwell",28138
-"NC","North Carolina","Rowan","Salisbury",28144
-"NC","North Carolina","Rowan","Salisbury",28146
-"NC","North Carolina","Rowan","Salisbury",28147
-"NC","North Carolina","Rowan","Spencer",28159
-"NC","North Carolina","Rowan","Woodleaf",27054
-"NC","North Carolina","Rutherford","Ellenboro",28040
-"NC","North Carolina","Rutherford","Forest City",28043
-"NC","North Carolina","Rutherford","Lake Lure",28746
-"NC","North Carolina","Rutherford","Mooresboro",28114
-"NC","North Carolina","Rutherford","Rutherfordton",28139
-"NC","North Carolina","Stanly","Albemarle",28001
-"NC","North Carolina","Stanly","Locust",28097
-"NC","North Carolina","Stanly","New London",28127
-"NC","North Carolina","Stanly","Norwood",28128
-"NC","North Carolina","Stanly","Oakboro",28129
-"NC","North Carolina","Stanly","Richfield",28137
-"NC","North Carolina","Stanly","Stanfield",28163
-"NC","North Carolina","Transylvania","Brevard",28712
-"NC","North Carolina","Transylvania","Brevard",28772
-"NC","North Carolina","Transylvania","Lake Toxaway",28747
-"NC","North Carolina","Transylvania","Pisgah Forest",28768
-"NC","North Carolina","Union","Indian Trail",28079
-"NC","North Carolina","Union","Marshville",28103
-"NC","North Carolina","Union","Monroe",28110
-"NC","North Carolina","Union","Monroe",28112
-"NC","North Carolina","Union","Stallings",28104
-"NC","North Carolina","Union","Waxhaw",28173
-"NC","North Carolina","Union","Wingate",28174
-"NC","North Carolina","Wake","Apex",27502
-"NC","North Carolina","Wake","Apex",27523
-"NC","North Carolina","Wake","Apex",27539
-"NC","North Carolina","Wake","Cary",27511
-"NC","North Carolina","Wake","Cary",27513
-"NC","North Carolina","Wake","Cary",27518
-"NC","North Carolina","Wake","Cary",27519
-"NC","North Carolina","Wake","Fuquay Varina",27526
-"NC","North Carolina","Wake","Garner",27529
-"NC","North Carolina","Wake","Holly Springs",27540
-"NC","North Carolina","Wake","Knightdale",27545
-"NC","North Carolina","Wake","Morrisville",27560
-"NC","North Carolina","Wake","New Hill",27562
-"NC","North Carolina","Wake","Raleigh",27601
-"NC","North Carolina","Wake","Raleigh",27603
-"NC","North Carolina","Wake","Raleigh",27604
-"NC","North Carolina","Wake","Raleigh",27605
-"NC","North Carolina","Wake","Raleigh",27606
-"NC","North Carolina","Wake","Raleigh",27607
-"NC","North Carolina","Wake","Raleigh",27608
-"NC","North Carolina","Wake","Raleigh",27609
-"NC","North Carolina","Wake","Raleigh",27610
-"NC","North Carolina","Wake","Raleigh",27612
-"NC","North Carolina","Wake","Raleigh",27613
-"NC","North Carolina","Wake","Raleigh",27614
-"NC","North Carolina","Wake","Raleigh",27615
-"NC","North Carolina","Wake","Raleigh",27616
-"NC","North Carolina","Wake","Raleigh",27617
-"NC","North Carolina","Wake","Rolesville",27571
-"NC","North Carolina","Wake","Wake Forest",27587
-"NC","North Carolina","Wake","Wendell",27591
-"NC","North Carolina","Wake","Willow Spring",27592
-"NC","North Carolina","Wake","Zebulon",27597
-"NC","North Carolina","Watauga","Beech Mountain",28604
-"NC","North Carolina","Watauga","Blowing Rock",28605
-"NC","North Carolina","Watauga","Boone",28607
-"NC","North Carolina","Watauga","Deep Gap",28618
-"NC","North Carolina","Watauga","Sugar Grove",28679
-"NC","North Carolina","Watauga","Todd",28684
-"NC","North Carolina","Watauga","Vilas",28692
-"NC","North Carolina","Watauga","Zionville",28698
-"NC","North Carolina","Yadkin","Boonville",27011
-"NC","North Carolina","Yadkin","East Bend",27018
-"NC","North Carolina","Yadkin","Hamptonville",27020
-"NC","North Carolina","Yadkin","Jonesville",28642
-"NC","North Carolina","Yadkin","Yadkinville",27055
-"ND","North Dakota","Burleigh","Bismarck",58501
-"ND","North Dakota","Burleigh","Bismarck",58503
-"ND","North Dakota","Burleigh","Bismarck",58504
-"ND","North Dakota","Cass","Fargo",58102
-"ND","North Dakota","Cass","Fargo",58103
-"ND","North Dakota","Cass","Fargo",58104
-"ND","North Dakota","Cass","West Fargo",58078
-"ND","North Dakota","Dickey","Ellendale",58436
-"ND","North Dakota","Dickey","Oakes",58474
-"ND","North Dakota","Grand Forks","Grand Forks",58201
-"ND","North Dakota","Grand Forks","Grand Forks",58203
-"ND","North Dakota","Ward","Minot",58701
-"ND","North Dakota","Ward","Minot",58703
 "NE","Nebraska","Douglas","Omaha",68022
 "NE","Nebraska","Douglas","Omaha",68102
 "NE","Nebraska","Douglas","Omaha",68105
@@ -7038,6 +6642,106 @@
 "NE","Nebraska","Washington","Arlington",68002
 "NE","Nebraska","Washington","Blair",68008
 "NE","Nebraska","Washington","Fort Calhoun",68023
+"NV","Nevada","Carson City","Carson City",89701
+"NV","Nevada","Carson City","Carson City",89703
+"NV","Nevada","Carson City","Carson City",89705
+"NV","Nevada","Carson City","Carson City",89706
+"NV","Nevada","Churchill","Fallon",89406
+"NV","Nevada","Clark","Boulder City",89005
+"NV","Nevada","Clark","Henderson",89002
+"NV","Nevada","Clark","Henderson",89011
+"NV","Nevada","Clark","Henderson",89012
+"NV","Nevada","Clark","Henderson",89014
+"NV","Nevada","Clark","Henderson",89015
+"NV","Nevada","Clark","Henderson",89044
+"NV","Nevada","Clark","Henderson",89052
+"NV","Nevada","Clark","Henderson",89074
+"NV","Nevada","Clark","Las Vegas",89101
+"NV","Nevada","Clark","Las Vegas",89102
+"NV","Nevada","Clark","Las Vegas",89103
+"NV","Nevada","Clark","Las Vegas",89104
+"NV","Nevada","Clark","Las Vegas",89106
+"NV","Nevada","Clark","Las Vegas",89107
+"NV","Nevada","Clark","Las Vegas",89108
+"NV","Nevada","Clark","Las Vegas",89110
+"NV","Nevada","Clark","Las Vegas",89113
+"NV","Nevada","Clark","Las Vegas",89115
+"NV","Nevada","Clark","Las Vegas",89117
+"NV","Nevada","Clark","Las Vegas",89118
+"NV","Nevada","Clark","Las Vegas",89119
+"NV","Nevada","Clark","Las Vegas",89120
+"NV","Nevada","Clark","Las Vegas",89121
+"NV","Nevada","Clark","Las Vegas",89122
+"NV","Nevada","Clark","Las Vegas",89123
+"NV","Nevada","Clark","Las Vegas",89128
+"NV","Nevada","Clark","Las Vegas",89129
+"NV","Nevada","Clark","Las Vegas",89130
+"NV","Nevada","Clark","Las Vegas",89131
+"NV","Nevada","Clark","Las Vegas",89134
+"NV","Nevada","Clark","Las Vegas",89135
+"NV","Nevada","Clark","Las Vegas",89138
+"NV","Nevada","Clark","Las Vegas",89139
+"NV","Nevada","Clark","Las Vegas",89141
+"NV","Nevada","Clark","Las Vegas",89142
+"NV","Nevada","Clark","Las Vegas",89143
+"NV","Nevada","Clark","Las Vegas",89144
+"NV","Nevada","Clark","Las Vegas",89145
+"NV","Nevada","Clark","Las Vegas",89146
+"NV","Nevada","Clark","Las Vegas",89147
+"NV","Nevada","Clark","Las Vegas",89148
+"NV","Nevada","Clark","Las Vegas",89149
+"NV","Nevada","Clark","Las Vegas",89156
+"NV","Nevada","Clark","Las Vegas",89166
+"NV","Nevada","Clark","Las Vegas",89169
+"NV","Nevada","Clark","Las Vegas",89178
+"NV","Nevada","Clark","Las Vegas",89179
+"NV","Nevada","Clark","Las Vegas",89183
+"NV","Nevada","Clark","Laughlin",89029
+"NV","Nevada","Clark","Logandale",89021
+"NV","Nevada","Clark","Mesquite",89027
+"NV","Nevada","Clark","Mesquite",89034
+"NV","Nevada","Clark","North Las Vegas",89031
+"NV","Nevada","Clark","North Las Vegas",89032
+"NV","Nevada","Clark","North Las Vegas",89081
+"NV","Nevada","Clark","North Las Vegas",89084
+"NV","Nevada","Clark","North Las Vegas",89085
+"NV","Nevada","Clark","North Las Vegas",89086
+"NV","Nevada","Clark","Overton",89040
+"NV","Nevada","Douglas","Gardnerville",89410
+"NV","Nevada","Douglas","Gardnerville",89460
+"NV","Nevada","Douglas","Genoa",89411
+"NV","Nevada","Douglas","Minden",89423
+"NV","Nevada","Douglas","Stateline",89449
+"NV","Nevada","Douglas","Wellington",89444
+"NV","Nevada","Douglas","Zephyr Cove",89448
+"NV","Nevada","Lyon","Dayton",89403
+"NV","Nevada","Lyon","Fernley",89408
+"NV","Nevada","Lyon","Silver Springs",89429
+"NV","Nevada","Lyon","Yerington",89447
+"NV","Nevada","Nye","Pahrump",89048
+"NV","Nevada","Nye","Pahrump",89060
+"NV","Nevada","Nye","Pahrump",89061
+"NV","Nevada","Nye","Tonopah",89049
+"NV","Nevada","Washoe","Cold Springs",89508
+"NV","Nevada","Washoe","Incline Village",89451
+"NV","Nevada","Washoe","Reno",89501
+"NV","Nevada","Washoe","Reno",89502
+"NV","Nevada","Washoe","Reno",89503
+"NV","Nevada","Washoe","Reno",89506
+"NV","Nevada","Washoe","Reno",89509
+"NV","Nevada","Washoe","Reno",89511
+"NV","Nevada","Washoe","Reno",89512
+"NV","Nevada","Washoe","Reno",89519
+"NV","Nevada","Washoe","Reno",89521
+"NV","Nevada","Washoe","Reno",89523
+"NV","Nevada","Washoe","Reno",89704
+"NV","Nevada","Washoe","Sparks",89431
+"NV","Nevada","Washoe","Sparks",89434
+"NV","Nevada","Washoe","Sparks",89436
+"NV","Nevada","Washoe","Sparks",89441
+"NV","Nevada","Washoe","Sparks",89510
+"NV","Nevada","Washoe","Sun Valley",89433
+"NV","Nevada","Washoe","Verdi-Mogul",89439
 "NH","New Hampshire","Belknap","Alton",3809
 "NH","New Hampshire","Belknap","Barnstead",3225
 "NH","New Hampshire","Belknap","Belmont",3220
@@ -7785,106 +7489,6 @@
 "NM","New Mexico","Valencia","Bosque Farms",87068
 "NM","New Mexico","Valencia","Los Lunas",87031
 "NM","New Mexico","Valencia","Peralta",87042
-"NV","Nevada","Carson City","Carson City",89701
-"NV","Nevada","Carson City","Carson City",89703
-"NV","Nevada","Carson City","Carson City",89705
-"NV","Nevada","Carson City","Carson City",89706
-"NV","Nevada","Churchill","Fallon",89406
-"NV","Nevada","Clark","Boulder City",89005
-"NV","Nevada","Clark","Henderson",89002
-"NV","Nevada","Clark","Henderson",89011
-"NV","Nevada","Clark","Henderson",89012
-"NV","Nevada","Clark","Henderson",89014
-"NV","Nevada","Clark","Henderson",89015
-"NV","Nevada","Clark","Henderson",89044
-"NV","Nevada","Clark","Henderson",89052
-"NV","Nevada","Clark","Henderson",89074
-"NV","Nevada","Clark","Las Vegas",89101
-"NV","Nevada","Clark","Las Vegas",89102
-"NV","Nevada","Clark","Las Vegas",89103
-"NV","Nevada","Clark","Las Vegas",89104
-"NV","Nevada","Clark","Las Vegas",89106
-"NV","Nevada","Clark","Las Vegas",89107
-"NV","Nevada","Clark","Las Vegas",89108
-"NV","Nevada","Clark","Las Vegas",89110
-"NV","Nevada","Clark","Las Vegas",89113
-"NV","Nevada","Clark","Las Vegas",89115
-"NV","Nevada","Clark","Las Vegas",89117
-"NV","Nevada","Clark","Las Vegas",89118
-"NV","Nevada","Clark","Las Vegas",89119
-"NV","Nevada","Clark","Las Vegas",89120
-"NV","Nevada","Clark","Las Vegas",89121
-"NV","Nevada","Clark","Las Vegas",89122
-"NV","Nevada","Clark","Las Vegas",89123
-"NV","Nevada","Clark","Las Vegas",89128
-"NV","Nevada","Clark","Las Vegas",89129
-"NV","Nevada","Clark","Las Vegas",89130
-"NV","Nevada","Clark","Las Vegas",89131
-"NV","Nevada","Clark","Las Vegas",89134
-"NV","Nevada","Clark","Las Vegas",89135
-"NV","Nevada","Clark","Las Vegas",89138
-"NV","Nevada","Clark","Las Vegas",89139
-"NV","Nevada","Clark","Las Vegas",89141
-"NV","Nevada","Clark","Las Vegas",89142
-"NV","Nevada","Clark","Las Vegas",89143
-"NV","Nevada","Clark","Las Vegas",89144
-"NV","Nevada","Clark","Las Vegas",89145
-"NV","Nevada","Clark","Las Vegas",89146
-"NV","Nevada","Clark","Las Vegas",89147
-"NV","Nevada","Clark","Las Vegas",89148
-"NV","Nevada","Clark","Las Vegas",89149
-"NV","Nevada","Clark","Las Vegas",89156
-"NV","Nevada","Clark","Las Vegas",89166
-"NV","Nevada","Clark","Las Vegas",89169
-"NV","Nevada","Clark","Las Vegas",89178
-"NV","Nevada","Clark","Las Vegas",89179
-"NV","Nevada","Clark","Las Vegas",89183
-"NV","Nevada","Clark","Laughlin",89029
-"NV","Nevada","Clark","Logandale",89021
-"NV","Nevada","Clark","Mesquite",89027
-"NV","Nevada","Clark","Mesquite",89034
-"NV","Nevada","Clark","North Las Vegas",89031
-"NV","Nevada","Clark","North Las Vegas",89032
-"NV","Nevada","Clark","North Las Vegas",89081
-"NV","Nevada","Clark","North Las Vegas",89084
-"NV","Nevada","Clark","North Las Vegas",89085
-"NV","Nevada","Clark","North Las Vegas",89086
-"NV","Nevada","Clark","Overton",89040
-"NV","Nevada","Douglas","Gardnerville",89410
-"NV","Nevada","Douglas","Gardnerville",89460
-"NV","Nevada","Douglas","Genoa",89411
-"NV","Nevada","Douglas","Minden",89423
-"NV","Nevada","Douglas","Stateline",89449
-"NV","Nevada","Douglas","Wellington",89444
-"NV","Nevada","Douglas","Zephyr Cove",89448
-"NV","Nevada","Lyon","Dayton",89403
-"NV","Nevada","Lyon","Fernley",89408
-"NV","Nevada","Lyon","Silver Springs",89429
-"NV","Nevada","Lyon","Yerington",89447
-"NV","Nevada","Nye","Pahrump",89048
-"NV","Nevada","Nye","Pahrump",89060
-"NV","Nevada","Nye","Pahrump",89061
-"NV","Nevada","Nye","Tonopah",89049
-"NV","Nevada","Washoe","Cold Springs",89508
-"NV","Nevada","Washoe","Incline Village",89451
-"NV","Nevada","Washoe","Reno",89501
-"NV","Nevada","Washoe","Reno",89502
-"NV","Nevada","Washoe","Reno",89503
-"NV","Nevada","Washoe","Reno",89506
-"NV","Nevada","Washoe","Reno",89509
-"NV","Nevada","Washoe","Reno",89511
-"NV","Nevada","Washoe","Reno",89512
-"NV","Nevada","Washoe","Reno",89519
-"NV","Nevada","Washoe","Reno",89521
-"NV","Nevada","Washoe","Reno",89523
-"NV","Nevada","Washoe","Reno",89704
-"NV","Nevada","Washoe","Sparks",89431
-"NV","Nevada","Washoe","Sparks",89434
-"NV","Nevada","Washoe","Sparks",89436
-"NV","Nevada","Washoe","Sparks",89441
-"NV","Nevada","Washoe","Sparks",89510
-"NV","Nevada","Washoe","Sun Valley",89433
-"NV","Nevada","Washoe","Verdi-Mogul",89439
 "NY","New York","Albany","Albany",12202
 "NY","New York","Albany","Albany",12203
 "NY","New York","Albany","Albany",12206
@@ -8864,6 +8468,402 @@
 "NY","New York","Yates","Middlesex",14507
 "NY","New York","Yates","Penn Yan",14527
 "NY","New York","Yates","Starkey",14837
+"NC","North Carolina","Alamance","Burlington",27215
+"NC","North Carolina","Alamance","Burlington",27217
+"NC","North Carolina","Alamance","Elon",27244
+"NC","North Carolina","Alamance","Graham",27253
+"NC","North Carolina","Alamance","Haw River",27258
+"NC","North Carolina","Alamance","Mebane",27302
+"NC","North Carolina","Alamance","Snow Camp",27349
+"NC","North Carolina","Buncombe","Alexander",28701
+"NC","North Carolina","Buncombe","Arden",28704
+"NC","North Carolina","Buncombe","Asheville",28801
+"NC","North Carolina","Buncombe","Asheville",28803
+"NC","North Carolina","Buncombe","Asheville",28804
+"NC","North Carolina","Buncombe","Asheville",28805
+"NC","North Carolina","Buncombe","Asheville",28806
+"NC","North Carolina","Buncombe","Barnardsville",28709
+"NC","North Carolina","Buncombe","Black Mountain",28711
+"NC","North Carolina","Buncombe","Candler",28715
+"NC","North Carolina","Buncombe","Fairview",28730
+"NC","North Carolina","Buncombe","Leicester",28748
+"NC","North Carolina","Buncombe","Montreat",28757
+"NC","North Carolina","Buncombe","Swannanoa",28778
+"NC","North Carolina","Buncombe","Weaverville",28787
+"NC","North Carolina","Burke","Connelly Springs",28612
+"NC","North Carolina","Burke","Hildebran",28637
+"NC","North Carolina","Burke","Morganton",28655
+"NC","North Carolina","Burke","Valdese",28690
+"NC","North Carolina","Cabarrus","Concord",28025
+"NC","North Carolina","Cabarrus","Concord",28027
+"NC","North Carolina","Cabarrus","Gold Hill",28071
+"NC","North Carolina","Cabarrus","Harrisburg",28075
+"NC","North Carolina","Cabarrus","Kannapolis",28081
+"NC","North Carolina","Cabarrus","Kannapolis",28083
+"NC","North Carolina","Cabarrus","Midland",28107
+"NC","North Carolina","Cabarrus","Mount Pleasant",28124
+"NC","North Carolina","Caldwell","Collettsville",28611
+"NC","North Carolina","Caldwell","Granite Falls",28630
+"NC","North Carolina","Caldwell","Hudson",28638
+"NC","North Carolina","Caldwell","Lenoir",28645
+"NC","North Carolina","Carteret","Atlantic Beach",28512
+"NC","North Carolina","Carteret","Beaufort",28516
+"NC","North Carolina","Carteret","Emerald Isle",28594
+"NC","North Carolina","Carteret","Harkers Island",28531
+"NC","North Carolina","Carteret","Morehead City",28557
+"NC","North Carolina","Carteret","Newport",28570
+"NC","North Carolina","Carteret","Stella",28582
+"NC","North Carolina","Catawba","Catawba",28609
+"NC","North Carolina","Catawba","Claremont",28610
+"NC","North Carolina","Catawba","Conover",28613
+"NC","North Carolina","Catawba","Hickory",28601
+"NC","North Carolina","Catawba","Hickory",28602
+"NC","North Carolina","Catawba","Maiden",28650
+"NC","North Carolina","Catawba","Newton",28658
+"NC","North Carolina","Catawba","Sherrills Ford",28673
+"NC","North Carolina","Catawba","Terrell",28682
+"NC","North Carolina","Cleveland","Belwood",28090
+"NC","North Carolina","Cleveland","Casar",28020
+"NC","North Carolina","Cleveland","Grover",28073
+"NC","North Carolina","Cleveland","Kings Mountain",28086
+"NC","North Carolina","Cleveland","Shelby",28150
+"NC","North Carolina","Cleveland","Shelby",28152
+"NC","North Carolina","Cumberland","Fayetteville",28301
+"NC","North Carolina","Cumberland","Fayetteville",28303
+"NC","North Carolina","Cumberland","Fayetteville",28304
+"NC","North Carolina","Cumberland","Fayetteville",28305
+"NC","North Carolina","Cumberland","Fayetteville",28306
+"NC","North Carolina","Cumberland","Fayetteville",28311
+"NC","North Carolina","Cumberland","Fayetteville",28312
+"NC","North Carolina","Cumberland","Fayetteville",28314
+"NC","North Carolina","Cumberland","Hope Mills",28348
+"NC","North Carolina","Cumberland","Linden",28356
+"NC","North Carolina","Cumberland","Parkton",28371
+"NC","North Carolina","Cumberland","Stedman",28391
+"NC","North Carolina","Cumberland","Wade",28395
+"NC","North Carolina","Davidson","Denton",27239
+"NC","North Carolina","Davidson","Lexington",27292
+"NC","North Carolina","Davidson","Lexington",27295
+"NC","North Carolina","Davidson","Linwood",27299
+"NC","North Carolina","Davidson","Thomasville",27360
+"NC","North Carolina","Davie","Advance",27006
+"NC","North Carolina","Davie","Mocksville",27028
+"NC","North Carolina","Duplin","Beulaville",28518
+"NC","North Carolina","Duplin","Chinquapin",28521
+"NC","North Carolina","Duplin","Faison",28341
+"NC","North Carolina","Duplin","Magnolia",28453
+"NC","North Carolina","Duplin","Rose Hill",28458
+"NC","North Carolina","Duplin","Teachey",28464
+"NC","North Carolina","Duplin","Wallace",28466
+"NC","North Carolina","Durham","Bahama",27503
+"NC","North Carolina","Durham","Durham",27701
+"NC","North Carolina","Durham","Durham",27703
+"NC","North Carolina","Durham","Durham",27704
+"NC","North Carolina","Durham","Durham",27705
+"NC","North Carolina","Durham","Durham",27707
+"NC","North Carolina","Durham","Durham",27712
+"NC","North Carolina","Durham","Durham",27713
+"NC","North Carolina","Durham","Rougemont",27572
+"NC","North Carolina","Edgecombe","Macclesfield",27852
+"NC","North Carolina","Edgecombe","Pinetops",27864
+"NC","North Carolina","Edgecombe","Tarboro",27886
+"NC","North Carolina","Forsyth","Belews Creek",27009
+"NC","North Carolina","Forsyth","Clemmons",27012
+"NC","North Carolina","Forsyth","Germanton",27019
+"NC","North Carolina","Forsyth","Kernersville",27284
+"NC","North Carolina","Forsyth","Lewisville",27023
+"NC","North Carolina","Forsyth","Rural Hall",27045
+"NC","North Carolina","Forsyth","Tobaccoville",27050
+"NC","North Carolina","Forsyth","Walkertown",27051
+"NC","North Carolina","Forsyth","Winston-Salem",27040
+"NC","North Carolina","Forsyth","Winston-Salem",27101
+"NC","North Carolina","Forsyth","Winston-Salem",27103
+"NC","North Carolina","Forsyth","Winston-Salem",27104
+"NC","North Carolina","Forsyth","Winston-Salem",27105
+"NC","North Carolina","Forsyth","Winston-Salem",27106
+"NC","North Carolina","Forsyth","Winston-Salem",27107
+"NC","North Carolina","Forsyth","Winston-Salem",27127
+"NC","North Carolina","Franklin","Bunn",27508
+"NC","North Carolina","Franklin","Castalia",27816
+"NC","North Carolina","Franklin","Franklinton",27525
+"NC","North Carolina","Franklin","Louisburg",27549
+"NC","North Carolina","Franklin","Youngsville",27596
+"NC","North Carolina","Gaston","Belmont",28012
+"NC","North Carolina","Gaston","Bessemer City",28016
+"NC","North Carolina","Gaston","Cherryville",28021
+"NC","North Carolina","Gaston","Cramerton",28032
+"NC","North Carolina","Gaston","Dallas",28034
+"NC","North Carolina","Gaston","Gastonia",28052
+"NC","North Carolina","Gaston","Gastonia",28054
+"NC","North Carolina","Gaston","Gastonia",28056
+"NC","North Carolina","Gaston","Lowell",28098
+"NC","North Carolina","Gaston","Mount Holly",28120
+"NC","North Carolina","Gaston","Stanley",28164
+"NC","North Carolina","Granville","Butner",27509
+"NC","North Carolina","Granville","Creedmoor",27522
+"NC","North Carolina","Granville","Oxford",27565
+"NC","North Carolina","Granville","Stem",27581
+"NC","North Carolina","Guilford","Browns Summit",27214
+"NC","North Carolina","Guilford","Climax",27233
+"NC","North Carolina","Guilford","Gibsonville",27249
+"NC","North Carolina","Guilford","Greensboro",27301
+"NC","North Carolina","Guilford","Greensboro",27401
+"NC","North Carolina","Guilford","Greensboro",27403
+"NC","North Carolina","Guilford","Greensboro",27405
+"NC","North Carolina","Guilford","Greensboro",27406
+"NC","North Carolina","Guilford","Greensboro",27407
+"NC","North Carolina","Guilford","Greensboro",27408
+"NC","North Carolina","Guilford","Greensboro",27409
+"NC","North Carolina","Guilford","Greensboro",27410
+"NC","North Carolina","Guilford","Greensboro",27455
+"NC","North Carolina","Guilford","High Point",27235
+"NC","North Carolina","Guilford","High Point",27260
+"NC","North Carolina","Guilford","High Point",27262
+"NC","North Carolina","Guilford","High Point",27265
+"NC","North Carolina","Guilford","High Point",27282
+"NC","North Carolina","Guilford","Julian",27283
+"NC","North Carolina","Guilford","Oak Ridge",27310
+"NC","North Carolina","Guilford","Pleasant Garden",27313
+"NC","North Carolina","Guilford","Summerfield",27358
+"NC","North Carolina","Guilford","Whitsett",27377
+"NC","North Carolina","Harnett","Angier",27501
+"NC","North Carolina","Harnett","Broadway",27505
+"NC","North Carolina","Harnett","Coats",27521
+"NC","North Carolina","Harnett","Dunn",28334
+"NC","North Carolina","Harnett","Erwin",28339
+"NC","North Carolina","Harnett","Lillington",27546
+"NC","North Carolina","Harnett","Spring Lake",28390
+"NC","North Carolina","Haywood","Canton",28716
+"NC","North Carolina","Haywood","Clyde",28721
+"NC","North Carolina","Haywood","Lake Junaluska",28745
+"NC","North Carolina","Haywood","Maggie Valley",28751
+"NC","North Carolina","Haywood","Waynesville",28786
+"NC","North Carolina","Henderson","East Flat Rock",28726
+"NC","North Carolina","Henderson","Etowah",28729
+"NC","North Carolina","Henderson","Flat Rock",28731
+"NC","North Carolina","Henderson","Fletcher",28732
+"NC","North Carolina","Henderson","Hendersonville",28739
+"NC","North Carolina","Henderson","Hendersonville",28791
+"NC","North Carolina","Henderson","Hendersonville",28792
+"NC","North Carolina","Henderson","Horse Shoe",28742
+"NC","North Carolina","Henderson","Mills River",28759
+"NC","North Carolina","Henderson","Saluda",28773
+"NC","North Carolina","Henderson","Zirconia",28790
+"NC","North Carolina","Iredell","Harmony",28634
+"NC","North Carolina","Iredell","Mooresville",28115
+"NC","North Carolina","Iredell","Mooresville",28117
+"NC","North Carolina","Iredell","Olin",28660
+"NC","North Carolina","Iredell","Statesville",28625
+"NC","North Carolina","Iredell","Statesville",28677
+"NC","North Carolina","Iredell","Stony Point",28678
+"NC","North Carolina","Iredell","Troutman",28166
+"NC","North Carolina","Iredell","Union Grove",28689
+"NC","North Carolina","Jackson","Cashiers",28717
+"NC","North Carolina","Jackson","Cullowhee",28723
+"NC","North Carolina","Jackson","Glenville",28736
+"NC","North Carolina","Jackson","Sapphire",28774
+"NC","North Carolina","Jackson","Sylva",28779
+"NC","North Carolina","Jackson","Whittier",28789
+"NC","North Carolina","Johnston","Benson",27504
+"NC","North Carolina","Johnston","Clayton",27520
+"NC","North Carolina","Johnston","Clayton",27527
+"NC","North Carolina","Johnston","Four Oaks",27524
+"NC","North Carolina","Johnston","Kenly",27542
+"NC","North Carolina","Johnston","Middlesex",27557
+"NC","North Carolina","Johnston","Princeton",27569
+"NC","North Carolina","Johnston","Selma",27576
+"NC","North Carolina","Johnston","Smithfield",27577
+"NC","North Carolina","Lincoln","Crouse",28033
+"NC","North Carolina","Lincoln","Denver",28037
+"NC","North Carolina","Lincoln","Iron Station",28080
+"NC","North Carolina","Lincoln","Lincolnton",28092
+"NC","North Carolina","Lincoln","Vale",28168
+"NC","North Carolina","Macon","Franklin",28734
+"NC","North Carolina","Macon","Highlands",28741
+"NC","North Carolina","Macon","Otto",28763
+"NC","North Carolina","Macon","Scaly Mountain",28775
+"NC","North Carolina","Mecklenburg","Charlotte",28202
+"NC","North Carolina","Mecklenburg","Charlotte",28203
+"NC","North Carolina","Mecklenburg","Charlotte",28204
+"NC","North Carolina","Mecklenburg","Charlotte",28205
+"NC","North Carolina","Mecklenburg","Charlotte",28206
+"NC","North Carolina","Mecklenburg","Charlotte",28207
+"NC","North Carolina","Mecklenburg","Charlotte",28208
+"NC","North Carolina","Mecklenburg","Charlotte",28209
+"NC","North Carolina","Mecklenburg","Charlotte",28210
+"NC","North Carolina","Mecklenburg","Charlotte",28211
+"NC","North Carolina","Mecklenburg","Charlotte",28212
+"NC","North Carolina","Mecklenburg","Charlotte",28213
+"NC","North Carolina","Mecklenburg","Charlotte",28214
+"NC","North Carolina","Mecklenburg","Charlotte",28215
+"NC","North Carolina","Mecklenburg","Charlotte",28216
+"NC","North Carolina","Mecklenburg","Charlotte",28217
+"NC","North Carolina","Mecklenburg","Charlotte",28226
+"NC","North Carolina","Mecklenburg","Charlotte",28262
+"NC","North Carolina","Mecklenburg","Charlotte",28269
+"NC","North Carolina","Mecklenburg","Charlotte",28270
+"NC","North Carolina","Mecklenburg","Charlotte",28273
+"NC","North Carolina","Mecklenburg","Charlotte",28277
+"NC","North Carolina","Mecklenburg","Charlotte",28278
+"NC","North Carolina","Mecklenburg","Cornelius",28031
+"NC","North Carolina","Mecklenburg","Davidson",28036
+"NC","North Carolina","Mecklenburg","Huntersville",28078
+"NC","North Carolina","Mecklenburg","Matthews",28105
+"NC","North Carolina","Mecklenburg","Mint Hill",28227
+"NC","North Carolina","Mecklenburg","Pineville",28134
+"NC","North Carolina","New Hanover","Carolina Beach",28428
+"NC","North Carolina","New Hanover","Castle Hayne",28429
+"NC","North Carolina","New Hanover","Kure Beach",28449
+"NC","North Carolina","New Hanover","Wilmington",28401
+"NC","North Carolina","New Hanover","Wilmington",28403
+"NC","North Carolina","New Hanover","Wilmington",28405
+"NC","North Carolina","New Hanover","Wilmington",28409
+"NC","North Carolina","New Hanover","Wilmington",28411
+"NC","North Carolina","New Hanover","Wilmington",28412
+"NC","North Carolina","New Hanover","Wrightsville Beach",28480
+"NC","North Carolina","Northampton","Conway",27820
+"NC","North Carolina","Northampton","Jackson",27845
+"NC","North Carolina","Onslow","Hubert",28539
+"NC","North Carolina","Onslow","Jacksonville",28540
+"NC","North Carolina","Onslow","Jacksonville",28546
+"NC","North Carolina","Onslow","Maple Hill",28454
+"NC","North Carolina","Onslow","Maysville",28555
+"NC","North Carolina","Onslow","Midway Park",28544
+"NC","North Carolina","Onslow","North Topsail Beach",28460
+"NC","North Carolina","Onslow","Richlands",28574
+"NC","North Carolina","Onslow","Swansboro",28584
+"NC","North Carolina","Orange","Carrboro",27510
+"NC","North Carolina","Orange","Cedar Grove",27231
+"NC","North Carolina","Orange","Chapel Hill",27514
+"NC","North Carolina","Orange","Chapel Hill",27516
+"NC","North Carolina","Orange","Chapel Hill",27517
+"NC","North Carolina","Orange","Efland",27243
+"NC","North Carolina","Orange","Hillsborough",27278
+"NC","North Carolina","Pender","Burgaw",28425
+"NC","North Carolina","Pender","Rocky Point",28443
+"NC","North Carolina","Pender","Rocky Point",28457
+"NC","North Carolina","Pender","Surf City",28445
+"NC","North Carolina","Pitt","Ayden",28513
+"NC","North Carolina","Pitt","Bethel",27812
+"NC","North Carolina","Pitt","Farmville",27828
+"NC","North Carolina","Pitt","Fountain",27829
+"NC","North Carolina","Pitt","Greenville",27834
+"NC","North Carolina","Pitt","Greenville",27858
+"NC","North Carolina","Pitt","Greenville",28590
+"NC","North Carolina","Pitt","Grifton",28530
+"NC","North Carolina","Pitt","Grimesland",27837
+"NC","North Carolina","Randolph","Archdale",27263
+"NC","North Carolina","Randolph","Asheboro",27203
+"NC","North Carolina","Randolph","Asheboro",27205
+"NC","North Carolina","Randolph","Franklinville",27248
+"NC","North Carolina","Randolph","Liberty",27298
+"NC","North Carolina","Randolph","Ramseur",27316
+"NC","North Carolina","Randolph","Randleman",27317
+"NC","North Carolina","Randolph","Seagrove",27341
+"NC","North Carolina","Randolph","Sophia",27350
+"NC","North Carolina","Randolph","Staley",27355
+"NC","North Carolina","Randolph","Trinity",27370
+"NC","North Carolina","Robeson","Lumberton",28358
+"NC","North Carolina","Robeson","Rennert",28386
+"NC","North Carolina","Rockingham","Eden",27288
+"NC","North Carolina","Rockingham","Madison",27025
+"NC","North Carolina","Rockingham","Mayodan",27027
+"NC","North Carolina","Rockingham","Reidsville",27320
+"NC","North Carolina","Rockingham","Ruffin",27326
+"NC","North Carolina","Rockingham","Stokesdale",27357
+"NC","North Carolina","Rockingham","Stoneville",27048
+"NC","North Carolina","Rowan","China Grove",28023
+"NC","North Carolina","Rowan","Cleveland",27013
+"NC","North Carolina","Rowan","Landis",28088
+"NC","North Carolina","Rowan","Mount Ulla",28125
+"NC","North Carolina","Rowan","Rockwell",28138
+"NC","North Carolina","Rowan","Salisbury",28144
+"NC","North Carolina","Rowan","Salisbury",28146
+"NC","North Carolina","Rowan","Salisbury",28147
+"NC","North Carolina","Rowan","Spencer",28159
+"NC","North Carolina","Rowan","Woodleaf",27054
+"NC","North Carolina","Rutherford","Ellenboro",28040
+"NC","North Carolina","Rutherford","Forest City",28043
+"NC","North Carolina","Rutherford","Lake Lure",28746
+"NC","North Carolina","Rutherford","Mooresboro",28114
+"NC","North Carolina","Rutherford","Rutherfordton",28139
+"NC","North Carolina","Stanly","Albemarle",28001
+"NC","North Carolina","Stanly","Locust",28097
+"NC","North Carolina","Stanly","New London",28127
+"NC","North Carolina","Stanly","Norwood",28128
+"NC","North Carolina","Stanly","Oakboro",28129
+"NC","North Carolina","Stanly","Richfield",28137
+"NC","North Carolina","Stanly","Stanfield",28163
+"NC","North Carolina","Transylvania","Brevard",28712
+"NC","North Carolina","Transylvania","Brevard",28772
+"NC","North Carolina","Transylvania","Lake Toxaway",28747
+"NC","North Carolina","Transylvania","Pisgah Forest",28768
+"NC","North Carolina","Union","Indian Trail",28079
+"NC","North Carolina","Union","Marshville",28103
+"NC","North Carolina","Union","Monroe",28110
+"NC","North Carolina","Union","Monroe",28112
+"NC","North Carolina","Union","Stallings",28104
+"NC","North Carolina","Union","Waxhaw",28173
+"NC","North Carolina","Union","Wingate",28174
+"NC","North Carolina","Wake","Apex",27502
+"NC","North Carolina","Wake","Apex",27523
+"NC","North Carolina","Wake","Apex",27539
+"NC","North Carolina","Wake","Cary",27511
+"NC","North Carolina","Wake","Cary",27513
+"NC","North Carolina","Wake","Cary",27518
+"NC","North Carolina","Wake","Cary",27519
+"NC","North Carolina","Wake","Fuquay Varina",27526
+"NC","North Carolina","Wake","Garner",27529
+"NC","North Carolina","Wake","Holly Springs",27540
+"NC","North Carolina","Wake","Knightdale",27545
+"NC","North Carolina","Wake","Morrisville",27560
+"NC","North Carolina","Wake","New Hill",27562
+"NC","North Carolina","Wake","Raleigh",27601
+"NC","North Carolina","Wake","Raleigh",27603
+"NC","North Carolina","Wake","Raleigh",27604
+"NC","North Carolina","Wake","Raleigh",27605
+"NC","North Carolina","Wake","Raleigh",27606
+"NC","North Carolina","Wake","Raleigh",27607
+"NC","North Carolina","Wake","Raleigh",27608
+"NC","North Carolina","Wake","Raleigh",27609
+"NC","North Carolina","Wake","Raleigh",27610
+"NC","North Carolina","Wake","Raleigh",27612
+"NC","North Carolina","Wake","Raleigh",27613
+"NC","North Carolina","Wake","Raleigh",27614
+"NC","North Carolina","Wake","Raleigh",27615
+"NC","North Carolina","Wake","Raleigh",27616
+"NC","North Carolina","Wake","Raleigh",27617
+"NC","North Carolina","Wake","Rolesville",27571
+"NC","North Carolina","Wake","Wake Forest",27587
+"NC","North Carolina","Wake","Wendell",27591
+"NC","North Carolina","Wake","Willow Spring",27592
+"NC","North Carolina","Wake","Zebulon",27597
+"NC","North Carolina","Watauga","Beech Mountain",28604
+"NC","North Carolina","Watauga","Blowing Rock",28605
+"NC","North Carolina","Watauga","Boone",28607
+"NC","North Carolina","Watauga","Deep Gap",28618
+"NC","North Carolina","Watauga","Sugar Grove",28679
+"NC","North Carolina","Watauga","Todd",28684
+"NC","North Carolina","Watauga","Vilas",28692
+"NC","North Carolina","Watauga","Zionville",28698
+"NC","North Carolina","Yadkin","Boonville",27011
+"NC","North Carolina","Yadkin","East Bend",27018
+"NC","North Carolina","Yadkin","Hamptonville",27020
+"NC","North Carolina","Yadkin","Jonesville",28642
+"NC","North Carolina","Yadkin","Yadkinville",27055
+"ND","North Dakota","Burleigh","Bismarck",58501
+"ND","North Dakota","Burleigh","Bismarck",58503
+"ND","North Dakota","Burleigh","Bismarck",58504
+"ND","North Dakota","Cass","Fargo",58102
+"ND","North Dakota","Cass","Fargo",58103
+"ND","North Dakota","Cass","Fargo",58104
+"ND","North Dakota","Cass","West Fargo",58078
+"ND","North Dakota","Dickey","Ellendale",58436
+"ND","North Dakota","Dickey","Oakes",58474
+"ND","North Dakota","Grand Forks","Grand Forks",58201
+"ND","North Dakota","Grand Forks","Grand Forks",58203
+"ND","North Dakota","Ward","Minot",58701
+"ND","North Dakota","Ward","Minot",58703
 "OH","Ohio","Allen","Bluffton",45817
 "OH","Ohio","Allen","Delphos",45833
 "OH","Ohio","Allen","Elida",45807
@@ -12057,6 +12057,75 @@
 "UT","Utah","Weber","Ogden",84404
 "UT","Utah","Weber","Roy",84067
 "UT","Utah","Weber","Washington Terrace",84405
+"VT","Vermont","Addison","Bridport",5734
+"VT","Vermont","Addison","Ferrisburgh",5456
+"VT","Vermont","Addison","Ferrisburgh",5473
+"VT","Vermont","Addison","New Haven",5472
+"VT","Vermont","Addison","Orwell",5760
+"VT","Vermont","Addison","Salisbury",5769
+"VT","Vermont","Addison","Starksboro",5487
+"VT","Vermont","Addison","Town of Bristol",5443
+"VT","Vermont","Addison","Town of Middlebury",5753
+"VT","Vermont","Addison","Vergennes",5491
+"VT","Vermont","Bennington","Dorset",5251
+"VT","Vermont","Bennington","Pownal",5261
+"VT","Vermont","Bennington","Shaftsbury",5257
+"VT","Vermont","Bennington","Shaftsbury",5262
+"VT","Vermont","Bennington","Stamford",5352
+"VT","Vermont","Bennington","Town of Arlington",5250
+"VT","Vermont","Bennington","Town of Manchester",5255
+"VT","Vermont","Chittenden","Burlington",5401
+"VT","Vermont","Chittenden","Burlington",5408
+"VT","Vermont","Chittenden","Charlotte",5445
+"VT","Vermont","Chittenden","Colchester",5446
+"VT","Vermont","Chittenden","Essex",5452
+"VT","Vermont","Chittenden","South Burlington",5403
+"VT","Vermont","Chittenden","Town of Jericho",5465
+"VT","Vermont","Chittenden","Town of Milton",5468
+"VT","Vermont","Chittenden","Underhill",5489
+"VT","Vermont","Chittenden","Westford",5494
+"VT","Vermont","Chittenden","Williston",5495
+"VT","Vermont","Chittenden","Winooski",5404
+"VT","Vermont","Franklin","Enosburg",5450
+"VT","Vermont","Franklin","Fairfax",5454
+"VT","Vermont","Franklin","Franklin",5457
+"VT","Vermont","Franklin","Highgate",5459
+"VT","Vermont","Franklin","Saint Albans",5478
+"VT","Vermont","Franklin","Sheldon",5483
+"VT","Vermont","Franklin","Town of Swanton",5488
+"VT","Vermont","Lamoille","Morristown",5661
+"VT","Vermont","Lamoille","Town of Cambridge",5444
+"VT","Vermont","Lamoille","Town of Cambridge",5464
+"VT","Vermont","Lamoille","Town of Hyde Park",5655
+"VT","Vermont","Lamoille","Town of Stowe",5672
+"VT","Vermont","Rutland","Castleton",5735
+"VT","Vermont","Rutland","Clarendon",5759
+"VT","Vermont","Rutland","Danby",5739
+"VT","Vermont","Rutland","Pittsford",5763
+"VT","Vermont","Rutland","Proctor",5765
+"VT","Vermont","Rutland","Shrewsbury",5738
+"VT","Vermont","Rutland","Town of Rutland",5701
+"VT","Vermont","Rutland","Town of Wallingford",5773
+"VT","Vermont","Washington","East Montpelier",5651
+"VT","Vermont","Washington","Montpelier",5602
+"VT","Vermont","Washington","Moretown",5660
+"VT","Vermont","Washington","Town of Barre",5641
+"VT","Vermont","Washington","Town of Waterbury",5676
+"VT","Vermont","Washington","Town of Waterbury",5677
+"VT","Vermont","Washington","Waitsfield",5673
+"VT","Vermont","Windham","Bellows Falls",5101
+"VT","Vermont","Windham","Brattleboro",5301
+"VT","Vermont","Windham","Londonderry",5148
+"VT","Vermont","Windham","Putney",5346
+"VT","Vermont","Windham","Vernon",5354
+"VT","Vermont","Windsor","Bethel",5032
+"VT","Vermont","Windsor","Chester",5143
+"VT","Vermont","Windsor","Hartford",5001
+"VT","Vermont","Windsor","Hartland",5048
+"VT","Vermont","Windsor","Royalton",5068
+"VT","Vermont","Windsor","Town of Ludlow",5149
+"VT","Vermont","Windsor","Town of Springfield",5156
+"VT","Vermont","Windsor","Windsor",5089
 "VA","Virginia","Albemarle","Charlottesville",22901
 "VA","Virginia","Albemarle","Charlottesville",22902
 "VA","Virginia","Albemarle","Charlottesville",22903
@@ -12338,75 +12407,6 @@
 "VA","Virginia","York","Yorktown",23690
 "VA","Virginia","York","Yorktown",23692
 "VA","Virginia","York","Yorktown",23693
-"VT","Vermont","Addison","Bridport",5734
-"VT","Vermont","Addison","Ferrisburgh",5456
-"VT","Vermont","Addison","Ferrisburgh",5473
-"VT","Vermont","Addison","New Haven",5472
-"VT","Vermont","Addison","Orwell",5760
-"VT","Vermont","Addison","Salisbury",5769
-"VT","Vermont","Addison","Starksboro",5487
-"VT","Vermont","Addison","Town of Bristol",5443
-"VT","Vermont","Addison","Town of Middlebury",5753
-"VT","Vermont","Addison","Vergennes",5491
-"VT","Vermont","Bennington","Dorset",5251
-"VT","Vermont","Bennington","Pownal",5261
-"VT","Vermont","Bennington","Shaftsbury",5257
-"VT","Vermont","Bennington","Shaftsbury",5262
-"VT","Vermont","Bennington","Stamford",5352
-"VT","Vermont","Bennington","Town of Arlington",5250
-"VT","Vermont","Bennington","Town of Manchester",5255
-"VT","Vermont","Chittenden","Burlington",5401
-"VT","Vermont","Chittenden","Burlington",5408
-"VT","Vermont","Chittenden","Charlotte",5445
-"VT","Vermont","Chittenden","Colchester",5446
-"VT","Vermont","Chittenden","Essex",5452
-"VT","Vermont","Chittenden","South Burlington",5403
-"VT","Vermont","Chittenden","Town of Jericho",5465
-"VT","Vermont","Chittenden","Town of Milton",5468
-"VT","Vermont","Chittenden","Underhill",5489
-"VT","Vermont","Chittenden","Westford",5494
-"VT","Vermont","Chittenden","Williston",5495
-"VT","Vermont","Chittenden","Winooski",5404
-"VT","Vermont","Franklin","Enosburg",5450
-"VT","Vermont","Franklin","Fairfax",5454
-"VT","Vermont","Franklin","Franklin",5457
-"VT","Vermont","Franklin","Highgate",5459
-"VT","Vermont","Franklin","Saint Albans",5478
-"VT","Vermont","Franklin","Sheldon",5483
-"VT","Vermont","Franklin","Town of Swanton",5488
-"VT","Vermont","Lamoille","Morristown",5661
-"VT","Vermont","Lamoille","Town of Cambridge",5444
-"VT","Vermont","Lamoille","Town of Cambridge",5464
-"VT","Vermont","Lamoille","Town of Hyde Park",5655
-"VT","Vermont","Lamoille","Town of Stowe",5672
-"VT","Vermont","Rutland","Castleton",5735
-"VT","Vermont","Rutland","Clarendon",5759
-"VT","Vermont","Rutland","Danby",5739
-"VT","Vermont","Rutland","Pittsford",5763
-"VT","Vermont","Rutland","Proctor",5765
-"VT","Vermont","Rutland","Shrewsbury",5738
-"VT","Vermont","Rutland","Town of Rutland",5701
-"VT","Vermont","Rutland","Town of Wallingford",5773
-"VT","Vermont","Washington","East Montpelier",5651
-"VT","Vermont","Washington","Montpelier",5602
-"VT","Vermont","Washington","Moretown",5660
-"VT","Vermont","Washington","Town of Barre",5641
-"VT","Vermont","Washington","Town of Waterbury",5676
-"VT","Vermont","Washington","Town of Waterbury",5677
-"VT","Vermont","Washington","Waitsfield",5673
-"VT","Vermont","Windham","Bellows Falls",5101
-"VT","Vermont","Windham","Brattleboro",5301
-"VT","Vermont","Windham","Londonderry",5148
-"VT","Vermont","Windham","Putney",5346
-"VT","Vermont","Windham","Vernon",5354
-"VT","Vermont","Windsor","Bethel",5032
-"VT","Vermont","Windsor","Chester",5143
-"VT","Vermont","Windsor","Hartford",5001
-"VT","Vermont","Windsor","Hartland",5048
-"VT","Vermont","Windsor","Royalton",5068
-"VT","Vermont","Windsor","Town of Ludlow",5149
-"VT","Vermont","Windsor","Town of Springfield",5156
-"VT","Vermont","Windsor","Windsor",5089
 "WA","Washington","Benton","Benton City",99320
 "WA","Washington","Benton","Kennewick",99336
 "WA","Washington","Benton","Kennewick",99337
@@ -12740,6 +12740,55 @@
 "WA","Washington","Yakima","Yakima",98903
 "WA","Washington","Yakima","Yakima",98908
 "WA","Washington","Yakima","Zillah",98953
+"WV","West Virginia","Hancock","Chester",26034
+"WV","West Virginia","Hancock","New Cumberland",26047
+"WV","West Virginia","Hancock","Weirton",26062
+"WV","West Virginia","Jefferson","Charles Town",25414
+"WV","West Virginia","Jefferson","Kearneysville",25430
+"WV","West Virginia","Jefferson","Ranson",25438
+"WV","West Virginia","Jefferson","Shenandoah Junction",25442
+"WV","West Virginia","Jefferson","Shepherdstown",25443
+"WV","West Virginia","Kanawha","Belle",25015
+"WV","West Virginia","Kanawha","Charleston",25301
+"WV","West Virginia","Kanawha","Charleston",25302
+"WV","West Virginia","Kanawha","Charleston",25304
+"WV","West Virginia","Kanawha","Charleston",25311
+"WV","West Virginia","Kanawha","Charleston",25312
+"WV","West Virginia","Kanawha","Charleston",25314
+"WV","West Virginia","Kanawha","Charleston",25387
+"WV","West Virginia","Kanawha","Clendenin",25045
+"WV","West Virginia","Kanawha","Coal Fork",25306
+"WV","West Virginia","Kanawha","Cross Lanes",25313
+"WV","West Virginia","Kanawha","Dunbar",25064
+"WV","West Virginia","Kanawha","Elkview",25071
+"WV","West Virginia","Kanawha","Marmet",25315
+"WV","West Virginia","Kanawha","Nitro",25143
+"WV","West Virginia","Kanawha","Saint Albans",25177
+"WV","West Virginia","Kanawha","Sissonville",25320
+"WV","West Virginia","Kanawha","South Charleston",25303
+"WV","West Virginia","Kanawha","South Charleston",25309
+"WV","West Virginia","Kanawha","Upper Falls",25202
+"WV","West Virginia","Marion","Fairmont",26554
+"WV","West Virginia","Marion","Fairview",26570
+"WV","West Virginia","Marion","Mannington",26582
+"WV","West Virginia","Marion","Rivesville",26588
+"WV","West Virginia","Marshall","Glen Dale",26038
+"WV","West Virginia","Marshall","Moundsville",26041
+"WV","West Virginia","Monongalia","Cheat Lake",26508
+"WV","West Virginia","Monongalia","Maidsville",26541
+"WV","West Virginia","Monongalia","Morgantown",26501
+"WV","West Virginia","Monongalia","Morgantown",26505
+"WV","West Virginia","Wayne","Kenova",25530
+"WV","West Virginia","Wayne","Wayne",25570
+"WV","West Virginia","Wood","Davisville",26142
+"WV","West Virginia","Wood","Mineral Wells",26150
+"WV","West Virginia","Wood","Parkersburg",26101
+"WV","West Virginia","Wood","Parkersburg",26104
+"WV","West Virginia","Wood","Parkersburg",26180
+"WV","West Virginia","Wood","Vienna",26105
+"WV","West Virginia","Wood","Washington",26181
+"WV","West Virginia","Wood","Waverly",26184
+"WV","West Virginia","Wood","Williamstown",26187
 "WI","Wisconsin","Brown","Allouez",54301
 "WI","Wisconsin","Brown","Denmark",54208
 "WI","Wisconsin","Brown","Green Bay",54229
@@ -13052,55 +13101,6 @@
 "WI","Wisconsin","Winnebago","Town of Neenah",54956
 "WI","Wisconsin","Winnebago","Town of Winneconne",54986
 "WI","Wisconsin","Winnebago","Wolf River",54940
-"WV","West Virginia","Hancock","Chester",26034
-"WV","West Virginia","Hancock","New Cumberland",26047
-"WV","West Virginia","Hancock","Weirton",26062
-"WV","West Virginia","Jefferson","Charles Town",25414
-"WV","West Virginia","Jefferson","Kearneysville",25430
-"WV","West Virginia","Jefferson","Ranson",25438
-"WV","West Virginia","Jefferson","Shenandoah Junction",25442
-"WV","West Virginia","Jefferson","Shepherdstown",25443
-"WV","West Virginia","Kanawha","Belle",25015
-"WV","West Virginia","Kanawha","Charleston",25301
-"WV","West Virginia","Kanawha","Charleston",25302
-"WV","West Virginia","Kanawha","Charleston",25304
-"WV","West Virginia","Kanawha","Charleston",25311
-"WV","West Virginia","Kanawha","Charleston",25312
-"WV","West Virginia","Kanawha","Charleston",25314
-"WV","West Virginia","Kanawha","Charleston",25387
-"WV","West Virginia","Kanawha","Clendenin",25045
-"WV","West Virginia","Kanawha","Coal Fork",25306
-"WV","West Virginia","Kanawha","Cross Lanes",25313
-"WV","West Virginia","Kanawha","Dunbar",25064
-"WV","West Virginia","Kanawha","Elkview",25071
-"WV","West Virginia","Kanawha","Marmet",25315
-"WV","West Virginia","Kanawha","Nitro",25143
-"WV","West Virginia","Kanawha","Saint Albans",25177
-"WV","West Virginia","Kanawha","Sissonville",25320
-"WV","West Virginia","Kanawha","South Charleston",25303
-"WV","West Virginia","Kanawha","South Charleston",25309
-"WV","West Virginia","Kanawha","Upper Falls",25202
-"WV","West Virginia","Marion","Fairmont",26554
-"WV","West Virginia","Marion","Fairview",26570
-"WV","West Virginia","Marion","Mannington",26582
-"WV","West Virginia","Marion","Rivesville",26588
-"WV","West Virginia","Marshall","Glen Dale",26038
-"WV","West Virginia","Marshall","Moundsville",26041
-"WV","West Virginia","Monongalia","Cheat Lake",26508
-"WV","West Virginia","Monongalia","Maidsville",26541
-"WV","West Virginia","Monongalia","Morgantown",26501
-"WV","West Virginia","Monongalia","Morgantown",26505
-"WV","West Virginia","Wayne","Kenova",25530
-"WV","West Virginia","Wayne","Wayne",25570
-"WV","West Virginia","Wood","Davisville",26142
-"WV","West Virginia","Wood","Mineral Wells",26150
-"WV","West Virginia","Wood","Parkersburg",26101
-"WV","West Virginia","Wood","Parkersburg",26104
-"WV","West Virginia","Wood","Parkersburg",26180
-"WV","West Virginia","Wood","Vienna",26105
-"WV","West Virginia","Wood","Washington",26181
-"WV","West Virginia","Wood","Waverly",26184
-"WV","West Virginia","Wood","Williamstown",26187
 "WY","Wyoming","Laramie","Burns",82053
 "WY","Wyoming","Laramie","Cheyenne",82001
 "WY","Wyoming","Laramie","Cheyenne",82007
